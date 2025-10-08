@@ -1,7 +1,10 @@
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
+import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:get/utils.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -50,10 +53,15 @@ class _SplashScreenState extends State<SplashScreen>
     if (StorageService.isFirstTime()) {
       StorageService.setFirstTime(false);
       // navigate to onboarding screen
+      Get.offNamed(AppRoutes.onboarding);
     } else if (authState.userModel != null) {
       // navigate to home screen
+            Get.offNamed(AppRoutes.home);
+
     } else {
       // navigate to login screen
+            Get.offNamed(AppRoutes.login);
+
     }
   }
 

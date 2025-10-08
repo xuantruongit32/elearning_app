@@ -9,7 +9,7 @@ class StorageService {
   }
 
   static bool isFirstTime() {
-    return _box.read(_keyFirstTime);
+    return _box.read(_keyFirstTime) ?? true;
   }
 
   static Future<void> setFirstTime(bool value) async {
