@@ -21,7 +21,7 @@ class AppTheme {
     textTheme: FontService.getCustomTextTheme(
       AppTypography.lightTextTheme,
       fontState.fontScale,
-      fontState.fontFamily.
+      fontState.fontFamily,
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
