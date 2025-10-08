@@ -4,13 +4,16 @@ import 'package:elearning_app/bloc/font/font_state.dart';
 import 'package:elearning_app/core/theme/app_theme.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/routes/route_pages.dart';
+import 'package:elearning_app/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await StorageService.init();
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
