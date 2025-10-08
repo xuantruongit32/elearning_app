@@ -9,6 +9,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginRequested>(_onLoginRequested);
     on<LogoutRequested>(_onLogoutRequested);
     on<UpdateProfileRequested>(_onUpdateProfileRequested);
+    on<ForgotPasswordRequested>(_onForgotPasswordRequested);
   }
 
   Future<void> _onAuthStateChanged(
@@ -55,6 +56,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onUpdateProfileRequested(
     UpdateProfileRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+
+      emit(state.copyWith(isLoading: false));
+    } catch (e) {
+      emit(state.copyWith(error: e.toString(), isLoading: false));
+    }
+  }
+
+  Future<void> _onForgotPasswordRequested(
+    ForgotPasswordRequested event,
     Emitter<AuthState> emit,
   ) async {
     try {
