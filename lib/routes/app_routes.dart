@@ -1,4 +1,6 @@
+import 'package:elearning_app/view/auth/forgot_password_screen.dart';
 import 'package:elearning_app/view/auth/login_screen.dart';
+import 'package:elearning_app/view/auth/register_screen.dart';
 import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/onboarding/onboarding_screen.dart';
 import 'package:elearning_app/view/splash/splash_screen.dart';
@@ -26,6 +28,11 @@ class AppRoutes {
 
       case login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case register:
+        return MaterialPageRoute(builder: (_) => const RegisterScreen());
+      case forgotPassword:
+        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
+
       default:
         return MaterialPageRoute(
           builder: (_) =>
