@@ -1,3 +1,4 @@
+import 'package:elearning_app/bloc/auth/auth_bloc.dart';
 import 'package:elearning_app/bloc/font/font_bloc.dart';
 import 'package:elearning_app/bloc/font/font_state.dart';
 import 'package:elearning_app/core/theme/app_theme.dart';
@@ -18,20 +19,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider<FontBloc>(create: (context) => FontBloc())
-    ], child: BlocBuilder<FontBloc, FontState>(builder: (context, fontState){
-      return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'TT',
-        theme: AppTheme.getLightTheme(fontState),
-        themeMode: ThemeMode.light,
-        initialRoute: AppRoutes.splash,
-        onGenerateRoute: AppRoutes.onGenerateRoute,
-        getPages: AppPages.pages,
-
-      );
-    }));
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<FontBloc>(create: (context) => FontBloc()), // BlocProvider
+        BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
+      ],
+      child: BlocBuilder<FontBloc, FontState>(
+        builder: (context, fontState) {
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'TT',
+            theme: AppTheme.getLightTheme(fontState),
+            themeMode: ThemeMode.light,
+            initialRoute: AppRoutes.splash,
+            onGenerateRoute: AppRoutes.onGenerateRoute,
+            getPages: AppPages.pages,
+          );
+        },
+      ),
+    );
   }
 }
-
