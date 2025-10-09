@@ -104,6 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         CustomTextField(
                           label: 'Email',
                           prefixIcon: Icons.email_outlined,
+                          keyboardType: TextInputType.emailAddress,
                           controller: _emailController,
                           validator: FormValidator.validateEmail,
                         ),

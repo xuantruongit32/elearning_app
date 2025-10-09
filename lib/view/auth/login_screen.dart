@@ -85,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   const SizedBox(height: 20),
                   Form(
+                    key: _formKey,
                     child: Column(
                       children: [
                         CustomTextField(
