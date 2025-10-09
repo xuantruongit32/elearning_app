@@ -111,7 +111,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         CustomTextField(
                           label: 'Password',
                           prefixIcon: Icons.lock_outlined,
-                          controller: _fullNameController,
+                          controller: _passwordController,
                           validator: FormValidator.validatePassword,
                           obscureText: true,
                         ),
