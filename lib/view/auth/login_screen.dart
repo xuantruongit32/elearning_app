@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _handleLogin() {
     if (_formKey.currentState!.validate()) {
-      Get.offAllNamed(AppRoutes.home);
+      Get.offAllNamed(AppRoutes.main);
     }
   }
 
@@ -121,10 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 10),
                         //login button
-                        CustomButton(
-                          text: 'Login',
-                          onPressed: _handleLogin,
-                        ),
+                        CustomButton(text: 'Login', onPressed: _handleLogin),
                         const SizedBox(height: 20),
                       ],
                     ),

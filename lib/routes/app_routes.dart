@@ -1,14 +1,21 @@
+import 'package:elearning_app/main_screen.dart';
 import 'package:elearning_app/view/auth/forgot_password_screen.dart';
 import 'package:elearning_app/view/auth/login_screen.dart';
 import 'package:elearning_app/view/auth/register_screen.dart';
+import 'package:elearning_app/view/course/course_list/widgets/course_list_screen.dart';
 import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/onboarding/onboarding_screen.dart';
+import 'package:elearning_app/view/profile/profile_screen.dart';
+import 'package:elearning_app/view/quiz/quiz_list/widgets/quiz_list_screen.dart';
 import 'package:elearning_app/view/splash/splash_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AppRoutes {
+  //main
+  static const String main = '/main';
+
   static const String splash = '/splash';
   static const String onboarding = '/onboarding';
   static const String login = '/login';
@@ -18,13 +25,30 @@ class AppRoutes {
   static const String home = '/home';
 
   //teacher
-    static const String teacherHome = '/teacher/home';
+  static const String teacherHome = '/teacher/home';
 
+  //course routes
+  static const String courseList = '/courses';
+
+  //quiz routes
+  static const String quizList = '/quizzes';
+
+  //profile routes
+  static const String profile = '/profile';
 
   static Route<dynamic> onGenerateRoute(RouteSettings setting) {
     switch (setting.name) {
       case splash:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case main:
+        return MaterialPageRoute(
+          builder: (_) => MainScreen(
+            initialIndex: setting.arguments is Map
+                ? (setting.arguments as Map<String, dynamic>)['initialIndex']
+                      as int?
+                : null,
+          ),
+        );
       case onboarding:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
 
@@ -37,7 +61,13 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case forgotPassword:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
-        case teacherHome:
+      case courseList:
+        return MaterialPageRoute(builder: (_) => const CourseListScreen());
+      case quizList:
+        return MaterialPageRoute(builder: (_) => const QuizListScreen());
+      case profile:
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
+      case teacherHome:
         return MaterialPageRoute(builder: (_) => const TeacherHomeScreen());
 
       default:
