@@ -2,32 +2,32 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
   final String label;
-  final String hint;
+  final String? hint;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final bool obscureText;
-  final TextEditingController controller;
-  final String? Function(String?)? validate;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final void Function(String)? onChanged;
   final int maxLines;
   final bool enabled;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
 
   const CustomTextField({
     super.key,
     required this.label,
-    required this.hint,
+    this.hint,
     this.prefixIcon,
     this.suffixIcon,
     this.obscureText = false,
-    required this.controller,
-    this.validate,
+    this.controller,
+    this.validator,
     this.keyboardType,
     this.onChanged,
     this.maxLines = 1,
-    required this.enabled,
-    required this.focusNode,
+    this.enabled = true,
+    this.focusNode,
   });
 
   @override
@@ -46,7 +46,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return TextFormField(
       controller: widget.controller,
       obscureText: _obscureText,
-      validator: widget.validate,
+      validator: widget.validator,
       keyboardType: widget.keyboardType,
       onChanged: widget.onChanged,
       maxLines: widget.maxLines,
@@ -83,6 +83,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.red),
         ),
       ),
     );
