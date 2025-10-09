@@ -58,7 +58,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
         prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon) : null,
         suffixIcon: widget.obscureText
             ? IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
                 icon: Icon(
                   _obscureText
                       ? Icons.visibility_outlined
