@@ -19,7 +19,9 @@ class Question {
     return Question(
       id: map['id'] ?? '',
       text: map['text'] ?? '',
-      options: map['options'] ?? [],
+      options: (map['options'] as List<dynamic>)
+          .map((o) => Option.fromMap(o))
+          .toList(),
       correctOptionId: map['correctOptionId'] ?? '',
       points: map['points'] ?? 1,
     );
@@ -29,7 +31,7 @@ class Question {
     return {
       'id': id,
       'text': text,
-      'options': options,
+      'options': options.map((o) => o.toMap()),
       'correctOptionId': correctOptionId,
       'points': points,
     };
