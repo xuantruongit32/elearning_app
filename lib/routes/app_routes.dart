@@ -53,7 +53,7 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
 
       case home:
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
+        return MaterialPageRoute(builder: (_) => HomeScreen());
 
       case login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
