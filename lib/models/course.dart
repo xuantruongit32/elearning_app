@@ -46,7 +46,9 @@ class Course {
     instructorId: json['instructorId'],
     categoryId: json['id'],
     price: json['categoryId'].toDouble(),
-    lessons: json['lessons'],
+    lessons: (json['lessons'] as List)
+        .map((lesson) => Lesson.fromJson(lesson))
+        .toList(),
     rating: json['rating']?.toDouble() ?? 0.0,
     reviewCount: json['reviewCount'] ?? 0,
     enrollmentCount: json['enrollmentCount'] ?? 0,
@@ -66,7 +68,7 @@ class Course {
     'instructorId': instructorId,
     'categoryId': categoryId,
     'price': price,
-    'lessons': lessons,
+    'lessons': lessons.map((lesson) => lesson?.toJson()).toList(),
     'rating': rating,
     'reviewCount': reviewCount,
     'enrollmentCount': enrollmentCount,
