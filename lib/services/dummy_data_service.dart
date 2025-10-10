@@ -12,7 +12,7 @@ class DummyDataService {
       title: 'Flutter Development Bootcamp',
       description:
           'Master Flutter and Dart from scratch. Build real-world cross-platform apps.',
-      imageUrl: 'https://i.ytimg.com/vi/Z9kOcyk5t8s/maxresdefault.jpg',
+      imageUrl: 'https://i.ytimg.com/vi/z9kOcyk5t8s/maxresdefault.jpg',
       instructorId: 'inst_1',
       categoryId: '1', // Programming
       price: 99.99,
@@ -95,7 +95,8 @@ class DummyDataService {
       title: 'UI/UX Design Fundamentals',
       description:
           'Learn the core principles of great design and how to create user-friendly interfaces.',
-      imageUrl: 'https://i.ytimg.com/vi/z7iooEJz8iU/maxresdefault.jpg',
+      imageUrl:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-6f9YIlGZMSbzrNS0lRpJVbIHLMeYk8-fhw&s',
       instructorId: 'inst_4',
       categoryId: '3',
       price: 79.99,
@@ -306,11 +307,11 @@ class DummyDataService {
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'Dart Programming Basics', false, false),
-      _createLesson('3', 'Building UI with Widgets', false, false),
-      _createLesson('4', 'State Management', false, false),
-      _createLesson('5', 'Working with APIs', false, false),
-      _createLesson('6', 'Local Data Storage', false, false),
+      _createLesson('2', 'Dart Programming Basics', false, true, false),
+      _createLesson('3', 'Building UI with Widgets', false, true, false),
+      _createLesson('4', 'State Management', false, false, false),
+      _createLesson('5', 'Working with APIs', false, false, false),
+      _createLesson('6', 'Local Data Storage', false, false, false),
     ];
   }
 
@@ -327,10 +328,10 @@ class DummyDataService {
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'Props and State', false, false),
-      _createLesson('3', 'React Hooks', false, false),
-      _createLesson('4', 'React Router', false, false),
-      _createLesson('5', 'API Integration', false, false),
+      _createLesson('2', 'Props and State', false, false, false),
+      _createLesson('3', 'React Hooks', false, true, false),
+      _createLesson('4', 'React Router', false, false, false),
+      _createLesson('5', 'API Integration', false, true, false),
     ];
   }
 
@@ -347,10 +348,10 @@ class DummyDataService {
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'Data Analysis with Pandas', false, false),
-      _createLesson('3', 'Visualization with Matplotlib', false, false),
-      _createLesson('4', 'Intro to Machine Learning', false, false),
-      _createLesson('5', 'Project: Analyzing Real Data', false, false),
+      _createLesson('2', 'Data Analysis with Pandas', false, false, false),
+      _createLesson('3', 'Visualization with Matplotlib', false, true, false),
+      _createLesson('4', 'Intro to Machine Learning', false, true, false),
+      _createLesson('5', 'Project: Analyzing Real Data', false, false, false),
     ];
   }
 
@@ -368,10 +369,10 @@ class DummyDataService {
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'Wireframing and Prototyping', false, false),
-      _createLesson('3', 'Typography and Colors', false, false),
-      _createLesson('4', 'User Testing', false, false),
-      _createLesson('5', 'Final Design Project', false, false),
+      _createLesson('2', 'Wireframing and Prototyping', false, false, false),
+      _createLesson('3', 'Typography and Colors', false, false, false),
+      _createLesson('4', 'User Testing', false, false, false),
+      _createLesson('5', 'Final Design Project', false, false, false),
     ];
   }
 
@@ -388,10 +389,10 @@ class DummyDataService {
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'Collections Framework', false, false),
-      _createLesson('3', 'Multithreading in Java', false, false),
-      _createLesson('4', 'Design Patterns', false, false),
-      _createLesson('5', 'Networking and File I/O', false, false),
+      _createLesson('2', 'Collections Framework', false, false, false),
+      _createLesson('3', 'Multithreading in Java', false, true, false),
+      _createLesson('4', 'Design Patterns', false, false, false),
+      _createLesson('5', 'Networking and File I/O', false, true, false),
     ];
   }
 
@@ -408,10 +409,10 @@ class DummyDataService {
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'Functions and Lambdas', false, false),
-      _createLesson('3', 'Android Layouts', false, false),
-      _createLesson('4', 'Networking with Retrofit', false, false),
-      _createLesson('5', 'Publishing Your App', false, false),
+      _createLesson('2', 'Functions and Lambdas', false, true, false),
+      _createLesson('3', 'Android Layouts', false, false, false),
+      _createLesson('4', 'Networking with Retrofit', false, false, false),
+      _createLesson('5', 'Publishing Your App', false, false, true),
     ];
   }
 
@@ -428,10 +429,10 @@ class DummyDataService {
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'Express Framework', false, false),
-      _createLesson('3', 'MongoDB Basics', false, false),
-      _createLesson('4', 'Authentication with JWT', false, false),
-      _createLesson('5', 'Deploying to Cloud', false, false),
+      _createLesson('2', 'Express Framework', false, false, false),
+      _createLesson('3', 'MongoDB Basics', false, true, false),
+      _createLesson('4', 'Authentication with JWT', false, true, false),
+      _createLesson('5', 'Deploying to Cloud', false, true, false),
     ];
   }
 
@@ -448,10 +449,10 @@ class DummyDataService {
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'Neural Networks 101', false, false),
-      _createLesson('3', 'CNN and Image Data', false, false),
-      _createLesson('4', 'RNN and Text Data', false, false),
-      _createLesson('5', 'Model Deployment', false, false),
+      _createLesson('2', 'Neural Networks 101', false, false, false),
+      _createLesson('3', 'CNN and Image Data', false, false, false),
+      _createLesson('4', 'RNN and Text Data', false, false, false),
+      _createLesson('5', 'Model Deployment', false, false, false),
     ];
   }
 
@@ -468,10 +469,10 @@ class DummyDataService {
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'SELECT and WHERE Clauses', false, false),
-      _createLesson('3', 'JOIN Operations', false, false),
-      _createLesson('4', 'GROUP BY and HAVING', false, false),
-      _createLesson('5', 'Database Design', false, false),
+      _createLesson('2', 'SELECT and WHERE Clauses', false, false, false),
+      _createLesson('3', 'JOIN Operations', false, true, false),
+      _createLesson('4', 'GROUP BY and HAVING', false, false, false),
+      _createLesson('5', 'Database Design', false, true, false),
     ];
   }
 
@@ -488,10 +489,10 @@ class DummyDataService {
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'Committing and Branching', false, false),
-      _createLesson('3', 'Merging and Conflicts', false, false),
-      _createLesson('4', 'Working with GitHub', false, false),
-      _createLesson('5', 'Team Workflow', false, false),
+      _createLesson('2', 'Committing and Branching', false, true, false),
+      _createLesson('3', 'Merging and Conflicts', false, false, false),
+      _createLesson('4', 'Working with GitHub', false, true, false),
+      _createLesson('5', 'Team Workflow', false, false, false),
     ];
   }
 
@@ -499,6 +500,7 @@ class DummyDataService {
     String id,
     String title,
     bool isPreview,
+    bool isCompleted,
     bool isLocked,
   ) {
     return Lesson(
@@ -510,6 +512,7 @@ class DummyDataService {
       duration: 25,
       resources: _createDummyResources(),
       isPreview: isPreview,
+      isCompleted: isCompleted,
       isLocked: isLocked,
     );
   }
@@ -954,5 +957,5 @@ class TeacherStats {
     monthlyEnrollments: [],
     monthlyRevenue: [],
     studentEngagement: StudentEngagement.empty(),
-  ); //
+  );
 }
