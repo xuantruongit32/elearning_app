@@ -8,7 +8,7 @@ class RecommendedSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final courses = DummyDataService.courses;
+    final courses = DummyDataService.courses ?? [];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,26 +23,26 @@ class RecommendedSection extends StatelessWidget {
               ),
             ),
             TextButton(onPressed: () {}, child: const Text('See all')),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 200,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: courses.length,
-                itemBuilder: (context, index) {
-                  final course = courses[index];
-                  return RecommendedCourseCard(
-                    courseId: course.id,
-                    title: course.title,
-                    imageUrl: course.imageUrl,
-                    instructorId: course.instructorId,
-                    duration: '${course.lessons.length * 30} mins',
-                    isPremium: course.isPremium,
-                  );
-                },
-              ),
-            ),
           ],
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+          height: 200,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: courses.length,
+            itemBuilder: (context, index) {
+              final course = courses[index];
+              return RecommendedCourseCard(
+                courseId: course.id,
+                title: course.title,
+                imageUrl: course.imageUrl,
+                instructorId: course.instructorId,
+                duration: '${(course.lessons?.length ?? 0) * 30} mins',
+                isPremium: course.isPremium,
+              );
+            },
+          ),
         ),
       ],
     );

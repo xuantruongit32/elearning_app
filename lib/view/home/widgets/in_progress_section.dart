@@ -17,6 +17,7 @@ class InProgressSection extends StatelessWidget {
               !course.lessons.every((lesson) => lesson.isCompleted),
         )
         .toList();
+    print('In progress count: ${inProgressCourses.length}');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

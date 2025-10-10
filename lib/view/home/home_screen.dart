@@ -3,6 +3,7 @@ import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:elearning_app/view/home/widgets/category_section.dart';
 import 'package:elearning_app/view/home/widgets/home_app_bar.dart';
 import 'package:elearning_app/view/home/widgets/in_progress_section.dart';
+import 'package:elearning_app/view/home/widgets/recommended_section.dart';
 import 'package:elearning_app/view/home/widgets/search_bar_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -74,11 +75,11 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 32),
               CategorySection(categories: categories),
               const InProgressSection(),
+              const RecommendedSection(),
             ]),
           ),
         ),
       ],
     );
   }
-  
 }
