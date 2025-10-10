@@ -16,7 +16,7 @@ class AppPages {
   static final List<GetPage> pages = [
     GetPage(name: AppRoutes.splash, page: () => const SplashScreen()),
     GetPage(name: AppRoutes.onboarding, page: () => const OnboardingScreen()),
-    GetPage(name: AppRoutes.home, page: () => const HomeScreen()),
+    GetPage(name: AppRoutes.home, page: () => HomeScreen()),
     GetPage(name: AppRoutes.login, page: () => const LoginScreen()),
     GetPage(name: AppRoutes.register, page: () => const RegisterScreen()),
     GetPage(
