@@ -3,7 +3,7 @@ import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/view/auth/forgot_password_screen.dart';
 import 'package:elearning_app/view/auth/login_screen.dart';
 import 'package:elearning_app/view/auth/register_screen.dart';
-import 'package:elearning_app/view/course/course_list/widgets/course_list_screen.dart';
+import 'package:elearning_app/view/course/course_list/course_list_screen.dart';
 import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/onboarding/onboarding_screen.dart';
 import 'package:elearning_app/view/profile/profile_screen.dart';
@@ -25,7 +25,13 @@ class AppPages {
     ),
     GetPage(name: AppRoutes.teacherHome, page: () => const TeacherHomeScreen()),
     GetPage(name: AppRoutes.profile, page: () => const ProfileScreen()),
-    GetPage(name: AppRoutes.courseList, page: () => const CourseListScreen()),
+    GetPage(
+      name: AppRoutes.courseList,
+      page: () => CourseListScreen(
+        categoryId: Get.arguments?['category'] as String?,
+        categoryName: Get.arguments?['categoryName'] as String?,
+      ),
+    ),
     GetPage(name: AppRoutes.quizList, page: () => const QuizListScreen()),
 
     GetPage(

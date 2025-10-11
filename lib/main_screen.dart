@@ -2,7 +2,7 @@ import 'package:elearning_app/bloc/navigation/navigation_bloc.dart';
 import 'package:elearning_app/bloc/navigation/navigation_event.dart';
 import 'package:elearning_app/bloc/navigation/navigation_state.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
-import 'package:elearning_app/view/course/course_list/widgets/course_list_screen.dart';
+import 'package:elearning_app/view/course/course_list/course_list_screen.dart';
 import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/profile/profile_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_list/widgets/quiz_list_screen.dart';
