@@ -5,7 +5,7 @@ import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/view/course/course_list/course_list_screen.dart';
 import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/profile/profile_screen.dart';
-import 'package:elearning_app/view/quiz/quiz_list/widgets/quiz_list_screen.dart';
+import 'package:elearning_app/view/quiz/quiz_list/quiz_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
