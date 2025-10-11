@@ -2,7 +2,7 @@ import 'package:elearning_app/main_screen.dart';
 import 'package:elearning_app/view/auth/forgot_password_screen.dart';
 import 'package:elearning_app/view/auth/login_screen.dart';
 import 'package:elearning_app/view/auth/register_screen.dart';
-import 'package:elearning_app/view/course/course_list/widgets/course_list_screen.dart';
+import 'package:elearning_app/view/course/course_list/course_list_screen.dart';
 import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/onboarding/onboarding_screen.dart';
 import 'package:elearning_app/view/profile/profile_screen.dart';
@@ -62,7 +62,12 @@ class AppRoutes {
       case forgotPassword:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
       case courseList:
-        return MaterialPageRoute(builder: (_) => const CourseListScreen());
+      final args = setting.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(builder: (_) => CourseListScreen(
+          categoryId: args?['category'] as String?,
+          categoryName: args?['categoryName'] as String?,
+
+        ));
       case quizList:
         return MaterialPageRoute(builder: (_) => const QuizListScreen());
       case profile:
