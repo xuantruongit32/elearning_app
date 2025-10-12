@@ -1,7 +1,10 @@
+import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
+import 'package:elearning_app/view/course/course_detail/widgets/action_buttons.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/course_detail_app_bar.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/course_info_card.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/lesson_list.dart';
+import 'package:elearning_app/view/course/course_detail/widgets/reviews_section.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -81,12 +84,41 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     isUnlocked: isUnlocked,
                     onLessonComplete: () => setState(() {}),
                   ),
+                  const SizedBox(height: 24),
+                  ReviewsSection(courseId: widget.courseId),
+                  const SizedBox(height: 16),
+                  ActionButtons(course: course),
                 ],
               ),
             ),
           ),
         ],
       ),
+      bottomNavigationBar: course.isPremium && !isUnlocked
+          ? Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: theme.scaffoldBackgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.1),
+                    blurRadius: 10,
+                    offset: const Offset(0, -5),
+                  ),
+                ],
+              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  // navigate to payment
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  padding: const EdgeInsets.all(16),
+                ),
+                child: Text('Buy Now for \$${course.price}'),
+              ),
+            )
+          : null,
     );
   }
 }
