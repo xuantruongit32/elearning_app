@@ -30,7 +30,7 @@ class AppRoutes {
 
   //course routes
   static const String courseList = '/courses';
-  static const String courseDetail = '/courses/:id';
+  static const String courseDetail = '/course/:id';
 
   //quiz routes
   static const String quizList = '/quizzes';
