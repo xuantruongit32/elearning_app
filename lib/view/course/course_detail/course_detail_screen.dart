@@ -1,4 +1,5 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
+import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/action_buttons.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/course_detail_app_bar.dart';
@@ -110,6 +111,14 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   // navigate to payment
+                  Get.toNamed(
+                    AppRoutes.payment,
+                    arguments: {
+                      'courseId': widget.courseId,
+                      'courseName': course.title,
+                      'price': course.price,
+                    },
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
