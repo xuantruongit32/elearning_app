@@ -1,6 +1,7 @@
 import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/course_detail_app_bar.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/course_info_card.dart';
+import 'package:elearning_app/view/course/course_detail/widgets/lesson_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,7 +68,19 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   Text(course.description, style: theme.textTheme.bodyLarge),
                   const SizedBox(height: 16),
                   CourseInfoCard(course: course),
-                  
+                  const SizedBox(height: 24),
+                  Text(
+                    'Course Content',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  LessonList(
+                    courseId: widget.courseId,
+                    isUnlocked: isUnlocked,
+                    onLessonComplete: () => setState(() {}),
+                  ),
                 ],
               ),
             ),
