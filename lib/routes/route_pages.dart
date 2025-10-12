@@ -3,6 +3,7 @@ import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/view/auth/forgot_password_screen.dart';
 import 'package:elearning_app/view/auth/login_screen.dart';
 import 'package:elearning_app/view/auth/register_screen.dart';
+import 'package:elearning_app/view/course/course_detail/widgets/course_detail_screen.dart';
 import 'package:elearning_app/view/course/course_list/course_list_screen.dart';
 import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/onboarding/onboarding_screen.dart';
@@ -32,6 +33,11 @@ class AppPages {
         categoryName: Get.arguments?['categoryName'] as String?,
       ),
     ),
+    GetPage(
+      name: AppRoutes.quizList,
+      page: () => CourseDetailScreen(courseId: Get.parameters['id'] ?? ''),
+    ),
+
     GetPage(name: AppRoutes.quizList, page: () => const QuizListScreen()),
 
     GetPage(
