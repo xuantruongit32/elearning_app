@@ -40,7 +40,9 @@ class OrderSummary extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(courseName, style: theme.textTheme.bodyLarge),
+              Expanded(
+                child: Text(courseName, style: theme.textTheme.bodyLarge),
+              ),
               Text(
                 '\$$price',
                 style: theme.textTheme.titleMedium?.copyWith(
