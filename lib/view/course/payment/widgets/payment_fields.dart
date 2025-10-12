@@ -40,10 +40,10 @@ class PaymentFields extends StatelessWidget {
               Expanded(child: _buildExpiryField()),
               const SizedBox(width: 16),
               Expanded(child: _buildCVVField()),
-              const SizedBox(width: 16),
-              _buildNameField(),
             ],
           ),
+          const SizedBox(height: 16),
+          _buildNameField(),
         ],
       ),
     );
