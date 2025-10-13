@@ -303,14 +303,14 @@ class DummyDataService {
         description:
             'This is a detailed description for Introduction to Flutter.',
         videoUrl:
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+            'https://drive.google.com/uc?export=download&id=1eIaTK9JhzBvkyA7FvYwiN5WYs3E2bddq',
         duration: 30,
         resources: _createDummyResources(),
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'Dart Programming Basics', false, true, false),
-      _createLesson('3', 'Building UI with Widgets', false, true, false),
+      _createLesson('2', 'Dart Programming Basics', true, false, false),
+      _createLesson('3', 'Building UI with Widgets', false, false, false),
       _createLesson('4', 'State Management', false, false, false),
       _createLesson('5', 'Working with APIs', false, false, false),
       _createLesson('6', 'Local Data Storage', false, false, false),
@@ -324,7 +324,7 @@ class DummyDataService {
         title: 'Getting Started with React',
         description: 'Introduction to React, JSX, and component basics.',
         videoUrl:
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         duration: 28,
         resources: _createDummyResources(),
         isPreview: true,
@@ -344,7 +344,7 @@ class DummyDataService {
         title: 'Introduction to Python for Data Science',
         description: 'Learn Python basics for data analysis and visualization.',
         videoUrl:
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         duration: 35,
         resources: _createDummyResources(),
         isPreview: true,
@@ -365,7 +365,7 @@ class DummyDataService {
         description:
             'Understand how to approach problems with design thinking.',
         videoUrl:
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         duration: 25,
         resources: _createDummyResources(),
         isPreview: true,
@@ -385,7 +385,7 @@ class DummyDataService {
         title: 'Java OOP Review',
         description: 'Deep dive into classes, inheritance, and polymorphism.',
         videoUrl:
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         duration: 32,
         resources: _createDummyResources(),
         isPreview: true,
@@ -405,7 +405,7 @@ class DummyDataService {
         title: 'Introduction to Kotlin',
         description: 'Kotlin basics and setting up Android Studio.',
         videoUrl:
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
+            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         duration: 26,
         resources: _createDummyResources(),
         isPreview: true,
@@ -425,7 +425,7 @@ class DummyDataService {
         title: 'Intro to Node.js and NPM',
         description: 'Setup Node environment and understand NPM packages.',
         videoUrl:
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4',
+            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         duration: 27,
         resources: _createDummyResources(),
         isPreview: true,
@@ -445,7 +445,7 @@ class DummyDataService {
         title: 'Getting Started with TensorFlow',
         description: 'Learn what TensorFlow is and how to install it.',
         videoUrl:
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
+            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         duration: 33,
         resources: _createDummyResources(),
         isPreview: true,
@@ -465,7 +465,7 @@ class DummyDataService {
         title: 'Intro to SQL',
         description: 'Learn database basics and how SQL works.',
         videoUrl:
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         duration: 20,
         resources: _createDummyResources(),
         isPreview: true,
@@ -485,7 +485,7 @@ class DummyDataService {
         title: 'Introduction to Git',
         description: 'Learn version control concepts and Git setup.',
         videoUrl:
-            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         duration: 18,
         resources: _createDummyResources(),
         isPreview: true,
@@ -510,7 +510,7 @@ class DummyDataService {
       title: title,
       description: 'This is a detailed description for $title.',
       videoUrl:
-          'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+          'https://drive.google.com/uc?export=download&id=1eIaTK9JhzBvkyA7FvYwiN5WYs3E2bddq',
       duration: 25,
       resources: _createDummyResources(),
       isPreview: isPreview,

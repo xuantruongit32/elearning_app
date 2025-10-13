@@ -1,4 +1,3 @@
-import 'package:chewie/chewie.dart';
 import 'package:elearning_app/controllers/video_controller.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/course.dart';
@@ -8,6 +7,8 @@ import 'package:elearning_app/view/course/lesson_screen/widgets/certificate_dial
 import 'package:elearning_app/view/course/lesson_screen/widgets/resource_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:better_player_plus/better_player_plus.dart';
+
 
 class LessonScreen extends StatefulWidget {
   final String lessonId;
@@ -98,8 +99,10 @@ class _LessonScreenState extends State<LessonScreen> {
                     color: theme.colorScheme.surface,
                     child: const Center(child: CircularProgressIndicator()),
                   )
-                : _videoController.chewieController != null
-                ? Chewie(controller: _videoController.chewieController!)
+                : _videoController.betterPlayerController != null
+                ? BetterPlayer(
+                    controller: _videoController.betterPlayerController!,
+                  )
                 : Container(
                     color: theme.colorScheme.surface,
                     child: const Center(child: Text('Error loading video')),
