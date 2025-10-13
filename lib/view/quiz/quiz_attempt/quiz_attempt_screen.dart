@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/quiz.dart';
 import 'package:elearning_app/models/quiz_attempt.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
+import 'package:elearning_app/view/quiz/quiz_attempt/widgets/quiz_attempt_app_bar.dart';
+import 'package:elearning_app/view/quiz/quiz_attempt/widgets/quiz_question_page.dart';
+import 'package:elearning_app/view/quiz/quiz_attempt/widgets/quiz_submit_dialog.dart';
 import 'package:flutter/material.dart';
 
 class QuizAttemptScreen extends StatefulWidget {
@@ -82,9 +86,65 @@ class _QuizAttemptScreenState extends State<QuizAttemptScreen> {
     return score;
   }
 
+  void _selectAnswer(String questionId, String optionId) {
+    setState(() {
+      selectedAnswers[questionId] = optionId;
+    });
+  }
+
+  String get formattedTime {
+    final minutes = (remainingSeconds / 60).floor();
+    final seconds = remainingSeconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return const Placeholder();
+    return Scaffold(
+      backgroundColor: AppColors.lightBackground,
+      appBar: QuizAttemptAppBar(
+        formattedTime: formattedTime,
+        onSubmit: () => _showSubmitDialog(context),
+      ),
+      body: PageView.builder(
+        controller: _pageController,
+        physics: const BouncingScrollPhysics(),
+        itemCount: quiz.questions.length,
+        itemBuilder: (BuildContext context, int index) => QuizQuestionPage(
+          questionNumber: index + 1,
+          totalQuestions: quiz.questions.length,
+          question: quiz.questions[index],
+          selectedOptionId: selectedAnswers[quiz.questions[index].id],
+          onOptionSelected: (optionId) =>
+              _selectAnswer(quiz.questions[index].id, optionId),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showSubmitDialog(BuildContext context) async {
+    final score = _calculateScore();
+    currentAttempt = QuizAttempt(
+      id: DateTime.now().microsecondsSinceEpoch.toString(),
+      quizId: quiz.id,
+      userId: 'current user id',
+      answers: selectedAnswers,
+      score: score,
+      startedAt: DateTime.now().subtract(
+        Duration(seconds: quiz.timeLimit * 60 - remainingSeconds),
+      ),
+      timeSpent: quiz.timeLimit * 60 - remainingSeconds,
+      completedAt: DateTime.now(),
+    );
+
+    // save attempt
+    DummyDataService.saveQuizAttempt(currentAttempt!);
+
+    return showDialog(
+      context: context,
+      builder: (context) =>
+          QuizSubmitDialog(attempt: currentAttempt!, quiz: quiz),
+    );
   }
 }
