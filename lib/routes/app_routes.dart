@@ -9,6 +9,7 @@ import 'package:elearning_app/view/course/payment/payment_screen.dart';
 import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/onboarding/onboarding_screen.dart';
 import 'package:elearning_app/view/profile/profile_screen.dart';
+import 'package:elearning_app/view/quiz/quiz_attempt/quiz_attempt_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_list/quiz_list_screen.dart';
 import 'package:elearning_app/view/splash/splash_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home_screen.dart';
@@ -38,6 +39,7 @@ class AppRoutes {
 
   //quiz routes
   static const String quizList = '/quizzes';
+  static const String quizAttempt = '/quiz/:id';
 
   //profile routes
   static const String profile = '/profile';
@@ -88,6 +90,11 @@ class AppRoutes {
         );
       case quizList:
         return MaterialPageRoute(builder: (_) => const QuizListScreen());
+      case quizAttempt:
+        final quizzId = setting.arguments as String?;
+        return MaterialPageRoute(
+          builder: (_) => QuizAttemptScreen(quizId: quizzId ?? ''),
+        );
       case lesson:
         final lessonId = setting.arguments as String?;
         return MaterialPageRoute(
