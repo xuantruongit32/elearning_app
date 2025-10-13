@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:better_player_plus/better_player_plus.dart';
 
-
 class LessonScreen extends StatefulWidget {
   final String lessonId;
   const LessonScreen({super.key, required this.lessonId});
@@ -40,6 +39,7 @@ class _LessonScreenState extends State<LessonScreen> {
 
   @override
   void dispose() {
+    _videoController.betterPlayerController?.pause();
     _videoController.dispose();
     super.dispose();
   }

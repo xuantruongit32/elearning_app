@@ -303,13 +303,26 @@ class DummyDataService {
         description:
             'This is a detailed description for Introduction to Flutter.',
         videoUrl:
-            'https://drive.google.com/uc?export=download&id=1eIaTK9JhzBvkyA7FvYwiN5WYs3E2bddq',
+            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         duration: 30,
         resources: _createDummyResources(),
         isPreview: true,
         isLocked: false,
       ),
-      _createLesson('2', 'Dart Programming Basics', true, false, false),
+      Lesson(
+        id: '2',
+        title: 'Dart Programming Basics',
+        description:
+            'This is a detailed description for Dart Programming Basics.',
+        videoUrl:
+            'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        duration: 25,
+        resources: _createDummyResources(),
+        isPreview: false,
+        isCompleted: false,
+        isLocked: true,
+      ),
+      //     _createLesson('2', 'Dart Programming Basics', true, false, false),
       _createLesson('3', 'Building UI with Widgets', false, false, false),
       _createLesson('4', 'State Management', false, false, false),
       _createLesson('5', 'Working with APIs', false, false, false),
@@ -510,7 +523,7 @@ class DummyDataService {
       title: title,
       description: 'This is a detailed description for $title.',
       videoUrl:
-          'https://drive.google.com/uc?export=download&id=1eIaTK9JhzBvkyA7FvYwiN5WYs3E2bddq',
+          'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
       duration: 25,
       resources: _createDummyResources(),
       isPreview: isPreview,

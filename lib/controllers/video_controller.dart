@@ -20,6 +20,13 @@ class LessonVideoController {
 
   Future<void> initializeVideo() async {
     try {
+      if (betterPlayerController != null) {
+        await betterPlayerController!.pause();
+        betterPlayerController!.dispose();
+        betterPlayerController = null;
+        debugPrint('Disposed old BetterPlayerController');
+      }
+      onLoadingChanged(true);
       final courseId = Get.parameters['courseId'];
       debugPrint('CourseID: $courseId');
 
@@ -71,7 +78,7 @@ class LessonVideoController {
 
       final dataSource = BetterPlayerDataSource(
         BetterPlayerDataSourceType.network,
-        lesson.videoStreamUrl,
+        "${lesson.videoStreamUrl}?v=${DateTime.now().millisecondsSinceEpoch}",
         cacheConfiguration: const BetterPlayerCacheConfiguration(
           useCache: false,
         ),
@@ -82,6 +89,9 @@ class LessonVideoController {
         betterPlayerDataSource: dataSource,
       );
 
+      betterPlayerController!.addEventsListener(_onBetterPlayerEvent);
+      await Future.delayed(const Duration(milliseconds: 200));
+
       onLoadingChanged(false);
     } catch (e) {
       debugPrint('Error initializing video: $e');
@@ -89,18 +99,41 @@ class LessonVideoController {
     }
   }
 
+  void _onBetterPlayerEvent(BetterPlayerEvent event) {
+    final courseId = Get.parameters['courseId'];
+    if (courseId == null) return;
+
+    switch (event.betterPlayerEventType) {
+      case BetterPlayerEventType.finished:
+        debugPrint('🎯 Video finished!');
+        markLessonAsCompleted(courseId);
+        break;
+
+      case BetterPlayerEventType.progress:
+        final position =
+            betterPlayerController?.videoPlayerController?.value.position;
+        final duration =
+            betterPlayerController?.videoPlayerController?.value.duration;
+        if (position != null && duration != null) {
+          final progress = position.inSeconds / duration.inSeconds;
+          debugPrint('Progress: ${(progress * 100).toStringAsFixed(1)}%');
+        }
+        break;
+
+      default:
+        break;
+    }
+  }
+
   void markLessonAsCompleted(String courseId) {
     final course = DummyDataService.getCourseById(courseId);
     final lessonIndex = course.lessons.indexWhere((l) => l.id == lessonId);
+    if (lessonIndex == -1) return;
 
-    if (lessonIndex != -1) {
-      DummyDataService.updateLessonStatus(
-        courseId,
-        lessonId,
-        isCompleted: true,
-      );
-    }
+    DummyDataService.updateLessonStatus(courseId, lessonId, isCompleted: true);
+    debugPrint('✅ Lesson ${lessonId} marked completed.');
 
+    // Mở khóa bài kế tiếp
     if (lessonIndex < course.lessons.length - 1) {
       DummyDataService.updateLessonStatus(
         courseId,
@@ -111,7 +144,6 @@ class LessonVideoController {
 
     final isLastLesson = lessonIndex == course.lessons.length - 1;
     final allLessonsCompleted = DummyDataService.isCourseCompleted(courseId);
-
     Get.back(result: true);
 
     if (isLastLesson && allLessonsCompleted) {
@@ -127,6 +159,14 @@ class LessonVideoController {
   }
 
   void dispose() {
-    betterPlayerController?.dispose();
+    if (betterPlayerController != null) {
+      try {
+        betterPlayerController!.removeEventsListener(_onBetterPlayerEvent);
+      } catch (_) {}
+      //      betterPlayerController!.dispose(forceDispose: true);
+      betterPlayerController = null;
+      debugPrint("🎬 BetterPlayerController disposed completely");
+    }
+    isLoading = false;
   }
 }
