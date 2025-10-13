@@ -18,6 +18,10 @@ class CourseDetailScreen extends StatefulWidget {
 }
 
 class _CourseDetailScreenState extends State<CourseDetailScreen> {
+  void didPopNext() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -118,7 +122,12 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                       'courseName': course.title,
                       'price': course.price,
                     },
-                  );
+                  )?.then((_) {
+                    setState(
+                      () {},
+                    ); // 🔁 Khi quay lại từ trang thanh toán, rebuild UI
+                  });
+                  ;
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
