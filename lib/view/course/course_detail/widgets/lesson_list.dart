@@ -1,4 +1,7 @@
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+
 import 'package:elearning_app/core/theme/app_colors.dart';
+import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/lesson_tile.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +58,15 @@ class LessonList extends StatelessWidget {
                 colorText: Colors.white,
                 duration: Duration(seconds: 3),
               );
-            } else {}
+            } else {
+              final result = await Get.toNamed(
+                AppRoutes.lesson.replaceAll(':id', lesson.id),
+                parameters: {'courseId' : courseId},
+              );
+              if(result == true){
+                onLessonComplete?.call();
+              }
+            }
           },
         );
       },

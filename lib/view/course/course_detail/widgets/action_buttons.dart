@@ -1,6 +1,8 @@
 import 'package:elearning_app/models/course.dart';
+import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ActionButtons extends StatelessWidget {
   final Course course;
@@ -16,8 +18,20 @@ class ActionButtons extends StatelessWidget {
               if (course.isPremium &&
                   !DummyDataService.isCourseUnlocked(course.id)) {
                 // payment if is premium
+                Get.toNamed(
+                  AppRoutes.payment,
+                  arguments: {
+                    'courseId': course.id,
+                    'courseName': course.title,
+                    'price': course.price,
+                  },
+                );
               } else {
                 // first lesson if free
+                Get.toNamed(
+                  AppRoutes.lesson.replaceAll('id', course.lessons.first.id),
+                  parameters: {'courseId': course.id},
+                );
               }
             },
             label: const Text('Start Learning'),
