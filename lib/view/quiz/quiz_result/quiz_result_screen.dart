@@ -2,7 +2,9 @@ import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/quiz.dart';
 import 'package:elearning_app/models/quiz_attempt.dart';
 import 'package:elearning_app/routes/app_routes.dart';
+import 'package:elearning_app/view/quiz/quiz_result/widgets/quiz_question_analysis.dart';
 import 'package:elearning_app/view/quiz/quiz_result/widgets/quiz_score_card.dart';
+import 'package:elearning_app/view/quiz/quiz_result/widgets/quiz_stats_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,6 +69,10 @@ class QuizResultScreen extends StatelessWidget {
               child: Column(
                 children: [
                   QuizScoreCard(percentage: percentage, isPassed: isPassed),
+                  const SizedBox(height: 24),
+                  QuizStatsCard(quiz: quiz, attempt: attempt),
+                  const SizedBox(height: 24),
+                  QuizQuestionAnalysis(quiz: quiz, attempt: attempt),
                 ],
               ),
             ),
