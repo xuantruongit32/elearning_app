@@ -4,6 +4,7 @@ import 'package:elearning_app/models/quiz.dart';
 import 'package:elearning_app/models/quiz_attempt.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/widgets/quiz_attempt_app_bar.dart';
+import 'package:elearning_app/view/quiz/quiz_attempt/widgets/quiz_navigation_bar.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/widgets/quiz_question_page.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/widgets/quiz_submit_dialog.dart';
 import 'package:flutter/material.dart';
@@ -35,12 +36,29 @@ class _QuizAttemptScreenState extends State<QuizAttemptScreen> {
     _startTimer();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
+    _pageController.removeListener(_onPageChanged);
+    _pageController.dispose();
+    super.dispose();
+  }
+
   void _onPageChanged() {
     if (_pageController != null) {
       setState(() {
         _currentPage = _pageController.page!.round();
       });
     }
+  }
+
+  void _navigateToPage(int page) {
+    _pageController.animateToPage(
+      page,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   void _startTimer() {
@@ -119,6 +137,16 @@ class _QuizAttemptScreenState extends State<QuizAttemptScreen> {
           onOptionSelected: (optionId) =>
               _selectAnswer(quiz.questions[index].id, optionId),
         ),
+      ),
+      bottomNavigationBar: QuizNavigationBar(
+        theme: theme,
+        onPreviousPressed: _currentPage > 0
+            ? () => _navigateToPage(_currentPage - 1)
+            : null,
+        onNextPressed: _currentPage < quiz.questions.length - 1
+            ? () => _navigateToPage(_currentPage + 1)
+            : null,
+        isLastPage: _currentPage == quiz.questions.length - 1,
       ),
     );
   }
