@@ -13,7 +13,7 @@ import 'package:elearning_app/view/profile/profile_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/quiz_attempt_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_list/quiz_list_screen.dart';
 import 'package:elearning_app/view/splash/splash_screen.dart';
-import 'package:elearning_app/view/teacher/teacher_home_screen.dart';
+import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

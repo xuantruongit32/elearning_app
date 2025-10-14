@@ -1,5 +1,6 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/view/notifications/widgets/notification_settings_section.dart';
+import 'package:elearning_app/view/notifications/widgets/notifications_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,6 +42,7 @@ class NotificationsScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
+                  const NotificationsList(),
                 ],
               ),
             ),
