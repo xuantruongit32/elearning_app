@@ -7,7 +7,9 @@ import 'package:elearning_app/view/quiz/quiz_attempt/widgets/quiz_attempt_app_ba
 import 'package:elearning_app/view/quiz/quiz_attempt/widgets/quiz_navigation_bar.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/widgets/quiz_question_page.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/widgets/quiz_submit_dialog.dart';
+import 'package:elearning_app/view/quiz/quiz_result/quiz_result_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class QuizAttemptScreen extends StatefulWidget {
   final String quizId;
@@ -38,7 +40,6 @@ class _QuizAttemptScreenState extends State<QuizAttemptScreen> {
 
   @override
   void dispose() {
-    super.dispose();
     _timer?.cancel();
     _pageController.removeListener(_onPageChanged);
     _pageController.dispose();
@@ -68,7 +69,7 @@ class _QuizAttemptScreenState extends State<QuizAttemptScreen> {
           remainingSeconds--;
         });
       } else {
-        _submitQuiz(); // Gọi phương thức đã được định nghĩa
+        _submitQuiz();
       }
     });
   }
@@ -92,6 +93,7 @@ class _QuizAttemptScreenState extends State<QuizAttemptScreen> {
     DummyDataService.saveQuizAttempt(currentAttempt!);
 
     //navigate to quiz result
+    Get.off(() => QuizResultScreen(attempt: currentAttempt!, quiz: quiz));
   }
 
   int _calculateScore() {
