@@ -2,6 +2,7 @@ import 'package:elearning_app/main_screen.dart';
 import 'package:elearning_app/view/auth/forgot_password_screen.dart';
 import 'package:elearning_app/view/auth/login_screen.dart';
 import 'package:elearning_app/view/auth/register_screen.dart';
+import 'package:elearning_app/view/chat/chat_list_screen.dart';
 import 'package:elearning_app/view/course/course_detail/course_detail_screen.dart';
 import 'package:elearning_app/view/course/course_list/course_list_screen.dart';
 import 'package:elearning_app/view/course/lesson_screen/lesson_screen.dart';
@@ -33,6 +34,7 @@ class AppRoutes {
   //teacher
   static const String teacherHome = '/teacher/home';
   static const String myCourses = '/teacher/courses';
+  static const String teacherChats = '/teacher/chats';
 
   //course routes
   static const String courseList = '/courses';
@@ -111,6 +113,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
       case teacherHome:
         return MaterialPageRoute(builder: (_) => const TeacherHomeScreen());
+      case teacherChats:
+        return MaterialPageRoute(builder: (_) => const ChatListScreen());
       case myCourses:
         return MaterialPageRoute(builder: (_) => const MyCoursesScreen());
       case payment:
