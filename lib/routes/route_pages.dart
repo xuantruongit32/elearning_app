@@ -17,6 +17,7 @@ import 'package:elearning_app/view/quiz/quiz_attempt/quiz_attempt_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_list/quiz_list_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_result/quiz_result_screen.dart';
 import 'package:elearning_app/view/splash/splash_screen.dart';
+import 'package:elearning_app/view/teacher/my_courses/my_courses_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart';
 import 'package:get/get.dart';
 
@@ -32,6 +33,8 @@ class AppPages {
       page: () => const ForgotPasswordScreen(),
     ),
     GetPage(name: AppRoutes.teacherHome, page: () => const TeacherHomeScreen()),
+    GetPage(name: AppRoutes.myCourses, page: () => const MyCoursesScreen()),
+
     GetPage(name: AppRoutes.profile, page: () => const ProfileScreen()),
     GetPage(
       name: AppRoutes.notifications,
