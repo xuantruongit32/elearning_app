@@ -16,6 +16,7 @@ import 'package:elearning_app/view/quiz/quiz_list/quiz_list_screen.dart';
 import 'package:elearning_app/view/splash/splash_screen.dart';
 import 'package:elearning_app/view/teacher/create_course/create_course_screen.dart';
 import 'package:elearning_app/view/teacher/my_courses/my_courses_screen.dart';
+import 'package:elearning_app/view/teacher/student_progress/student_progress_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_analytics/teacher_analytics_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class AppRoutes {
   static const String teacherChats = '/teacher/chats';
   static const String createCourse = '/teacher/courses/create';
   static const String teacherAnalytics = '/teacher/analytics';
+  static const String studentProgress = '/teacher/students';
 
   //course routes
   static const String courseList = '/courses';
@@ -101,6 +103,8 @@ class AppRoutes {
         );
       case quizList:
         return MaterialPageRoute(builder: (_) => const QuizListScreen());
+      case studentProgress:
+        return MaterialPageRoute(builder: (_) => const StudentProgressScreen());
       case quizAttempt:
         final quizzId = setting.arguments as String?;
         return MaterialPageRoute(

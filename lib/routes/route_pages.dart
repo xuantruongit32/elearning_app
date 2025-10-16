@@ -20,6 +20,7 @@ import 'package:elearning_app/view/quiz/quiz_result/quiz_result_screen.dart';
 import 'package:elearning_app/view/splash/splash_screen.dart';
 import 'package:elearning_app/view/teacher/create_course/create_course_screen.dart';
 import 'package:elearning_app/view/teacher/my_courses/my_courses_screen.dart';
+import 'package:elearning_app/view/teacher/student_progress/student_progress_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_analytics/teacher_analytics_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart';
 import 'package:get/get.dart';
@@ -46,6 +47,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.teacherAnalytics,
       page: () => const TeacherAnalyticsScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.studentProgress,
+      page: () => const StudentProgressScreen(),
     ),
 
     GetPage(name: AppRoutes.profile, page: () => const ProfileScreen()),
