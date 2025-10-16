@@ -57,25 +57,25 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                       },
                     ),
                     const SizedBox(height: 24),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: CustomTextField(
-                            label: 'Price',
-                            hint: 'Enter price',
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value?.isEmpty ?? true) {
-                                return 'Required';
-                              }
-                              return null;
-                            },
-                          ),
+                        CustomTextField(
+                          label: 'Price',
+                          hint: 'Enter price',
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value?.isEmpty ?? true) {
+                              return 'Required';
+                            }
+                            return null;
+                          },
                         ),
-                        const SizedBox(width: 12),
-                        Expanded(child: _buildDropdown()),
+                        const SizedBox(height: 16),
+                        _buildDropdown(),
                       ],
                     ),
+
                     const SizedBox(height: 24),
                     _buildPremiumSwitch(),
                     const SizedBox(height: 32),
@@ -205,7 +205,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   }
 
   Widget _buildDropdown() {
-    return Column(
+    return
+    /*
+    Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
@@ -217,31 +219,33 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           ),
         ),
         const SizedBox(height: 8),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: _selectedLevel,
-              items: ['Beginner', 'Intermediate', 'Advanced']
-                  .map(
-                    (level) =>
-                        DropdownMenuItem(value: level, child: Text(level)),
-                  )
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedLevel = value!;
-                });
-              },
-            ),
-          ),
+        */
+    Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: _selectedLevel,
+          items: ['Beginner', 'Intermediate', 'Advanced']
+              .map(
+                (level) => DropdownMenuItem(value: level, child: Text(level)),
+              )
+              .toList(),
+          onChanged: (value) {
+            setState(() {
+              _selectedLevel = value!;
+            });
+          },
         ),
+      ),
+    );
+    /*
       ],
     );
+    */
   }
 
   Widget _buildImagePicker() {
