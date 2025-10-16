@@ -14,8 +14,9 @@ import 'package:elearning_app/view/profile/profile_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/quiz_attempt_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_list/quiz_list_screen.dart';
 import 'package:elearning_app/view/splash/splash_screen.dart';
-import 'package:elearning_app/view/teacher/creat_course/create_course_screen.dart';
+import 'package:elearning_app/view/teacher/create_course/create_course_screen.dart';
 import 'package:elearning_app/view/teacher/my_courses/my_courses_screen.dart';
+import 'package:elearning_app/view/teacher/teacher_analytics/teacher_analytics_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -37,6 +38,7 @@ class AppRoutes {
   static const String myCourses = '/teacher/courses';
   static const String teacherChats = '/teacher/chats';
   static const String createCourse = '/teacher/courses/create';
+  static const String teacherAnalytics = '/teacher/analytics';
 
   //course routes
   static const String courseList = '/courses';
@@ -119,8 +121,12 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const ChatListScreen());
       case myCourses:
         return MaterialPageRoute(builder: (_) => const MyCoursesScreen());
-        case createCourse:
+      case createCourse:
         return MaterialPageRoute(builder: (_) => const CreateCourseScreen());
+      case teacherAnalytics:
+        return MaterialPageRoute(
+          builder: (_) => const TeacherAnalyticsScreen(),
+        );
       case payment:
         final args = setting.arguments as Map<String, dynamic>;
         return MaterialPageRoute(

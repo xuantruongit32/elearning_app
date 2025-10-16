@@ -1,7 +1,7 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/core/utils/app_dialogs.dart';
 import 'package:elearning_app/routes/app_routes.dart';
-import 'package:elearning_app/view/teacher/widgets/dashboard_card.dart';
+import 'package:elearning_app/view/teacher/teacher_home/widgets/dashboard_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

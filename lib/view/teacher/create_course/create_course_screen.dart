@@ -1,6 +1,6 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/view/onboarding/widgets/common/custom_textfield.dart';
-import 'package:elearning_app/view/teacher/creat_course/widgets/create_course_app_bar.dart';
+import 'package:elearning_app/view/teacher/create_course/widgets/create_course_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -205,22 +205,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   }
 
   Widget _buildDropdown() {
-    return
-    /*
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Level',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: AppColors.primary,
-          ),
-        ),
-        const SizedBox(height: 8),
-        */
-    Container(
+    return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -242,10 +227,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
         ),
       ),
     );
-    /*
-      ],
-    );
-    */
   }
 
   Widget _buildImagePicker() {
