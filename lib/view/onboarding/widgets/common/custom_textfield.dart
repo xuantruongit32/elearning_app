@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
+  final String? initialValue;
   final String label;
   final String? hint;
   final IconData? prefixIcon;
@@ -28,6 +29,7 @@ class CustomTextField extends StatefulWidget {
     this.maxLines = 1,
     this.enabled = true,
     this.focusNode,
+    this.initialValue,
   });
 
   @override
@@ -44,6 +46,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: widget.initialValue,
       controller: widget.controller,
       obscureText: _obscureText,
       validator: widget.validator,
