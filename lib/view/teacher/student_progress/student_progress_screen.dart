@@ -19,7 +19,6 @@ class StudentProgressScreen extends StatelessWidget {
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             const StudentProgressAppBar(),
-            _buildCourseProgressTab(studentProgress),
           ],
           body: TabBarView(
             children: [
