@@ -21,7 +21,6 @@ import 'package:elearning_app/view/teacher/student_progress/student_progress_scr
 import 'package:elearning_app/view/teacher/teacher_analytics/teacher_analytics_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppRoutes {
   //main
@@ -107,7 +106,7 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const QuizListScreen());
       case analytics:
         return MaterialPageRoute(
-          builder: (_) => const AnalyticsDashboardScreen(),
+          builder: (_) => AnalyticsDashboardScreen(),
         );
       case studentProgress:
         return MaterialPageRoute(builder: (_) => const StudentProgressScreen());

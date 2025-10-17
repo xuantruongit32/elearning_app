@@ -53,10 +53,7 @@ class AppPages {
       name: AppRoutes.studentProgress,
       page: () => const StudentProgressScreen(),
     ),
-    GetPage(
-      name: AppRoutes.analytics,
-      page: () => const AnalyticsDashboardScreen(),
-    ),
+    GetPage(name: AppRoutes.analytics, page: () => AnalyticsDashboardScreen()),
 
     GetPage(name: AppRoutes.profile, page: () => const ProfileScreen()),
     GetPage(
