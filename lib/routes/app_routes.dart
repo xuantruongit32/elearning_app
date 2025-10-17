@@ -3,6 +3,7 @@ import 'package:elearning_app/view/auth/forgot_password_screen.dart';
 import 'package:elearning_app/view/auth/login_screen.dart';
 import 'package:elearning_app/view/auth/register_screen.dart';
 import 'package:elearning_app/view/chat/chat_list_screen.dart';
+import 'package:elearning_app/view/course/analytics_dashboard/analytics_dashboard_screen.dart';
 import 'package:elearning_app/view/course/course_detail/course_detail_screen.dart';
 import 'package:elearning_app/view/course/course_list/course_list_screen.dart';
 import 'package:elearning_app/view/course/lesson_screen/lesson_screen.dart';
@@ -47,6 +48,7 @@ class AppRoutes {
   static const String courseDetail = '/course/:id';
   static const String payment = '/payment';
   static const String lesson = '/lesson:id';
+  static const String analytics = '/analytics';
 
   //quiz routes
   static const String quizList = '/quizzes';
@@ -103,6 +105,10 @@ class AppRoutes {
         );
       case quizList:
         return MaterialPageRoute(builder: (_) => const QuizListScreen());
+      case analytics:
+        return MaterialPageRoute(
+          builder: (_) => const AnalyticsDashboardScreen(),
+        );
       case studentProgress:
         return MaterialPageRoute(builder: (_) => const StudentProgressScreen());
       case quizAttempt:
