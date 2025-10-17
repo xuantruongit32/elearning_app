@@ -15,6 +15,7 @@ import 'package:elearning_app/view/profile/edit_profile_screen.dart';
 import 'package:elearning_app/view/profile/profile_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/quiz_attempt_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_list/quiz_list_screen.dart';
+import 'package:elearning_app/view/settings/settings_screen.dart';
 import 'package:elearning_app/view/splash/splash_screen.dart';
 import 'package:elearning_app/view/teacher/create_course/create_course_screen.dart';
 import 'package:elearning_app/view/teacher/my_courses/my_courses_screen.dart';
@@ -59,6 +60,7 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String notifications = '/notifications';
   static const String editProfile = '/profile/edit';
+  static const String settings = '/settings';
 
   static Route<dynamic> onGenerateRoute(RouteSettings setting) {
     switch (setting.name) {
@@ -126,6 +128,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const EditProfileScreen());
       case notifications:
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
+      case settings:
+        return MaterialPageRoute(builder: (_) => const SettingsScreen());
       case teacherHome:
         return MaterialPageRoute(builder: (_) => const TeacherHomeScreen());
       case teacherChats:

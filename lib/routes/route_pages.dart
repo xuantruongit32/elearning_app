@@ -19,6 +19,7 @@ import 'package:elearning_app/view/profile/profile_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/quiz_attempt_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_list/quiz_list_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_result/quiz_result_screen.dart';
+import 'package:elearning_app/view/settings/settings_screen.dart';
 import 'package:elearning_app/view/splash/splash_screen.dart';
 import 'package:elearning_app/view/teacher/create_course/create_course_screen.dart';
 import 'package:elearning_app/view/teacher/my_courses/my_courses_screen.dart';
@@ -63,6 +64,7 @@ class AppPages {
       name: AppRoutes.notifications,
       page: () => const NotificationsScreen(),
     ),
+    GetPage(name: AppRoutes.settings, page: () => const SettingsScreen()),
 
     GetPage(
       name: AppRoutes.courseList,
