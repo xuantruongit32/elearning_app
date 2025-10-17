@@ -15,7 +15,7 @@ class ProfileOptions extends StatelessWidget {
           title: 'Edit Profile',
           subtitle: 'Update your personal information',
           icon: Icons.edit_outlined,
-          onTap: () {},
+          onTap: () => Get.toNamed(AppRoutes.editProfile),
         ),
         ProfileOptionCard(
           title: 'Notifications',

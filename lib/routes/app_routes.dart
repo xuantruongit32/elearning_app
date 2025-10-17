@@ -11,6 +11,7 @@ import 'package:elearning_app/view/course/payment/payment_screen.dart';
 import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/notifications/notifications_screen.dart';
 import 'package:elearning_app/view/onboarding/onboarding_screen.dart';
+import 'package:elearning_app/view/profile/edit_profile_screen.dart';
 import 'package:elearning_app/view/profile/profile_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/quiz_attempt_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_list/quiz_list_screen.dart';
@@ -57,6 +58,7 @@ class AppRoutes {
   //profile routes
   static const String profile = '/profile';
   static const String notifications = '/notifications';
+  static const String editProfile = '/profile/edit';
 
   static Route<dynamic> onGenerateRoute(RouteSettings setting) {
     switch (setting.name) {
@@ -105,9 +107,7 @@ class AppRoutes {
       case quizList:
         return MaterialPageRoute(builder: (_) => const QuizListScreen());
       case analytics:
-        return MaterialPageRoute(
-          builder: (_) => AnalyticsDashboardScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => AnalyticsDashboardScreen());
       case studentProgress:
         return MaterialPageRoute(builder: (_) => const StudentProgressScreen());
       case quizAttempt:
@@ -122,6 +122,8 @@ class AppRoutes {
         );
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
+      case editProfile:
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
       case notifications:
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
       case teacherHome:
