@@ -1,4 +1,5 @@
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
+import 'package:elearning_app/bloc/auth/auth_event.dart';
 import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/core/utils/validators.dart';
 import 'package:elearning_app/routes/app_routes.dart';
@@ -218,18 +219,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _handleRegister() {
     if (_formKey.currentState!.validate() && _selectedRole != null) {
-      // handle registeration logic here
-      if (_selectedRole == UserRole.teacher) {
-        Get.offAllNamed<dynamic>(AppRoutes.teacherHome);
-      } else {
-        Get.offAllNamed<dynamic>(AppRoutes.main);
-      }
+      context.read<AuthBloc>().add(
+        RegisterRequested(
+          email: _emailController.text,
+          password: _passwordController.text,
+          fullName: _fullNameController.text,
+          role: _selectedRole!,
+        ),
+      );
     } else if (_selectedRole == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Please select a role'),
           backgroundColor: Colors.red,
-        ), // SnackBar
+        ),
       );
     }
   }
