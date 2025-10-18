@@ -15,6 +15,7 @@ import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/notifications/notifications_screen.dart';
 import 'package:elearning_app/view/onboarding/onboarding_screen.dart';
 import 'package:elearning_app/view/privacy_&_terms_conditions/privacy_policy_screen.dart';
+import 'package:elearning_app/view/privacy_&_terms_conditions/terms_conditions_screen.dart';
 import 'package:elearning_app/view/profile/edit_profile_screen.dart';
 import 'package:elearning_app/view/profile/profile_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/quiz_attempt_screen.dart';
@@ -70,7 +71,10 @@ class AppPages {
       name: AppRoutes.privacyPolicy,
       page: () => const PrivacyPolicyScreen(),
     ),
-
+    GetPage(
+      name: AppRoutes.termsConditions,
+      page: () => const TermsConditionsScreen(),
+    ),
     GetPage(
       name: AppRoutes.courseList,
       page: () => CourseListScreen(
