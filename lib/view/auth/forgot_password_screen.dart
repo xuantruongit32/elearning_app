@@ -1,4 +1,5 @@
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
+import 'package:elearning_app/bloc/auth/auth_event.dart';
 import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/core/utils/validators.dart';
 import 'package:elearning_app/models/user_model.dart';
@@ -28,36 +29,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   void _handleResetPassword() {
     if (_formKey.currentState!.validate()) {
-      //show success dialog
-      Get.dialog(
-        AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.mark_email_read_outlined,
-                size: 60,
-                color: Colors.green,
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Check your email',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'We have sent password recovery instructions to your email',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey),
-              ),
-              const SizedBox(height: 20),
-              CustomButton(text: 'OK', onPressed: () => Get.back(), height: 55),
-            ],
-          ),
-        ),
+      context.read<AuthBloc>().add(
+        ForgotPasswordRequested(email: _emailController.text),
       );
     }
   }
