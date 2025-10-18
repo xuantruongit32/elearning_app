@@ -1,4 +1,5 @@
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
+import 'package:elearning_app/bloc/auth/auth_event.dart';
 import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/core/utils/validators.dart';
 import 'package:elearning_app/models/user_model.dart';
@@ -29,7 +30,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _handleLogin() {
     if (_formKey.currentState!.validate()) {
-      Get.offAllNamed(AppRoutes.main);
+      context.read<AuthBloc>().add(
+        LoginRequested(
+          email: _emailController.text,
+          password: _passwordController.text,
+        ),
+      );
     }
   }
 
