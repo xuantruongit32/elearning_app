@@ -33,7 +33,7 @@ class ProfileOptions extends StatelessWidget {
           title: 'Help & Support',
           subtitle: 'Get help or contact support',
           icon: Icons.help_outlined,
-          onTap: () {},
+          onTap: () => Get.toNamed(AppRoutes.helpSupport),
         ),
         ProfileOptionCard(
           title: 'Logout',

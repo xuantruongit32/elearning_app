@@ -8,6 +8,7 @@ import 'package:elearning_app/view/course/course_detail/course_detail_screen.dar
 import 'package:elearning_app/view/course/course_list/course_list_screen.dart';
 import 'package:elearning_app/view/course/lesson_screen/lesson_screen.dart';
 import 'package:elearning_app/view/course/payment/payment_screen.dart';
+import 'package:elearning_app/view/help_and_support/help_and_support_screen.dart';
 import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/notifications/notifications_screen.dart';
 import 'package:elearning_app/view/onboarding/onboarding_screen.dart';
@@ -65,6 +66,7 @@ class AppRoutes {
   static const String settings = '/settings';
   static const String privacyPolicy = '/privacy-policy';
   static const String termsConditions = '/terms-conditions';
+  static const String helpSupport = '/help-support';
 
   static Route<dynamic> onGenerateRoute(RouteSettings setting) {
     switch (setting.name) {
@@ -138,6 +140,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen());
       case termsConditions:
         return MaterialPageRoute(builder: (_) => const TermsConditionsScreen());
+      case helpSupport:
+        return MaterialPageRoute(builder: (_) => const HelpAndSupportScreen());
       case teacherHome:
         return MaterialPageRoute(builder: (_) => const TeacherHomeScreen());
       case teacherChats:
