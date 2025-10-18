@@ -1,7 +1,10 @@
+import 'package:elearning_app/bloc/auth/auth_bloc.dart';
+import 'package:elearning_app/bloc/auth/auth_event.dart';
 import 'package:elearning_app/core/utils/app_dialogs.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/view/profile/widgets/profile_option_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 class ProfileOptions extends StatelessWidget {
@@ -42,7 +45,7 @@ class ProfileOptions extends StatelessWidget {
           onTap: () async {
             final confirm = await AppDialogs.showLogoutDialog();
             if (confirm == true) {
-              Get.offAllNamed(AppRoutes.login);
+              context.read<AuthBloc>().add(LogoutRequested());
             }
           },
           isDestructive: true,
