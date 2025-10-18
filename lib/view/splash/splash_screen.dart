@@ -1,4 +1,5 @@
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
+import 'package:elearning_app/models/user_model.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/services/storage_service.dart';
 import 'package:flutter/material.dart';
@@ -52,8 +53,14 @@ class _SplashScreenState extends State<SplashScreen>
     final authState = context.read<AuthBloc>().state;
     if (StorageService.isFirstTime()) {
       // navigate to onboarding screen
+      StorageService.setFirstTime(false);
       Get.offNamed(AppRoutes.onboarding);
     } else if (authState.userModel != null) {
+      if (authState.userModel!.role == UserRole.teacher) {
+        Get.offNamed(AppRoutes.teacherHome);
+      } else {
+        Get.offNamed(AppRoutes.main);
+      }
       // navigate to home screen
       Get.offNamed(AppRoutes.main);
     } else {
