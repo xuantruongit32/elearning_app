@@ -1,7 +1,12 @@
+import 'package:elearning_app/bloc/auth/auth_bloc.dart';
+import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/core/utils/validators.dart';
+import 'package:elearning_app/models/user_model.dart';
+import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/view/onboarding/widgets/common/custom_button.dart';
 import 'package:elearning_app/view/onboarding/widgets/common/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -59,50 +64,71 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-        ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Forgot Password',
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state.error != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.error!), backgroundColor: Colors.red),
+          );
+        } else if (!state.isLoading && state.error == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Password reset email sent successfully!'),
+              backgroundColor: Colors.green,
             ),
-            const SizedBox(height: 10),
-            Text(
-              'Enter your email address to reset password',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-            const SizedBox(height: 10),
-            // email field
-            Form(
-              key: _formKey,
-              child: CustomTextField(
-                label: 'Email',
-                prefixIcon: Icons.email_outlined,
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                validator: FormValidator.validateEmail,
-              ),
-            ),
-            const SizedBox(height: 30),
+          );
+        }
+      },
 
-            //reset
-            CustomButton(
-              text: 'Rest Password',
-              onPressed: _handleResetPassword,
-            ),
-          ],
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          ),
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Forgot Password',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Enter your email address to reset password',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+              const SizedBox(height: 10),
+              // email field
+              Form(
+                key: _formKey,
+                child: CustomTextField(
+                  label: 'Email',
+                  prefixIcon: Icons.email_outlined,
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: FormValidator.validateEmail,
+                ),
+              ),
+              const SizedBox(height: 30),
+
+              //reset
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  return CustomButton(
+                    text: 'Rest Password',
+                    onPressed: _handleResetPassword,
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
