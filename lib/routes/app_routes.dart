@@ -11,6 +11,7 @@ import 'package:elearning_app/view/course/payment/payment_screen.dart';
 import 'package:elearning_app/view/home/home_screen.dart';
 import 'package:elearning_app/view/notifications/notifications_screen.dart';
 import 'package:elearning_app/view/onboarding/onboarding_screen.dart';
+import 'package:elearning_app/view/privacy_&_terms_conditions/privacy_policy_screen.dart';
 import 'package:elearning_app/view/profile/edit_profile_screen.dart';
 import 'package:elearning_app/view/profile/profile_screen.dart';
 import 'package:elearning_app/view/quiz/quiz_attempt/quiz_attempt_screen.dart';
@@ -61,6 +62,7 @@ class AppRoutes {
   static const String notifications = '/notifications';
   static const String editProfile = '/profile/edit';
   static const String settings = '/settings';
+  static const String privacyPolicy = '/privacy-policy';
 
   static Route<dynamic> onGenerateRoute(RouteSettings setting) {
     switch (setting.name) {
@@ -130,6 +132,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
       case settings:
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
+      case privacyPolicy:
+        return MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen());
       case teacherHome:
         return MaterialPageRoute(builder: (_) => const TeacherHomeScreen());
       case teacherChats:

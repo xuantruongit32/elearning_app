@@ -1,6 +1,7 @@
 import 'package:elearning_app/bloc/font/font_bloc.dart';
 import 'package:elearning_app/bloc/font/font_event.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
+import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/services/font_service.dart';
 import 'package:elearning_app/view/settings/widgets/setting_tile.dart';
 import 'package:elearning_app/view/settings/widgets/settings_section.dart';
@@ -84,9 +85,7 @@ class SettingsScreen extends StatelessWidget {
                   SettingTile(
                     title: 'Privacy Policy',
                     icon: Icons.privacy_tip_outlined,
-                    onTap: () {
-                      //navigate to privacy policy screen
-                    },
+                    onTap: () => Get.toNamed(AppRoutes.privacyPolicy),
                   ),
                   SettingTile(
                     title: 'Terms of Service',
