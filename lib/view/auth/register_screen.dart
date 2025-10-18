@@ -195,7 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: <Widget>[
                         const Text('Already have an account?'),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () => Get.toNamed(AppRoutes.login),
                           child: Text(
                             "Login",
                             style: TextStyle(
