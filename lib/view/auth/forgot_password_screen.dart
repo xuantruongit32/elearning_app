@@ -2,8 +2,7 @@ import 'package:elearning_app/bloc/auth/auth_bloc.dart';
 import 'package:elearning_app/bloc/auth/auth_event.dart';
 import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/core/utils/validators.dart';
-import 'package:elearning_app/models/user_model.dart';
-import 'package:elearning_app/routes/app_routes.dart';
+
 import 'package:elearning_app/view/onboarding/widgets/common/custom_button.dart';
 import 'package:elearning_app/view/onboarding/widgets/common/custom_textfield.dart';
 import 'package:flutter/material.dart';
