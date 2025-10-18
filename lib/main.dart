@@ -1,4 +1,5 @@
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
+import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/bloc/font/font_bloc.dart';
 import 'package:elearning_app/bloc/font/font_state.dart';
 import 'package:elearning_app/config/firebase_config.dart';
@@ -11,14 +12,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get_storage/get_storage.dart';
 
-void main() async{
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseConfig.init();
   await GetStorage.init();
   await StorageService.init();
   runApp(const MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
@@ -32,18 +31,30 @@ class MyApp extends StatelessWidget {
         BlocProvider<FontBloc>(create: (context) => FontBloc()), // BlocProvider
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
       ],
-      child: BlocBuilder<FontBloc, FontState>(
-        builder: (context, fontState) {
-          return GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'TT',
-            theme: AppTheme.getLightTheme(fontState),
-            themeMode: ThemeMode.light,
-            initialRoute: AppRoutes.splash,
-            onGenerateRoute: AppRoutes.onGenerateRoute,
-            getPages: AppPages.pages,
-          );
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state.error != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.error!),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
         },
+        child: BlocBuilder<FontBloc, FontState>(
+          builder: (context, fontState) {
+            return GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'E-Learning App',
+              theme: AppTheme.getLightTheme(fontState),
+              themeMode: ThemeMode.light,
+              initialRoute: AppRoutes.splash,
+              onGenerateRoute: AppRoutes.onGenerateRoute,
+              getPages: AppPages.pages,
+            );
+          },
+        ),
       ),
     );
   }
