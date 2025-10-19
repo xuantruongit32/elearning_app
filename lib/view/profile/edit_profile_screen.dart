@@ -225,7 +225,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         CustomTextField(
                           label: 'Email',
                           prefixIcon: Icons.email_outlined,
-                          initialValue: 'truong@gmail.com',
+                          initialValue: profile.email,
                           enabled: false, //email cannot edit
                         ),
                         const SizedBox(height: 16),
