@@ -18,6 +18,7 @@ class Course {
   final DateTime createdAt;
   final DateTime updatedAt;
   final bool isPremium;
+  final List<String> prerequisites;
 
   Course({
     required this.id,
@@ -37,6 +38,7 @@ class Course {
     required this.createdAt,
     required this.updatedAt,
     this.isPremium = false,
+    this.prerequisites = const [],
   });
   factory Course.fromJson(Map<String, dynamic> json) => Course(
     id: json['id'],
@@ -58,6 +60,7 @@ class Course {
     createdAt: DateTime.parse(json['createdAt']),
     updatedAt: DateTime.parse(json['updatedAt']),
     isPremium: json['isPremium'] ?? false,
+    prerequisites: List<String>.from(json['prerequisite'] ?? []),
   );
 
   Map<String, dynamic> toJson() => {
@@ -78,5 +81,6 @@ class Course {
     'createdAt': createdAt.toIso8601String(),
     'updatedAt': updatedAt.toIso8601String(),
     'isPremium': isPremium,
+    'prerequisite': prerequisites,
   };
 }
