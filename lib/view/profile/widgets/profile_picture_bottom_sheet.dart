@@ -1,8 +1,29 @@
+import 'package:elearning_app/bloc/profile/profile_bloc.dart';
+import 'package:elearning_app/bloc/profile/profile_event.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePictureBottomSheet extends StatelessWidget {
   const ProfilePictureBottomSheet({super.key});
+
+  Future<void> _pickImage(BuildContext context, ImageSource source) async {
+    final picker = ImagePicker();
+
+    final pickedFile = await picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      if (!context.mounted) return;
+
+      //close bottom sheet after selected
+      Navigator.pop(context);
+
+      //start upload process
+      final bloc = context.read<ProfileBloc>();
+      bloc.add(UpdateProfilePhotoRequested(pickedFile.path));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +47,7 @@ class ProfilePictureBottomSheet extends StatelessWidget {
               child: Icon(Icons.photo_library, color: Colors.white),
             ),
             title: const Text('Choose from Gallery'),
-            onTap: () {
-              // TODO: Implement gallery picker
-              Navigator.pop(context);
-            },
+            onTap: () => _pickImage(context, ImageSource.gallery),
           ),
           const SizedBox(height: 8),
           ListTile(
@@ -38,10 +56,7 @@ class ProfilePictureBottomSheet extends StatelessWidget {
               child: Icon(Icons.camera_alt, color: Colors.white),
             ),
             title: const Text('Take a photo'),
-            onTap: () {
-              // TODO: Implement camera
-              Navigator.pop(context);
-            },
+            onTap: () => _pickImage(context, ImageSource.camera),
           ),
           const SizedBox(height: 8),
           ListTile(
