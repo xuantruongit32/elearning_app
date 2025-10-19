@@ -48,17 +48,45 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   ];
 
   List<Map<String, dynamic>> _categories = [
-    {'id': '1', 'name': 'Programming', 'icon': Icons.code.codePoint},
-    {'id': '2', 'name': 'Data Science', 'icon': Icons.analytics.codePoint},
-    {'id': '3', 'name': 'Design', 'icon': Icons.brush.codePoint},
-    {'id': '4', 'name': 'Business', 'icon': Icons.business_center.codePoint},
-    {'id': '5', 'name': 'Music', 'icon': Icons.music_note.codePoint},
-    {'id': '6', 'name': 'Photography', 'icon': Icons.photo_camera.codePoint},
-    {'id': '7', 'name': 'Language', 'icon': Icons.language.codePoint},
+    {
+      'id': '1',
+      'name': 'Programming',
+      'icon': '0xe86f', // code
+    },
+    {
+      'id': '2',
+      'name': 'Data Science',
+      'icon': '0xe6b1', // analytics
+    },
+    {
+      'id': '3',
+      'name': 'Design',
+      'icon': '0xe3ae', // brush
+    },
+    {
+      'id': '4',
+      'name': 'Business',
+      'icon': '0xeb3f', // business_center
+    },
+    {
+      'id': '5',
+      'name': 'Music',
+      'icon': '0xe405', // music_note
+    },
+    {
+      'id': '6',
+      'name': 'Photography',
+      'icon': '0xe412', // photo_camera
+    },
+    {
+      'id': '7',
+      'name': 'Language',
+      'icon': '0xe894', // language
+    },
     {
       'id': '8',
       'name': 'Personal Development',
-      'icon': Icons.self_improvement.codePoint,
+      'icon': '0xea78', // self_improvement
     },
   ];
   bool _isUploadingImage = false;
