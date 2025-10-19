@@ -307,7 +307,6 @@ class DummyDataService {
         duration: 30,
         resources: _createDummyResources(),
         isPreview: true,
-        isLocked: false,
       ),
       Lesson(
         id: '2',
@@ -319,8 +318,6 @@ class DummyDataService {
         duration: 25,
         resources: _createDummyResources(),
         isPreview: false,
-        isCompleted: false,
-        isLocked: true,
       ),
       //     _createLesson('2', 'Dart Programming Basics', true, false, false),
       _createLesson('3', 'Building UI with Widgets', false, false, false),
@@ -341,7 +338,6 @@ class DummyDataService {
         duration: 28,
         resources: _createDummyResources(),
         isPreview: true,
-        isLocked: false,
       ),
       _createLesson('2', 'Props and State', false, false, false),
       _createLesson('3', 'React Hooks', false, true, false),
@@ -361,7 +357,6 @@ class DummyDataService {
         duration: 35,
         resources: _createDummyResources(),
         isPreview: true,
-        isLocked: false,
       ),
       _createLesson('2', 'Data Analysis with Pandas', false, false, false),
       _createLesson('3', 'Visualization with Matplotlib', false, true, false),
@@ -382,7 +377,6 @@ class DummyDataService {
         duration: 25,
         resources: _createDummyResources(),
         isPreview: true,
-        isLocked: false,
       ),
       _createLesson('2', 'Wireframing and Prototyping', false, false, false),
       _createLesson('3', 'Typography and Colors', false, false, false),
@@ -402,7 +396,6 @@ class DummyDataService {
         duration: 32,
         resources: _createDummyResources(),
         isPreview: true,
-        isLocked: false,
       ),
       _createLesson('2', 'Collections Framework', false, false, false),
       _createLesson('3', 'Multithreading in Java', false, true, false),
@@ -422,7 +415,6 @@ class DummyDataService {
         duration: 26,
         resources: _createDummyResources(),
         isPreview: true,
-        isLocked: false,
       ),
       _createLesson('2', 'Functions and Lambdas', false, true, false),
       _createLesson('3', 'Android Layouts', false, false, false),
@@ -442,7 +434,6 @@ class DummyDataService {
         duration: 27,
         resources: _createDummyResources(),
         isPreview: true,
-        isLocked: false,
       ),
       _createLesson('2', 'Express Framework', false, false, false),
       _createLesson('3', 'MongoDB Basics', false, true, false),
@@ -462,7 +453,6 @@ class DummyDataService {
         duration: 33,
         resources: _createDummyResources(),
         isPreview: true,
-        isLocked: false,
       ),
       _createLesson('2', 'Neural Networks 101', false, false, false),
       _createLesson('3', 'CNN and Image Data', false, false, false),
@@ -482,7 +472,6 @@ class DummyDataService {
         duration: 20,
         resources: _createDummyResources(),
         isPreview: true,
-        isLocked: false,
       ),
       _createLesson('2', 'SELECT and WHERE Clauses', false, false, false),
       _createLesson('3', 'JOIN Operations', false, true, false),
@@ -502,7 +491,6 @@ class DummyDataService {
         duration: 18,
         resources: _createDummyResources(),
         isPreview: true,
-        isLocked: false,
       ),
       _createLesson('2', 'Committing and Branching', false, true, false),
       _createLesson('3', 'Merging and Conflicts', false, false, false),
@@ -527,8 +515,6 @@ class DummyDataService {
       duration: 25,
       resources: _createDummyResources(),
       isPreview: isPreview,
-      isCompleted: isCompleted,
-      isLocked: isLocked,
     );
   }
 
@@ -568,7 +554,7 @@ class DummyDataService {
 
   static bool isCourseCompleted(String courseId) {
     final course = getCourseById(courseId);
-    return course.lessons.every((lesson) => lesson.isCompleted);
+    return false;
   }
 
   static List<Question> _createDartQuizQuestions() {
@@ -854,19 +840,7 @@ class DummyDataService {
   };
   static bool isLessonCompleted(String courseId, String lessonId) {
     final course = getCourseById(courseId);
-    return course.lessons
-        .firstWhere(
-          (l) => l.id == lessonId,
-          orElse: () => Lesson(
-            id: '',
-            title: '',
-            description: '',
-            videoUrl: '',
-            duration: 0,
-            resources: [],
-          ),
-        )
-        .isCompleted;
+    return false;
   }
 
   static void updateLessonStatus(
@@ -882,10 +856,7 @@ class DummyDataService {
       final lessonIndex = course.lessons.indexWhere((l) => l.id == lessonId);
 
       if (lessonIndex != -1) {
-        var updatedLesson = course.lessons[lessonIndex].copyWith(
-          isCompleted: isCompleted ?? course.lessons[lessonIndex].isCompleted,
-          isLocked: isLocked ?? course.lessons[lessonIndex].isLocked,
-        );
+        var updatedLesson = course.lessons[lessonIndex];
 
         courses[courseIndex].lessons[lessonIndex] = updatedLesson;
       }
