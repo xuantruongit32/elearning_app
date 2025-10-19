@@ -8,9 +8,13 @@ class UserModel {
   final DateTime createdAt;
   final DateTime lastLoginAt;
   final UserRole role;
+  final String? bio;
+  final String? phoneNumber;
 
   UserModel({
     required this.uid,
+    this.bio,
+    this.phoneNumber,
     required this.email,
     this.fullName,
     this.photoUrl,
@@ -24,6 +28,8 @@ class UserModel {
       uid: doc.id,
       email: data['email'] ?? '',
       fullName: data['fullName'],
+      phoneNumber: data['phoneNumber'],
+      bio: data['bio'],
       photoUrl: data['photoUrl'],
       createdAt: (data['createdAt'] as Timestamp).toDate(),
       lastLoginAt: (data['lastLoginAt'] as Timestamp).toDate(),
@@ -41,6 +47,8 @@ class UserModel {
       'createdAt': Timestamp.fromDate(createdAt),
       'lastLoginAt': Timestamp.fromDate(lastLoginAt),
       'role': role.name,
+      'phoneNumber': phoneNumber,
+      'bio': bio,
     };
   }
 }
