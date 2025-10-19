@@ -30,9 +30,14 @@ class ProfileScreen extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             slivers: [
               ProfileAppBar(
-                nickname: 'T',
-                fullName: 'Hoang Truong',
-                email: 'hoangtruong@gmail.com',
+                nickname: profile.fullName
+                    .split(' ')
+                    .map((e) => e[0])
+                    .take(2)
+                    .join()
+                    .toUpperCase(),
+                fullName: profile.fullName,
+                email: profile.email,
               ),
               SliverToBoxAdapter(
                 child: Padding(
