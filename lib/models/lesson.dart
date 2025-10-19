@@ -6,8 +6,6 @@ class Lesson {
   final int duration;
   final List<Resource> resources;
   final bool isPreview;
-  final bool isLocked;
-  final bool isCompleted;
 
   Lesson({
     required this.id,
@@ -17,8 +15,6 @@ class Lesson {
     required this.duration,
     required this.resources,
     this.isPreview = false,
-    this.isCompleted = false,
-    this.isLocked = true,
   });
 
   Lesson copyWith({
@@ -29,8 +25,6 @@ class Lesson {
     int? duration,
     List<Resource>? resources,
     bool? isPreview,
-    bool? isLocked,
-    bool? isCompleted,
   }) {
     return Lesson(
       id: id ?? this.id,
@@ -40,8 +34,6 @@ class Lesson {
       duration: duration ?? this.duration,
       resources: resources ?? this.resources,
       isPreview: isPreview ?? this.isPreview,
-      isLocked: isLocked ?? this.isLocked,
-      isCompleted: isCompleted ?? this.isCompleted,
     );
   }
 
@@ -55,8 +47,7 @@ class Lesson {
         .map((resource) => Resource.fromJson(resource))
         .toList(),
     isPreview: json['isPreview'] ?? false,
-    isCompleted: json['isCompleted'] ?? false,
-    isLocked: json['isLocked'] ?? true,
+    
   );
 
   Map<String, dynamic> toJson() => {
@@ -67,8 +58,7 @@ class Lesson {
     'duration': duration,
     'resources': resources.map((resources) => resources.toJson()).toList(),
     'isPreview': isPreview,
-    'isCompleted': isCompleted,
-    'isLocked': isLocked,
+ 
   };
 
   String get videoStreamUrl {
