@@ -11,7 +11,7 @@ class ProfileModel extends Equatable {
   const ProfileModel({
     required this.fullName,
     required this.email,
-    required this.bio,
+    this.bio,
     this.phoneNumber,
     this.photoUrl,
     required this.stats,

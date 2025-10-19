@@ -1,13 +1,18 @@
+import 'dart:async';
+
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
+import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/bloc/profile/profile_event.dart';
 import 'package:elearning_app/bloc/profile/profile_state.dart';
 import 'package:elearning_app/models/profile.dart';
 import 'package:elearning_app/respositories/auth_respository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final AuthBloc _authBloc;
   final AuthRepository _authRepository;
+  late final StreamSubscription<AuthState> _authSubscription;
 
   ProfileBloc({required AuthBloc authBloc, AuthRepository? authRepository})
     : _authBloc = authBloc,
@@ -16,6 +21,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<LoadProfile>(_onLoadProfile);
     on<UpdateProfileRequested>(_onUpdateProfileRequested);
     on<UpdateProfilePhotoRequested>(_onUpdateProfilePhotoRequested);
+
+    //load profile when aut state changes
+    _authSubscription = _authBloc.stream.listen((authState) {
+      if (authState.userModel != null) {
+        add(LoadProfile());
+      }
+    });
+    //initial load if user logged in
+    if (_authBloc.state.userModel != null) {
+      add(LoadProfile());
+    }
   }
 
   Future<void> _onLoadProfile(
@@ -77,5 +93,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       emit(state.copyWith(isLoading: true));
     } catch (e) {}
+  }
+
+  @override
+  Future<void> close() {
+    _authSubscription.cancel();
+    return super.close();
   }
 }

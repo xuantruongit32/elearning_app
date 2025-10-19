@@ -1,3 +1,5 @@
+import 'package:elearning_app/bloc/profile/profile_bloc.dart';
+import 'package:elearning_app/bloc/profile/profile_state.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +13,9 @@ class HomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return BlocBuilder(
+    return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
+        final profile = state.profile;
         return SliverAppBar(
           expandedHeight: 180,
           floating: false,
@@ -40,7 +43,7 @@ class HomeAppBar extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Hoang Truong,',
+                  profile?.fullName ?? 'Loading...',
                   style: theme.textTheme.titleLarge?.copyWith(
                     color: AppColors.accent.withValues(alpha: 0.7),
                   ),
