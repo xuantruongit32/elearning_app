@@ -1,4 +1,5 @@
 import 'package:elearning_app/bloc/profile/profile_bloc.dart';
+import 'package:elearning_app/bloc/profile/profile_event.dart';
 import 'package:elearning_app/bloc/profile/profile_state.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/view/profile/widgets/profile_app_bar.dart';
@@ -7,8 +8,20 @@ import 'package:elearning_app/view/profile/widgets/profile_stats_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    //load profile only once when screen is first create
+    context.read<ProfileBloc>().add(LoadProfile());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +51,7 @@ class ProfileScreen extends StatelessWidget {
                     .toUpperCase(),
                 fullName: profile.fullName,
                 email: profile.email,
+                photoUrl: profile.photoUrl,
               ),
               SliverToBoxAdapter(
                 child: Padding(
