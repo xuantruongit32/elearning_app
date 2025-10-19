@@ -7,7 +7,6 @@ import 'package:elearning_app/bloc/profile/profile_state.dart';
 import 'package:elearning_app/models/profile.dart';
 import 'package:elearning_app/respositories/auth_respository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final AuthBloc _authBloc;
@@ -46,6 +45,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         final profile = ProfileModel(
           fullName: userModel.fullName ?? '',
           email: userModel.email,
+          phoneNumber: userModel.phoneNumber,
+          bio: userModel.bio,
           photoUrl: userModel.photoUrl,
           stats: const ProfileStats(
             coursesCount: 0,
@@ -71,12 +72,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       await _authRepository.updateProfile(
         fullName: event.fullName,
         photoUrl: event.photoUrl,
+        phoneNumber: event.phoneNumber,
+        bio: event.bio,
       );
 
       if (state.profile != null) {
         final updatedProfile = state.profile!.copyWith(
           fullName: event.fullName,
           photoUrl: event.photoUrl,
+          phoneNumber: event.phoneNumber,
+          bio: event.bio,
         );
         emit(state.copyWith(isLoading: false, profile: updatedProfile));
       }

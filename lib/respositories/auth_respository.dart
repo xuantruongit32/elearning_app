@@ -99,7 +99,12 @@ class AuthRepository {
     }
   }
 
-  Future<void> updateProfile({String? fullName, String? photoUrl}) async {
+  Future<void> updateProfile({
+    String? fullName,
+    String? photoUrl,
+    String? phoneNumber,
+    String? bio,
+  }) async {
     try {
       final user = _firebaseAuth.currentUser;
       if (user == null) throw Exception('User not found');
