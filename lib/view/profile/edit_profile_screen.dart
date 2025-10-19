@@ -8,6 +8,7 @@ import 'package:elearning_app/view/profile/widgets/profile_picture_bottom_sheet.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -88,20 +89,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   width: 3,
                                 ),
                               ),
-                              child: CircleAvatar(
-                                radius: 60,
-                                backgroundColor: AppColors.accent,
-                                child: Text(
-                                  "T",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displaySmall
-                                      ?.copyWith(
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.bold,
+                              child: state.isPhotoUploading
+                                  ? Shimmer.fromColors(
+                                      baseColor: AppColors.primary.withValues(
+                                        alpha: 0.3,
                                       ),
-                                ),
-                              ),
+                                      highlightColor: AppColors.accent,
+                                      child: const CircleAvatar(
+                                        radius: 60,
+                                        backgroundColor: Colors.white,
+                                      ),
+                                    )
+                                  : CircleAvatar(
+                                      radius: 60,
+                                      backgroundColor: AppColors.accent,
+                                      backgroundImage: profile.photoUrl != null
+                                          ? NetworkImage(profile.photoUrl!)
+                                          : null,
+                                      child: profile.photoUrl == null
+                                          ? Text(
+                                              profile.fullName
+                                                  .split(' ')
+                                                  .map((e) => e[0])
+                                                  .take(2)
+                                                  .join()
+                                                  .toUpperCase(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .displaySmall
+                                                  ?.copyWith(
+                                                    color: AppColors.primary,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                            )
+                                          : null,
+                                    ),
                             ),
                             Positioned(
                               bottom: 0,
