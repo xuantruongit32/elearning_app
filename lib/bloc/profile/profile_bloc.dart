@@ -16,14 +16,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   late final StreamSubscription<AuthState> _authSubscription;
   final CloudinaryService _cloudinaryService;
 
-  ProfileBloc(
-    this._authSubscription,
-    CloudinaryService cloudinaryService, {
+  ProfileBloc({
     required AuthBloc authBloc,
+    CloudinaryService? cloudinaryService,
     AuthRepository? authRepository,
   }) : _authBloc = authBloc,
        _authRepository = authRepository ?? AuthRepository(),
-       _cloudinaryService = cloudinaryService,
+       _cloudinaryService = cloudinaryService ?? CloudinaryService(),
        super(const ProfileState()) {
     on<LoadProfile>(_onLoadProfile);
     on<UpdateProfileRequested>(_onUpdateProfileRequested);
