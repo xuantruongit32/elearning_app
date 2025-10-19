@@ -47,7 +47,6 @@ class Lesson {
         .map((resource) => Resource.fromJson(resource))
         .toList(),
     isPreview: json['isPreview'] ?? false,
-    
   );
 
   Map<String, dynamic> toJson() => {
@@ -58,7 +57,6 @@ class Lesson {
     'duration': duration,
     'resources': resources.map((resources) => resources.toJson()).toList(),
     'isPreview': isPreview,
- 
   };
 
   String get videoStreamUrl {

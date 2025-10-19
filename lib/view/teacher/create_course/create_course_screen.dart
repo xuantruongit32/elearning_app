@@ -1,8 +1,16 @@
+import 'package:better_player_plus/better_player_plus.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
+import 'package:elearning_app/models/lesson.dart';
+import 'package:elearning_app/models/prerequisite_course.dart';
+import 'package:elearning_app/respositories/course_respository.dart';
+import 'package:elearning_app/services/cloudinary_service.dart';
 import 'package:elearning_app/view/onboarding/widgets/common/custom_textfield.dart';
 import 'package:elearning_app/view/teacher/create_course/widgets/create_course_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CreateCourseScreen extends StatefulWidget {
   const CreateCourseScreen({super.key});
@@ -17,85 +25,156 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   bool _isPremium = false;
   final List<String> _requirements = [''];
   final List<String> _learningPoints = [''];
+  final _courseRepository = CourseRepository();
+  final _cloudinaryService = CloudinaryService();
+  final _imagePicker = ImagePicker();
+  final _firestore = FirebaseFirestore.instance;
+
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _priceController = TextEditingController();
+  String? _selectedCategoryId;
+  String? _selectedCategoryName;
+  final List<Lesson> _lessons = [];
+  String? _courseImagePath;
+  String? _courseImageUrl;
+  bool _isLoading = false;
+  List<Map<String, dynamic>> _categories = [
+    {
+      'id': '1',
+      'name': 'Programming',
+      'icon': 0xe86f, // code
+    },
+    {
+      'id': '2',
+      'name': 'Data Science',
+      'icon': 0xe6b1, // analytics
+    },
+    {
+      'id': '3',
+      'name': 'Design',
+      'icon': 0xe3ae, // brush
+    },
+    {
+      'id': '4',
+      'name': 'Business',
+      'icon': 0xeb3f, // business_center
+    },
+    {
+      'id': '5',
+      'name': 'Music',
+      'icon': 0xe405, // music_note
+    },
+    {
+      'id': '6',
+      'name': 'Photography',
+      'icon': 0xe412, // photo_camera
+    },
+    {
+      'id': '7',
+      'name': 'Language',
+      'icon': 0xe894, // language
+    },
+    {
+      'id': '8',
+      'name': 'Personal Development',
+      'icon': 0xea78, // self_improvement
+    },
+  ];
+  bool _isUploadingImage = false;
+  Map<int, bool> _isUploadingVideo = {};
+  Map<int, bool> _isUploadingResource = {};
+  List<PrerequisiteCourse> _availableCourse = [];
+  List<String> _selectedPrerequisites = [];
+  Map<int, BetterPlayerController?> _betterPlayerControllers = {};
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
-      body: CustomScrollView(
-        physics: BouncingScrollPhysics(),
-        slivers: [
-          CreateCourseAppBar(onSubmit: _submitForm),
-          SliverToBoxAdapter(
-            child: Form(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  children: [
-                    _buildImagePicker(),
-                    const SizedBox(height: 32),
-                    CustomTextField(
-                      label: 'Course Title',
-                      hint: 'Enter course title',
-                      maxLines: 1,
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Please enter a title';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    CustomTextField(
-                      label: 'Description',
-                      hint: 'Enter course description',
-                      maxLines: 3,
-                      validator: (value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Please enter a description';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
+        children: [
+          CustomScrollView(
+            physics: BouncingScrollPhysics(),
+            slivers: [
+              CreateCourseAppBar(onSubmit: _submitForm),
+              SliverToBoxAdapter(
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
                       children: [
+                        _buildImagePicker(),
+                        const SizedBox(height: 32),
                         CustomTextField(
-                          label: 'Price',
-                          hint: 'Enter price',
-                          keyboardType: TextInputType.number,
+                          controller: _titleController,
+                          label: 'Course Title',
+                          hint: 'Enter course title',
+                          maxLines: 1,
                           validator: (value) {
                             if (value?.isEmpty ?? true) {
-                              return 'Required';
+                              return 'Please enter a title';
                             }
                             return null;
                           },
                         ),
-                        const SizedBox(height: 16),
-                        _buildDropdown(),
+                        const SizedBox(height: 24),
+                        CustomTextField(
+                          controller: _descriptionController,
+                          label: 'Description',
+                          hint: 'Enter course description',
+                          maxLines: 3,
+                          validator: (value) {
+                            if (value?.isEmpty ?? true) {
+                              return 'Please enter a description';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomTextField(
+                              controller: _priceController,
+                              label: 'Price',
+                              hint: 'Enter price',
+                              keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value?.isEmpty ?? true) {
+                                  return 'Required';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            _buildDropdown(),
+                          ],
+                        ),
+                        const SizedBox(height: 24),
+                        _buildCategoryDropdown(),
+                        const SizedBox(height: 24),
+                        _buildPremiumSwitch(),
+                        const SizedBox(height: 32),
+                        _buildDynamicList(
+                          title: 'Course Requirements',
+                          items: _requirements,
+                          onRemove: (index) => _requirements.removeAt(index),
+                          onAdd: () => _requirements.add(''),
+                        ),
+                        const SizedBox(height: 32),
+                        _buildDynamicList(
+                          title: 'What You Will Learn',
+                          items: _requirements,
+                          onRemove: (index) => _requirements.removeAt(index),
+                          onAdd: () => _requirements.add(''),
+                        ),
                       ],
                     ),
-
-                    const SizedBox(height: 24),
-                    _buildPremiumSwitch(),
-                    const SizedBox(height: 32),
-                    _buildDynamicList(
-                      title: 'Course Requirements',
-                      items: _requirements,
-                      onRemove: (index) => _requirements.removeAt(index),
-                      onAdd: () => _requirements.add(''),
-                    ),
-                    const SizedBox(height: 32),
-                    _buildDynamicList(
-                      title: 'What You Will Learn',
-                      items: _requirements,
-                      onRemove: (index) => _requirements.removeAt(index),
-                      onAdd: () => _requirements.add(''),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ],
       ),
@@ -229,18 +308,137 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     );
   }
 
-  Widget _buildImagePicker() {
-    return Container(
-      height: 200,
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Center(
-        child: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.add_photo_alternate, size: 48),
+  Widget _buildCategoryDropdown() {
+    return Column(
+      children: [
+        Text(
+          'Category',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: AppColors.primary,
+          ),
         ),
+        const SizedBox(height: 8),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey.shade300),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              value: _selectedCategoryId,
+              isExpanded: true,
+              hint: const Text('Select Category'),
+              items: _categories.map<DropdownMenuItem<String>>((category) {
+                return DropdownMenuItem<String>(
+                  value: category['id'] as String,
+                  child: Row(
+                    children: [
+                      const Icon(Icons.category, color: AppColors.primary),
+                      const SizedBox(width: 8),
+                      Text(category['name'] as String),
+                    ],
+                  ),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _selectedCategoryId = value;
+                  _selectedCategoryName =
+                      _categories.firstWhere(
+                            (cat) => cat['id'] == value,
+                          )['name']
+                          as String;
+                });
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildImagePicker() {
+    return GestureDetector(
+      onTap: _pickImage,
+      child: Stack(
+        children: [
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(12),
+              image: _courseImageUrl != null && !_isUploadingImage
+                  ? DecorationImage(
+                      image: NetworkImage(_courseImageUrl!),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+            ),
+            child: _isUploadingImage
+                ? Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                : _courseImageUrl == null
+                ? const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.add_photo_alternate, size: 48),
+                        SizedBox(height: 8),
+                        Text(
+                          'Add Course Thumbnail',
+                          style: TextStyle(color: Colors.grey, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  )
+                : null,
+          ),
+          if (_courseImageUrl != null && !_isUploadingImage)
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.edit, color: Colors.white, size: 32),
+                      SizedBox(height: 8),
+                      Text(
+                        'Change Thumbnail',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              offset: const Offset(0, 1),
+                              blurRadius: 3,
+                              color: Colors.black.withValues(alpha: 0.5),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -250,4 +448,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
       Get.back();
     }
   }
+
+  Future<void> _pickImage() async {}
 }
