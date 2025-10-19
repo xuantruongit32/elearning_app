@@ -2,6 +2,7 @@ import 'package:elearning_app/bloc/auth/auth_bloc.dart';
 import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/bloc/font/font_bloc.dart';
 import 'package:elearning_app/bloc/font/font_state.dart';
+import 'package:elearning_app/bloc/profile/profile_bloc.dart';
 import 'package:elearning_app/config/firebase_config.dart';
 import 'package:elearning_app/core/theme/app_theme.dart';
 import 'package:elearning_app/routes/app_routes.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<FontBloc>(create: (context) => FontBloc()), // BlocProvider
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(authBloc: context.read<AuthBloc>()),
+        ),
       ],
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
