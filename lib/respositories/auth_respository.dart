@@ -108,12 +108,23 @@ class AuthRepository {
     try {
       final user = _firebaseAuth.currentUser;
       if (user == null) throw Exception('User not found');
+      final update = <String, dynamic>{};
 
       if (fullName != null) {
         await user.updateDisplayName(fullName);
+        update['fullName'] = fullName;
       }
       if (photoUrl != null) {
         await user.updatePhotoURL(photoUrl);
+        update['photoUrl'] = photoUrl;
+      }
+
+      if (phoneNumber != null) update['phoneNumber'] = phoneNumber;
+      if (bio != null) update['bio'] = bio;
+
+      //update firestore if there are changes
+      if (update.isNotEmpty) {
+        await _firestore.collection('users').doc(user.uid).update(update);
       }
     } on FirebaseAuthException catch (e) {
       throw _handleAuthException(e);
