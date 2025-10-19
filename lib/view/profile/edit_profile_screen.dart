@@ -1,4 +1,5 @@
 import 'package:elearning_app/bloc/profile/profile_bloc.dart';
+import 'package:elearning_app/bloc/profile/profile_event.dart';
 import 'package:elearning_app/bloc/profile/profile_state.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/view/onboarding/widgets/common/custom_button.dart';
@@ -42,6 +43,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.dispose();
   }
 
+  void _handleSave() {
+    if (_formKey.currentState!.validate()) {
+      context.read<ProfileBloc>().add(
+        UpdateProfileRequested(
+          fullName: _fullNameController.text.trim(),
+          phoneNumber: _phoneController.text.trim(),
+          bio: _bioController.text.trim(),
+        ),
+      );
+
+      context.read<ProfileBloc>().stream.firstWhere(
+        ((state) => !state.isLoading),
+      );
+
+      //wait for the update to complete before navigation back
+
+      context.read<ProfileBloc>().stream.firstWhere(
+        ((state) => !state.isLoading),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
@@ -49,12 +72,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         final profile = state.profile;
         if (profile == null) return const Scaffold();
         return Scaffold(
-          appBar: EditProfileAppBar(
-            onSave: () {
-              //save profile change
-              Get.back();
-            },
-          ),
+          appBar: EditProfileAppBar(onSave: _handleSave),
           body: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -273,11 +291,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   const SizedBox(height: 32),
                   CustomButton(
                     text: 'Save Changes',
-                    onPressed: () {
-                      //save profile
-                      Get.back();
-                    },
+                    onPressed: _handleSave,
                     icon: Icons.check_circle_outline,
+                    isLoading: state.isLoading,
                   ),
                 ],
               ),
