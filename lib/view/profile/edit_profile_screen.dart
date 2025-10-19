@@ -59,9 +59,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
       //wait for the update to complete before navigation back
 
-      context.read<ProfileBloc>().stream.firstWhere(
-        ((state) => !state.isLoading),
-      );
+      context
+          .read<ProfileBloc>()
+          .stream
+          .firstWhere(((state) => !state.isLoading))
+          .then((_) => Get.back());
     }
   }
 
