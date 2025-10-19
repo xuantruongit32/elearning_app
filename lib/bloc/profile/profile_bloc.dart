@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
 import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/bloc/profile/profile_event.dart';
@@ -107,7 +106,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       //upload to cloudinary
 
-      final photoUrl = await _cloudinaryService.uploadImage(event.photoPath);
+      final photoUrl = await _cloudinaryService.uploadImage(
+        event.photoPath,
+        'profile_pictures',
+      );
 
       //update profile with new photo url
       add(UpdateProfileRequested(photoUrl: photoUrl));
