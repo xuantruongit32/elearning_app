@@ -1,22 +1,30 @@
 import 'dart:async';
 
+import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
 import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/bloc/profile/profile_event.dart';
 import 'package:elearning_app/bloc/profile/profile_state.dart';
 import 'package:elearning_app/models/profile.dart';
 import 'package:elearning_app/respositories/auth_respository.dart';
+import 'package:elearning_app/services/cloudinary_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final AuthBloc _authBloc;
   final AuthRepository _authRepository;
   late final StreamSubscription<AuthState> _authSubscription;
+  final CloudinaryService _cloudinaryService;
 
-  ProfileBloc({required AuthBloc authBloc, AuthRepository? authRepository})
-    : _authBloc = authBloc,
-      _authRepository = authRepository ?? AuthRepository(),
-      super(const ProfileState()) {
+  ProfileBloc(
+    this._authSubscription,
+    CloudinaryService cloudinaryService, {
+    required AuthBloc authBloc,
+    AuthRepository? authRepository,
+  }) : _authBloc = authBloc,
+       _authRepository = authRepository ?? AuthRepository(),
+       _cloudinaryService = cloudinaryService,
+       super(const ProfileState()) {
     on<LoadProfile>(_onLoadProfile);
     on<UpdateProfileRequested>(_onUpdateProfileRequested);
     on<UpdateProfilePhotoRequested>(_onUpdateProfilePhotoRequested);
@@ -97,7 +105,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     //firebase later
     try {
       emit(state.copyWith(isLoading: true));
-    } catch (e) {}
+
+      //upload to cloudinary
+
+      final photoUrl = await _cloudinaryService.uploadImage(event.photoPath);
+
+      //update profile with new photo url
+      add(UpdateProfileRequested(photoUrl: photoUrl));
+
+      emit(state.copyWith(isPhotoUploading: false));
+    } catch (e) {
+      emit(state.copyWith(error: e.toString(), isPhotoUploading: false));
+    }
   }
 
   @override
