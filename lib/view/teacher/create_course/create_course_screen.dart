@@ -310,7 +310,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
               label: 'Lesson Description',
               hint: 'Enter lesson description',
               maxLines: 3,
-              onChanged: (value) => _updateLesson(index, title: value),
+              onChanged: (value) => _updateLesson(index, description: value),
             ),
             const SizedBox(height: 8),
             CustomTextField(
