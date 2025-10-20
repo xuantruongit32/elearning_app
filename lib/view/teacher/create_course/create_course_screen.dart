@@ -123,7 +123,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           CustomScrollView(
             physics: BouncingScrollPhysics(),
             slivers: [
-              CreateCourseAppBar(onSubmit: _submitForm),
+              CreateCourseAppBar(onSubmit: _submitForm, course: widget.course),
               SliverToBoxAdapter(
                 child: Form(
                   key: _formKey,
