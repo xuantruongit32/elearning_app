@@ -1,10 +1,12 @@
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
 import 'package:elearning_app/bloc/auth/auth_state.dart';
+import 'package:elearning_app/bloc/course/course_bloc.dart';
 import 'package:elearning_app/bloc/font/font_bloc.dart';
 import 'package:elearning_app/bloc/font/font_state.dart';
 import 'package:elearning_app/bloc/profile/profile_bloc.dart';
 import 'package:elearning_app/config/firebase_config.dart';
 import 'package:elearning_app/core/theme/app_theme.dart';
+import 'package:elearning_app/respositories/course_respository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/routes/route_pages.dart';
 import 'package:elearning_app/services/storage_service.dart';
@@ -33,6 +35,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<ProfileBloc>(
           create: (context) => ProfileBloc(authBloc: context.read<AuthBloc>()),
+        ),
+        BlocProvider<CourseBloc>(
+          create: (context) => CourseBloc(
+            authBloc: context.read<AuthBloc>(),
+            courseRepository: CourseRepository(),
+          ),
         ),
       ],
       child: BlocListener<AuthBloc, AuthState>(
