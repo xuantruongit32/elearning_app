@@ -4,6 +4,7 @@ import 'package:elearning_app/respositories/course_respository.dart';
 import 'package:elearning_app/services/user_service.dart';
 import 'package:elearning_app/view/teacher/my_courses/widgets/empty_courses_state.dart';
 import 'package:elearning_app/view/teacher/my_courses/widgets/my_courses_app_bar.dart';
+import 'package:elearning_app/view/teacher/my_courses/widgets/shimmer_course_card.dart';
 import 'package:elearning_app/view/teacher/my_courses/widgets/teacher_course_card.dart';
 import 'package:flutter/material.dart';
 
@@ -38,8 +39,10 @@ class MyCoursesScreen extends StatelessWidget {
                 icon: const Icon(Icons.arrow_back),
               ),
             ),
-            body: const Center(
-              child: CircularProgressIndicator(), //loading state - code later
+            body: ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: 5,
+              itemBuilder: (context, index) => const ShimmerCourseCard(),
             ),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
