@@ -50,6 +50,7 @@ dependencies:
   cloudinary_public: ^0.23.1
   image_picker: ^1.2.0
   uuid: ^4.4.2
+  file_picker: ^10.0.0
   flutter:
     sdk: flutter
 

@@ -1,12 +1,15 @@
 import 'package:better_player_plus/better_player_plus.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
+import 'package:elearning_app/models/course.dart';
 import 'package:elearning_app/models/lesson.dart';
 import 'package:elearning_app/models/prerequisite_course.dart';
 import 'package:elearning_app/respositories/course_respository.dart';
 import 'package:elearning_app/services/cloudinary_service.dart';
 import 'package:elearning_app/view/onboarding/widgets/common/custom_textfield.dart';
 import 'package:elearning_app/view/teacher/create_course/widgets/create_course_app_bar.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -41,59 +44,75 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   String? _courseImageUrl;
   bool _isLoading = false;
   List<String> _selectedPrerequisites = [];
-  List<PrerequisiteCourse> _availableCourses = [
-    PrerequisiteCourse(id: '1', title: 'Flutter Fundamentals'),
-    PrerequisiteCourse(id: '2', title: 'Dart Pro Language'),
-    PrerequisiteCourse(id: '3', title: 'Mobile App Development'),
-  ];
+  List<PrerequisiteCourse> _availableCourses = [];
 
-  List<Map<String, dynamic>> _categories = [
-    {
-      'id': '1',
-      'name': 'Programming',
-      'icon': '0xe86f', // code
-    },
-    {
-      'id': '2',
-      'name': 'Data Science',
-      'icon': '0xe6b1', // analytics
-    },
-    {
-      'id': '3',
-      'name': 'Design',
-      'icon': '0xe3ae', // brush
-    },
-    {
-      'id': '4',
-      'name': 'Business',
-      'icon': '0xeb3f', // business_center
-    },
-    {
-      'id': '5',
-      'name': 'Music',
-      'icon': '0xe405', // music_note
-    },
-    {
-      'id': '6',
-      'name': 'Photography',
-      'icon': '0xe412', // photo_camera
-    },
-    {
-      'id': '7',
-      'name': 'Language',
-      'icon': '0xe894', // language
-    },
-    {
-      'id': '8',
-      'name': 'Personal Development',
-      'icon': '0xea78', // self_improvement
-    },
-  ];
+  List<Map<String, dynamic>> _categories = [];
   bool _isUploadingImage = false;
   Map<int, bool> _isUploadingVideo = {};
   Map<int, bool> _isUploadingResource = {};
 
   Map<int, BetterPlayerController?> _betterPlayerControllers = {};
+
+  @override
+  void initState() {
+    _loadCategories();
+    super.initState();
+    _loadAvailableCourses();
+  }
+
+  Future<void> _loadAvailableCourses() async {
+    try {
+      final snapshot = await _firestore.collection('courses').get();
+      setState(() {
+        _availableCourses = snapshot.docs.map((doc) {
+          final data = doc.data();
+          return PrerequisiteCourse(id: doc.id, title: data['title'] as String);
+        }).toList();
+      });
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to load courses: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  Future<void> _loadCategories() async {
+    try {
+      final snapshot = await _firestore.collection('categories').get();
+      setState(() {
+        _categories = snapshot.docs.map((doc) {
+          final data = doc.data();
+          return {
+            'id': doc.id,
+            'name': data['name'] as String,
+            'icon': data['icon'] as String,
+          };
+        }).toList();
+      });
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to load categories: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    _priceController.dispose();
+
+    for (var controller in _betterPlayerControllers.values) {
+      controller?.dispose();
+    }
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -415,8 +434,117 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
   Future<void> _addResource(int lessonIndex) async {
     //code later
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.any,
+        allowMultiple: false,
+      );
+
+      if (result != null && result.files.isNotEmpty) {
+        setState(() {
+          _isUploadingResource[lessonIndex] = true;
+        });
+        final file = result.files.first;
+        final resourceUrl = await _cloudinaryService.uploadFile(file.path!);
+        final resource = Resource(
+          id: const Uuid().v4(),
+          title: file.name,
+          type: file.extension ?? 'unknown',
+          url: resourceUrl,
+        );
+        setState(() {
+          final updatedResources = List<Resource>.from(
+            _lessons[lessonIndex].resources,
+          )..add(resource);
+          _updateLesson(lessonIndex, resources: updatedResources);
+          _isUploadingResource[lessonIndex] = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _isUploadingResource[lessonIndex] = false;
+      });
+      Get.snackbar(
+        'Error',
+        'Failed to add resource: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
-  Future<void> _pickVideo(int lessonIndex) async {}
+
+  Future<void> _pickVideo(int lessonIndex) async {
+    try {
+      final pickedFile = await _imagePicker.pickVideo(
+        source: ImageSource.gallery,
+      );
+
+      if (pickedFile != null) {
+        setState(() {
+          _isUploadingVideo[lessonIndex] = true;
+        });
+        //upload video to cloudinary
+        final videoUrl = await _cloudinaryService.uploadVideo(pickedFile.path);
+        //update lesson with new url
+        setState(() {
+          _lessons[lessonIndex] = _lessons[lessonIndex].copyWith(
+            videoUrl: videoUrl,
+          );
+          //initialize video player after upload
+        });
+        await _initializeVideoPlayer(lessonIndex, videoUrl);
+
+        setState(() {
+          _isUploadingVideo[lessonIndex] = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _isUploadingVideo[lessonIndex] = false;
+      });
+      Get.snackbar(
+        'Error',
+        'Failed to pick video: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  Future<void> _initializeVideoPlayer(int lessonIndex, String videoUrl) async {
+    try {
+      _betterPlayerControllers[lessonIndex]?.dispose();
+
+      /*    final videoController = BetterPlayerController(
+      BetterPlayerConfiguration(),
+      betterPlayerDataSource: BetterPlayerDataSource.network(videoUrl),
+    );
+final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
+      final betterPlayerController = BetterPlayerController(
+        const BetterPlayerConfiguration(
+          autoPlay: false,
+          looping: false,
+          controlsConfiguration: BetterPlayerControlsConfiguration(
+            enableMute: true,
+            showControls: true,
+          ),
+        ),
+
+        betterPlayerDataSource: BetterPlayerDataSource.network(videoUrl),
+      );
+      if (mounted) {
+        setState(() {
+          _betterPlayerControllers[lessonIndex] = betterPlayerController;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        Get.snackbar(
+          'Error',
+          'Failed to initialize player: $e',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    }
+  }
 
   void _removeResource(int lessonIndex, int resourceIndex) {
     setState(() {
@@ -509,7 +637,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                         }
                       });
                     },
-                    icon: Icon(Icons.circle_outlined, color: Colors.grey[600]),
+                    icon: Icon(
+                      Icons.remove_circle_outline,
+                      color: Colors.grey[600],
+                    ),
                   ),
                 ],
               ),
@@ -783,11 +914,150 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     );
   }
 
-  void _submitForm() {
-    if (_formKey.currentState?.validate() ?? false) {
+  void _submitForm() async {
+    if (!_formKey.currentState!.validate()) return;
+    //validate course thumb
+    if (_courseImageUrl == null) {
+      Get.snackbar(
+        'Error',
+        'Please select a course thumbnail',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red[100],
+        colorText: Colors.red[900],
+      );
+      return;
+    }
+    //Validate category
+    if (_selectedCategoryId == null) {
+      Get.snackbar(
+        'Error',
+        'Please select a category',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red[100],
+        colorText: Colors.red[900],
+      );
+      return;
+    }
+    //validate lesson
+    if (_lessons.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Please add at least one lesson',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red[100],
+        colorText: Colors.red[900],
+      );
+      return;
+    }
+    String? _lessonError = _validatelessons();
+    if (_lessonError != null) {
+      Get.snackbar(
+        'Error',
+        _lessonError,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red[100],
+        colorText: Colors.red[900],
+      );
+      return;
+    }
+    setState(() => _isLoading = true);
+
+    try {
+      final course = Course(
+        id: Uuid().v4(),
+        title: _titleController.text,
+        description: _descriptionController.text,
+        imageUrl: _courseImageUrl!,
+        instructorId: FirebaseAuth.instance.currentUser!.uid,
+        categoryId: _selectedCategoryId!,
+        price: double.parse(_priceController.text),
+        lessons: _lessons,
+        level: _selectedLevel,
+        requirements: _requirements.where((r) => r.isNotEmpty).toList(),
+        whatYouWillLearn: _learningPoints.where((r) => r.isNotEmpty).toList(),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        prerequisites: _selectedPrerequisites,
+      );
+      await _courseRepository.createCourse(course);
       Get.back();
+      Get.snackbar(
+        'Success',
+        'Course created successfully',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green[100],
+        colorText: Colors.green[900],
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to create course: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red[100],
+        colorText: Colors.red[900],
+      );
+    } finally {
+      setState(() => _isLoading = false);
     }
   }
 
-  Future<void> _pickImage() async {}
+  String? _validatelessons() {
+    for (int i = 0; i < _lessons.length; i++) {
+      final lesson = _lessons[i];
+
+      // validate lesson title
+      if (lesson.title.isEmpty) {
+        return 'Please enter a title for Lesson ${i + 1}';
+      }
+
+      // validate lesson description
+      if (lesson.description.isEmpty) {
+        return 'Please enter a description for Lesson ${i + 1}';
+      }
+
+      //validate lesson video
+      if (lesson.videoUrl.isEmpty) {
+        return 'Please upload a video for Lesson ${i + 1}';
+      }
+      //validate lesson video
+      if (lesson.duration <= 0) {
+        return 'Please enter a valid duration for Lesson ${i + 1}';
+      }
+    }
+    return null;
+  }
+
+  Future<void> _pickImage() async {
+    try {
+      final pickedFile = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1920,
+        maxHeight: 1080,
+      );
+      if (pickedFile != null) {
+        setState(() {
+          _courseImagePath = pickedFile.path;
+          _isUploadingImage = true;
+        });
+        //upload image to cloudinary
+        final imageUrl = await _cloudinaryService.uploadImage(
+          pickedFile.path,
+          'course_images',
+        );
+        setState(() {
+          _courseImageUrl = imageUrl;
+          _isUploadingImage = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _isUploadingImage = false;
+      });
+      Get.snackbar(
+        'Error',
+        'Failed to pick image: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
 }
