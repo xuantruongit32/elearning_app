@@ -17,7 +17,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateCourseScreen extends StatefulWidget {
-  const CreateCourseScreen({super.key});
+  final Course? course;
+  const CreateCourseScreen({super.key, this.course});
 
   @override
   State<CreateCourseScreen> createState() => _CreateCourseScreenState();
