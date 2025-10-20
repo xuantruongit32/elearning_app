@@ -1,5 +1,7 @@
 import 'package:better_player_plus/better_player_plus.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elearning_app/bloc/course/course_bloc.dart';
+import 'package:elearning_app/bloc/course/course_event.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/course.dart';
 import 'package:elearning_app/models/lesson.dart';
@@ -11,6 +13,7 @@ import 'package:elearning_app/view/teacher/create_course/widgets/create_course_a
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmer/shimmer.dart';
@@ -59,6 +62,28 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     _loadCategories();
     super.initState();
     _loadAvailableCourses();
+    if (widget.course != null) {
+      _initializeCourseData();
+    }
+  }
+
+  void _initializeCourseData() {
+    final course = widget.course!;
+    _titleController.text = course.title;
+    _descriptionController.text = course.description;
+    _priceController.text = course.price.toString();
+    _selectedLevel = course.level;
+    _selectedCategoryId = course.categoryId;
+    _isPremium = course.isPremium;
+    _requirements.clear();
+    _requirements.addAll(course.requirements);
+    _learningPoints.clear();
+    _learningPoints.addAll(course.whatYouWillLearn);
+    _lessons.clear();
+    _lessons.addAll(course.lessons);
+    _courseImageUrl = course.imageUrl;
+    _selectedPrerequisites.clear();
+    _selectedPrerequisites.addAll(course.prerequisites);
   }
 
   Future<void> _loadAvailableCourses() async {
@@ -965,7 +990,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
 
     try {
       final course = Course(
-        id: Uuid().v4(),
+        id: widget.course?.id ?? const Uuid().v4(),
         title: _titleController.text,
         description: _descriptionController.text,
         imageUrl: _courseImageUrl!,
@@ -976,19 +1001,38 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
         level: _selectedLevel,
         requirements: _requirements.where((r) => r.isNotEmpty).toList(),
         whatYouWillLearn: _learningPoints.where((r) => r.isNotEmpty).toList(),
-        createdAt: DateTime.now(),
+        createdAt: widget.course?.createdAt ?? DateTime.now(),
         updatedAt: DateTime.now(),
         prerequisites: _selectedPrerequisites,
+        rating: widget.course?.rating ?? 0.0,
+        reviewCount: widget.course?.enrollmentCount ?? 0,
+        enrollmentCount: widget.course?.enrollmentCount ?? 0,
       );
-      await _courseRepository.createCourse(course);
-      Get.back();
-      Get.snackbar(
-        'Success',
-        'Course created successfully',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green[100],
-        colorText: Colors.green[900],
-      );
+
+      if (widget.course != null) {
+        await _courseRepository.updateCourse(course);
+        context.read<CourseBloc>().add(
+          UpdateCourse(FirebaseAuth.instance.currentUser!.uid),
+        );
+        Get.back();
+        Get.snackbar(
+          'Success',
+          'Course updated successfully',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green[100],
+          colorText: Colors.green[900],
+        );
+      } else {
+        await _courseRepository.createCourse(course);
+        Get.back();
+        Get.snackbar(
+          'Success',
+          'Course created successfully',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green[100],
+          colorText: Colors.green[900],
+        );
+      }
     } catch (e) {
       Get.snackbar(
         'Error',
