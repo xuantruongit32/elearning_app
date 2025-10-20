@@ -285,7 +285,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                         Switch(
                           value: lesson.isPreview,
                           onChanged: (value) =>
-                              _updateLesson(index, isPreview: true),
+                              _updateLesson(index, isPreview: value),
                           activeThumbColor: AppColors.primary,
                         ),
                       ],
