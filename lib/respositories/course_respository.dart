@@ -38,4 +38,24 @@ class CourseRepository {
       throw Exception('Failed to get instructor courses: $e');
     }
   }
+
+  Future<void> updateCourse(Course course) async {
+    try {
+      // convert course to JSON
+      final courseData = course.toJson();
+
+      // Convert lessons to JSON
+      final lessonsData = course.lessons
+          .map((lesson) => lesson.toJson())
+          .toList();
+
+      // Update course document
+      await _firestore.collection('courses').doc(course.id).update({
+        ...courseData,
+        'lessons': lessonsData,
+      });
+    } catch (e) {
+      throw Exception('Failed to update course: $e');
+    }
+  }
 }
