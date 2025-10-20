@@ -377,13 +377,55 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
               ),
             ),
             const SizedBox(height: 16),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: lesson.resources.length,
+              itemBuilder: (context, resourceIndex) {
+                final resource = lesson.resources[resourceIndex];
+                return ListTile(
+                  title: Text(resource.title),
+                  subtitle: Text(resource.type),
+                  trailing: IconButton(
+                    onPressed: () => _removeResource(index, resourceIndex),
+                    icon: const Icon(Icons.delete),
+                  ),
+                );
+              },
+            ),
+            TextButton.icon(
+              icon: _isUploadingResource[index] == true
+                  ? const SizedBox(height: 20, width: 20)
+                  : const Icon(Icons.add),
+              onPressed: _isUploadingResource[index] == true
+                  ? null
+                  : () => _addResource(index),
+              label: Text(
+                _isUploadingResource[index] == true
+                    ? 'Uploading...'
+                    : 'Add Resouce',
+              ),
+              style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+            ),
           ],
         ),
       ),
     );
   }
 
+  Future<void> _addResource(int lessonIndex) async {
+    //code later
+  }
   Future<void> _pickVideo(int lessonIndex) async {}
+
+  void _removeResource(int lessonIndex, int resourceIndex) {
+    setState(() {
+      final updatedResources = List<Resource>.from(
+        _lessons[lessonIndex].resources,
+      );
+      _updateLesson(lessonIndex, resources: updatedResources);
+    });
+  }
 
   void _removeLesson(int index) {
     setState(() {
