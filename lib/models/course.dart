@@ -46,8 +46,8 @@ class Course {
     description: json['description'],
     imageUrl: json['imageUrl'],
     instructorId: json['instructorId'],
-    categoryId: json['id'],
-    price: json['categoryId'].toDouble(),
+    categoryId: json['categoryId'],
+    price: json['price'].toDouble(),
     lessons: (json['lessons'] as List)
         .map((lesson) => Lesson.fromJson(lesson))
         .toList(),
