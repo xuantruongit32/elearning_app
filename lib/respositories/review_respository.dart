@@ -51,4 +51,12 @@ class ReviewRepository {
       throw Exception('Failed to update review: $e');
     }
   }
+
+  Future<void> deleteReview(String reviewId) async {
+    try {
+      await _firestore.collection('reviews').doc(reviewId).delete();
+    } catch (e) {
+      throw Exception('Failed to delete review: $e');
+    }
+  }
 }
