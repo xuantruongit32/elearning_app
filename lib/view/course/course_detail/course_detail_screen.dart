@@ -1,4 +1,6 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
+import 'package:elearning_app/models/course.dart';
+import 'package:elearning_app/respositories/course_respository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/action_buttons.dart';
@@ -22,6 +24,36 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     setState(() {});
   }
 
+  final CourseRepository _courseRepository = CourseRepository();
+  Course? _course;
+  bool _isLoading = true;
+  bool _isUnlocked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCourse();
+  }
+
+  Future<void> _loadCourse() async {
+    try {
+      final course = await _courseRepository.getCourseDetail(widget.courseId);
+      setState(() {
+        _course = course;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      Get.snackbar(
+        'Error',
+        'Failed to load course details',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -30,6 +62,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     final course = DummyDataService.getCourseById(id);
     final isCompleted = DummyDataService.isCourseCompleted(course.id);
     final isUnlocked = DummyDataService.isCourseUnlocked(widget.courseId);
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
