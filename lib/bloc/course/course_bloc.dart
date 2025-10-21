@@ -27,7 +27,15 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
     LoadCourses event,
     Emitter<CourseState> emit,
   ) async {
-    //code later
+    emit(CourseLoading());
+    try {
+      final courses = await _courseRepository.getCourses(
+        categoryId: event.categoryId,
+      );
+      emit(CoursesLoaded(courses));
+    } catch (e) {
+      emit(CourseError(e.toString()));
+    }
   }
 
   Future<void> _onLoadCourseDetail(
@@ -74,25 +82,25 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
   }
 
   Future<void> _onDeleteCourse(
-  DeleteCourse event,
-  Emitter<CourseState> emit,
-) async {
-  try {
-    // Gọi Repository để thực hiện việc xóa khóa học trong database (như Firestore)
-    await _courseRepository.deleteCourse(event.courseId);
+    DeleteCourse event,
+    Emitter<CourseState> emit,
+  ) async {
+    try {
+      // Gọi Repository để thực hiện việc xóa khóa học trong database (như Firestore)
+      await _courseRepository.deleteCourse(event.courseId);
 
-    // Lấy ID người dùng hiện tại
-    final userId = _authBloc.state.userModel?.uid;
+      // Lấy ID người dùng hiện tại
+      final userId = _authBloc.state.userModel?.uid;
 
-    if (userId != null) {
-      final courses = await _courseRepository.getInstructorCourses(userId);
+      if (userId != null) {
+        final courses = await _courseRepository.getInstructorCourses(userId);
 
-      emit(CourseDeleted('Course deleted successfully'));
+        emit(CourseDeleted('Course deleted successfully'));
 
-      emit(CoursesLoaded(courses));
+        emit(CoursesLoaded(courses));
+      }
+    } catch (e) {
+      emit(CourseError(e.toString()));
     }
-  } catch (e) {
-    emit(CourseError(e.toString()));
   }
-}
 }
