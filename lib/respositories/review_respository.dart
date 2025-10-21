@@ -41,5 +41,14 @@ class ReviewRepository {
     }
   }
 
-  
+  Future<void> updateReview(Review review) async {
+    try {
+      await _firestore
+          .collection('reviews')
+          .doc(review.id)
+          .update(review.toJson());
+    } catch (e) {
+      throw Exception('Failed to update review: $e');
+    }
+  }
 }
