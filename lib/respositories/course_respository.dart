@@ -43,6 +43,22 @@ class CourseRepository {
     }
   }
 
+  Future<Set<String>> getCompletedLessons(String courseID) async {
+    try {
+      final snapshot = await _firestore
+          .collection('lesson_progress')
+          .where('courseID', isEqualTo: courseID)
+          .where('isCompleted', isEqualTo: true)
+          .get();
+
+      return snapshot.docs
+          .map((doc) => doc.data()['lessonId'] as String)
+          .toSet();
+    } catch (e) {
+      throw Exception('Failed to get completed lessons: $e');
+    }
+  }
+
   Future<void> createCourse(Course course) async {
     try {
       final courseData = course.toJson();
