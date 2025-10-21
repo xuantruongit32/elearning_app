@@ -58,15 +58,27 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final lastLesson = Get.parameters['latestlesson'];
-    final id = Get.parameters['id'] ?? widget.courseId;
-    final course = DummyDataService.getCourseById(id);
-    final isCompleted = DummyDataService.isCourseCompleted(course.id);
-    final isUnlocked = DummyDataService.isCourseUnlocked(widget.courseId);
+    if (_isLoading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    if (_course == null) {
+      return Scaffold(
+        appBar: AppBar(),
+        body: const Center(child: Text('Course not found')),
+      );
+    }
+
+    //if in progress -> scroll to last lesson
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (lastLesson != null) {
+        // implement scroll to jast lesson logic here
+      }
+    });
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          CourseDetailAppBar(imageUrl: course.imageUrl),
+          CourseDetailAppBar(imageUrl: _course!.imageUrl),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -74,7 +86,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    course.title,
+                    _course!.title,
                     style: theme.textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -85,19 +97,19 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                       const Icon(Icons.star, color: Colors.amber),
                       const SizedBox(width: 4),
                       Text(
-                        course.rating.toString(),
+                        _course!.rating.toString(),
                         style: theme.textTheme.bodyMedium,
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '(${course.reviewCount} reviews)',
+                        '(${_course!.reviewCount} reviews)',
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.secondary,
                         ),
                       ),
                       const Spacer(),
                       Text(
-                        '\$${course.price}',
+                        '\$${_course!.price}',
                         style: theme.textTheme.titleLarge?.copyWith(
                           color: theme.colorScheme.primary,
                           fontWeight: FontWeight.bold,
@@ -106,9 +118,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  Text(course.description, style: theme.textTheme.bodyLarge),
+                  Text(_course!.description, style: theme.textTheme.bodyLarge),
                   const SizedBox(height: 16),
-                  CourseInfoCard(course: course),
+                  CourseInfoCard(course: _course!),
                   const SizedBox(height: 24),
                   Text(
                     'Course Content',
@@ -119,20 +131,20 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   const SizedBox(height: 16),
                   LessonList(
                     courseId: widget.courseId,
-                    isUnlocked: isUnlocked,
+                    isUnlocked: _isUnlocked,
                     onLessonComplete: () => setState(() {}),
                   ),
                   const SizedBox(height: 24),
                   ReviewsSection(courseId: widget.courseId),
                   const SizedBox(height: 16),
-                  ActionButtons(course: course),
+                  ActionButtons(course: _course!),
                 ],
               ),
             ),
           ),
         ],
       ),
-      bottomNavigationBar: course.isPremium && !isUnlocked
+      bottomNavigationBar: _course!.isPremium && !_isUnlocked
           ? Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -152,13 +164,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     AppRoutes.payment,
                     arguments: {
                       'courseId': widget.courseId,
-                      'courseName': course.title,
-                      'price': course.price,
+                      'courseName': _course!.title,
+                      'price': _course!.price,
                     },
                   )?.then((_) {
                     setState(
                       () {},
-                    ); // 🔁 Khi quay lại từ trang thanh toán, rebuild UI
+                    ); 
                   });
                   ;
                 },
@@ -166,7 +178,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   backgroundColor: AppColors.primary,
                   padding: const EdgeInsets.all(16),
                 ),
-                child: Text('Buy Now for \$${course.price}'),
+                child: Text('Buy Now for \$${_course!.price}'),
               ),
             )
           : null,
