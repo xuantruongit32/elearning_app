@@ -4,6 +4,27 @@ import 'package:elearning_app/models/course.dart';
 class CourseRepository {
   final _firestore = FirebaseFirestore.instance;
 
+  Future<List<Course>> getCourses({String? categoryId}) async {
+    try {
+      Query query = _firestore.collection('courses');
+
+      if (categoryId != null) {
+        query = query.where('categoryId', isEqualTo: categoryId);
+      }
+
+      final snapshot = await query.get();
+      return snapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>?;
+        if (data == null) {
+          throw Exception('Course data is null');
+        }
+        return Course.fromJson({...data, 'id': doc.id});
+      }).toList();
+    } catch (e) {
+      throw Exception('Failed to get courses: $e');
+    }
+  }
+
   Future<void> createCourse(Course course) async {
     try {
       final courseData = course.toJson();
@@ -59,24 +80,23 @@ class CourseRepository {
     }
   }
 
-
   //delete course
   Future<void> deleteCourse(String courseId) async {
-  try {
-    // delete the course document
-    await _firestore.collection('courses').doc(courseId).delete();
+    try {
+      // delete the course document
+      await _firestore.collection('courses').doc(courseId).delete();
 
-    // delete all enrollments for this course
-    final enrollmentsSnapshot = await _firestore
-        .collection('enrollments')
-        .where('courseId', isEqualTo: courseId)
-        .get();
+      // delete all enrollments for this course
+      final enrollmentsSnapshot = await _firestore
+          .collection('enrollments')
+          .where('courseId', isEqualTo: courseId)
+          .get();
 
-    for (var doc in enrollmentsSnapshot.docs) {
-      await doc.reference.delete();
+      for (var doc in enrollmentsSnapshot.docs) {
+        await doc.reference.delete();
+      }
+    } catch (e) {
+      throw Exception('Failed to delete course: $e');
     }
-  } catch (e) {
-    throw Exception('Failed to delete course: $e');
   }
-}
 }
