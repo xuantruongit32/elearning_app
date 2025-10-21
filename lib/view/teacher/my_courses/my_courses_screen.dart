@@ -2,7 +2,6 @@ import 'package:elearning_app/bloc/course/course_bloc.dart';
 import 'package:elearning_app/bloc/course/course_event.dart';
 import 'package:elearning_app/bloc/course/course_state.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
-import 'package:elearning_app/respositories/course_respository.dart';
 import 'package:elearning_app/services/user_service.dart';
 import 'package:elearning_app/view/teacher/my_courses/widgets/empty_courses_state.dart';
 import 'package:elearning_app/view/teacher/my_courses/widgets/my_courses_app_bar.dart';
