@@ -32,4 +32,14 @@ class ReviewRepository {
       return [];
     }
   }
+
+  Future<void> addReview(Review review) async {
+    try {
+      await _firestore.collection('reviews').add(review.toJson());
+    } catch (e) {
+      throw Exception('Failed to add review: $e');
+    }
+  }
+
+  
 }
