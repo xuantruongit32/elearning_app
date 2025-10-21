@@ -9,18 +9,24 @@ class RecommendedCourseCard extends StatelessWidget {
   final String courseId;
   final String title;
   final String imageUrl;
-  final String instructorId;
-  final String duration;
+  final String instructorName;
   final bool isPremium;
+  final double rating;
+  final int reviewCount;
+  final double price;
+  final VoidCallback onTap;
 
   const RecommendedCourseCard({
     super.key,
     required this.courseId,
     required this.title,
     required this.imageUrl,
-    required this.instructorId,
-    required this.duration,
-    required this.isPremium,
+    required this.instructorName,
+    this.isPremium = false,
+    required this.price,
+    required this.onTap,
+    required this.rating,
+    required this.reviewCount,
   });
 
   @override
