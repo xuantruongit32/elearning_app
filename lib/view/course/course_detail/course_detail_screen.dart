@@ -137,7 +137,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   const SizedBox(height: 24),
                   ReviewsSection(courseId: widget.courseId),
                   const SizedBox(height: 16),
-                  ActionButtons(course: _course!),
+                  ActionButtons(course: _course!, isUnlocked: _isUnlocked),
                 ],
               ),
             ),
@@ -168,9 +168,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                       'price': _course!.price,
                     },
                   )?.then((_) {
-                    setState(
-                      () {},
-                    ); 
+                    setState(() {});
                   });
                   ;
                 },

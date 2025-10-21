@@ -1,13 +1,17 @@
 import 'package:elearning_app/models/course.dart';
 import 'package:elearning_app/routes/app_routes.dart';
-import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:elearning_app/view/chat/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ActionButtons extends StatelessWidget {
   final Course course;
-  const ActionButtons({super.key, required this.course});
+  final isUnlocked;
+  const ActionButtons({
+    super.key,
+    required this.course,
+    required this.isUnlocked,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +20,7 @@ class ActionButtons extends StatelessWidget {
         Expanded(
           child: ElevatedButton.icon(
             onPressed: () {
-              if (course.isPremium &&
-                  !DummyDataService.isCourseUnlocked(course.id)) {
+              if (course.isPremium && !isUnlocked) {
                 // payment if is premium
                 Get.toNamed(
                   AppRoutes.payment,
@@ -40,8 +43,7 @@ class ActionButtons extends StatelessWidget {
           ),
         ),
         //show chat button if not premium or unlocked
-        if (!course.isPremium ||
-            DummyDataService.isCourseUnlocked(course.id)) ...[
+        if (!course.isPremium || isUnlocked) ...[
           const SizedBox(width: 16),
           IconButton(
             onPressed: () => Get.to(
