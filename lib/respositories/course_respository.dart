@@ -25,6 +25,24 @@ class CourseRepository {
     }
   }
 
+  Future<Course> getCourseDetail(String courseId) async {
+    try {
+      final doc = await _firestore.collection('courses').doc(courseId).get();
+      if (!doc.exists) {
+        throw Exception('Course not found');
+      }
+
+      final data = doc.data() as Map<String, dynamic>?;
+      if (data == null) {
+        throw Exception('Course data is null');
+      }
+
+      return Course.fromJson({...data, 'id': doc.id});
+    } catch (e) {
+      throw Exception('Failed to get course detail: $e');
+    }
+  }
+
   Future<void> createCourse(Course course) async {
     try {
       final courseData = course.toJson();
