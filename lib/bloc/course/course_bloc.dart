@@ -20,6 +20,7 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
     on<LoadEnrolledCourses>(_onLoadEnrolledCourse);
     on<LoadOfflineCourses>(_onLoadOfflineCourses);
     on<UpdateCourse>(_onUpdateCourse);
+    on<DeleteCourse>(_onDeleteCourse);
   }
 
   Future<void> _onLoadCourses(
@@ -71,4 +72,27 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
       emit(CourseError(e.toString()));
     }
   }
+
+  Future<void> _onDeleteCourse(
+  DeleteCourse event,
+  Emitter<CourseState> emit,
+) async {
+  try {
+    // Gọi Repository để thực hiện việc xóa khóa học trong database (như Firestore)
+    await _courseRepository.deleteCourse(event.courseId);
+
+    // Lấy ID người dùng hiện tại
+    final userId = _authBloc.state.userModel?.uid;
+
+    if (userId != null) {
+      final courses = await _courseRepository.getInstructorCourses(userId);
+
+      emit(CourseDeleted('Course deleted successfully'));
+
+      emit(CoursesLoaded(courses));
+    }
+  } catch (e) {
+    emit(CourseError(e.toString()));
+  }
+}
 }
