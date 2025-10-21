@@ -1,9 +1,7 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/review.dart';
 import 'package:elearning_app/respositories/review_respository.dart';
-import 'package:elearning_app/view/course/course_detail/widgets/review_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ReviewsSection extends StatefulWidget {
   final String courseId;
@@ -55,17 +53,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
             ),
             TextButton.icon(
               onPressed: () async {
-                final result = await Get.dialog<Map<String, dynamic>>(
-                  ReviewDialog(courseId: widget.courseId),
-                );
-                if (result != null) {
-                  Get.snackbar(
-                    'Success',
-                    'Thank you for your review!',
-                    backgroundColor: AppColors.primary,
-                    colorText: Colors.white,
-                  );
-                }
+                //code later
               },
               label: const Text('Write a review'),
               icon: const Icon(Icons.rate_review),
@@ -73,22 +61,68 @@ class _ReviewsSectionState extends State<ReviewsSection> {
           ],
         ),
         const SizedBox(height: 16),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            return _buildReviewTile(
-              context,
-              name: 'User ${index + 1}',
-              rating: 4.5,
-              comment: 'Great course! Very informative and well-structured.',
-              date: '2 days ago',
-            );
-          },
-        ),
+        if (_isLoading)
+          const Center(child: CircularProgressIndicator())
+        else if (_reviews.isEmpty)
+          Center(
+            child: Column(
+              children: [
+                Icon(
+                  Icons.reviews_outlined,
+                  size: 48,
+                  color: AppColors.secondary.withValues(alpha: 0.5),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'No reviews yet',
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: AppColors.primary,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Be first to review this course',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.secondary.withValues(alpha: 0.7),
+                  ),
+                ),
+              ],
+            ),
+          )
+        else
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: _reviews.length,
+            itemBuilder: (context, index) {
+              final review = _reviews[index];
+              return _buildReviewTile(
+                context,
+                name: review.userName,
+                rating: review.rating,
+                comment: review.comment,
+                date: _formatDate(review.createdAt),
+              );
+            },
+          ),
       ],
     );
+  }
+
+  String _formatDate(DateTime date) {
+    final now = DateTime.now();
+    final differece = now.difference(date);
+
+    if (differece.inDays == 0) {
+      if (differece.inHours == 0) {
+        return '${differece.inMinutes} minutes ago';
+      }
+      return '${differece.inHours} hours ago';
+    } else if (differece.inDays < 7) {
+      return '${differece.inDays} days ago';
+    } else {
+      return '${date.day}/${date.month}/${date.year}';
+    }
   }
 
   Widget _buildReviewTile(
