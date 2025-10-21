@@ -1,11 +1,42 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
+import 'package:elearning_app/models/review.dart';
+import 'package:elearning_app/respositories/review_respository.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/review_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ReviewsSection extends StatelessWidget {
+class ReviewsSection extends StatefulWidget {
   final String courseId;
   const ReviewsSection({super.key, required this.courseId});
+
+  @override
+  State<ReviewsSection> createState() => _ReviewsSectionState();
+}
+
+class _ReviewsSectionState extends State<ReviewsSection> {
+  final ReviewRepository _reviewRepository = ReviewRepository();
+  List<Review> _reviews = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadReviews();
+  }
+
+  Future<void> _loadReviews() async {
+    try {
+      final reviews = await _reviewRepository.getCourseReviews(widget.courseId);
+      setState(() {
+        _reviews = reviews;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +56,7 @@ class ReviewsSection extends StatelessWidget {
             TextButton.icon(
               onPressed: () async {
                 final result = await Get.dialog<Map<String, dynamic>>(
-                  ReviewDialog(courseId: courseId),
+                  ReviewDialog(courseId: widget.courseId),
                 );
                 if (result != null) {
                   Get.snackbar(
