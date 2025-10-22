@@ -68,6 +68,21 @@ class _ReviewsSectionState extends State<ReviewsSection> {
     }
   }
 
+  Future<void> _handleReviewAction(Map<String, dynamic> result) async {
+    final currentUser = _auth.currentUser;
+    if (currentUser == null) {
+      Get.snackbar(
+        'Error',
+        'Please sign in to review',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
