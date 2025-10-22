@@ -1,6 +1,7 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/review.dart';
 import 'package:elearning_app/respositories/review_respository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ReviewsSection extends StatefulWidget {
@@ -15,6 +16,8 @@ class _ReviewsSectionState extends State<ReviewsSection> {
   final ReviewRepository _reviewRepository = ReviewRepository();
   List<Review> _reviews = [];
   bool _isLoading = true;
+  final _auth = FirebaseAuth.instance;
+  String? _error;
 
   @override
   void initState() {
@@ -23,14 +26,26 @@ class _ReviewsSectionState extends State<ReviewsSection> {
   }
 
   Future<void> _loadReviews() async {
+    if (!mounted) return;
+
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
     try {
       final reviews = await _reviewRepository.getCourseReviews(widget.courseId);
+
+      if (!mounted) return;
+
       setState(() {
         _reviews = reviews;
         _isLoading = false;
       });
     } catch (e) {
+      if (!mounted) return;
       setState(() {
+        _error = 'Failed to load reviews';
         _isLoading = false;
       });
     }
