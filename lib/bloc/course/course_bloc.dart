@@ -58,7 +58,13 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
     LoadCourseDetail event,
     Emitter<CourseState> emit,
   ) async {
-    //code later
+    emit(CourseLoading());
+    try {
+      final course = await _courseRepository.getCourseDetail(event.courseId);
+      emit(CourseDetailLoaded(course));
+    } catch (e) {
+      emit(CourseError(e.toString()));
+    }
   }
 
   Future<void> _onEnrollCourse(
