@@ -94,10 +94,18 @@ class ReviewRepository {
 
   Future<void> updateReview(Review review) async {
     try {
+      // convert to JSON and save
+      final reviewData = review.toJson();
+
+      // remove id field before updating
+      final dataToUpdate = Map<String, dynamic>.from(reviewData)..remove('id');
       await _firestore
           .collection('reviews')
           .doc(review.id)
-          .update(review.toJson());
+          .update(dataToUpdate);
+
+      // update course rating
+      await _updateCourseRating(review.courseId);
     } catch (e) {
       throw Exception('Failed to update review: $e');
     }
@@ -105,7 +113,21 @@ class ReviewRepository {
 
   Future<void> deleteReview(String reviewId) async {
     try {
+      // get the review first to get the courseId
+      final reviewDoc = await _firestore
+          .collection('reviews')
+          .doc(reviewId)
+          .get();
+      final courseId = reviewDoc.data()?['courseId'] as String?;
+
+      // delete the review
       await _firestore.collection('reviews').doc(reviewId).delete();
+
+      // update course rating if we have the courseId
+      if (courseId != null) {
+        await _updateCourseRating(courseId);
+      }
+      
     } catch (e) {
       throw Exception('Failed to delete review: $e');
     }
