@@ -1,9 +1,12 @@
+import 'package:elearning_app/bloc/course/course_bloc.dart';
+import 'package:elearning_app/bloc/course/course_event.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/review.dart';
 import 'package:elearning_app/respositories/review_respository.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/review_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 class ReviewsSection extends StatefulWidget {
@@ -81,6 +84,86 @@ class _ReviewsSectionState extends State<ReviewsSection> {
     }
 
     setState(() => _isLoading = true);
+
+    try {
+      final action = result['action'] as String;
+
+      // check if user has already reviewed
+      final existingReview = _reviews.firstWhereOrNull(
+        (review) => review.userId == currentUser.uid,
+      );
+
+      switch (action) {
+        case 'add':
+          if (existingReview != null) {
+            Get.snackbar(
+              'Error',
+              'You have already reviewed this course',
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
+            setState(() => _isLoading = false);
+            return;
+          }
+          final rating = (result['rating'] as num).toDouble();
+          final comment = result['review'] as String;
+          final newReview = Review(
+            id: '',
+            courseId: widget.courseId,
+            userId: currentUser.uid,
+            userName: currentUser.displayName ?? 'Anonymous',
+            rating: rating,
+            comment: comment,
+            createdAt: DateTime.now(),
+          );
+          await _reviewRepository.addReview(newReview);
+          break;
+
+        case 'update':
+          if (existingReview != null) {
+            final rating = (result['rating'] as num).toDouble();
+            final comment = result['review'] as String;
+            final updatedReview = Review(
+              id: existingReview.id,
+              courseId: widget.courseId,
+              userId: currentUser.uid,
+              userName: currentUser.displayName ?? 'Anonymous',
+              rating: rating,
+              comment: comment,
+              createdAt: DateTime.now(),
+            );
+            await _reviewRepository.addReview(updatedReview);
+          }
+          break;
+
+        case 'delete':
+          if (existingReview != null) {
+            await _reviewRepository.deleteReview(existingReview.id);
+          }
+          break;
+      }
+      await _loadReviews();
+
+      // refresh course details to update rating and review count
+      context.read<CourseBloc>().add(RefreshCourseDetail(widget.courseId));
+
+      Get.snackbar(
+        'Success',
+        '',
+        backgroundColor: AppColors.primary,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      Get.snackbar(
+        'Error',
+        'Failed to ${result['action']} review',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 
   @override
