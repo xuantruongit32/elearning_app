@@ -149,7 +149,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
 
       Get.snackbar(
         'Success',
-        '',
+        _getSuccessMessage(action),
         backgroundColor: AppColors.primary,
         colorText: Colors.white,
       );
@@ -163,6 +163,19 @@ class _ReviewsSectionState extends State<ReviewsSection> {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+    }
+  }
+
+  String _getSuccessMessage(String action) {
+    switch (action) {
+      case 'add':
+        return 'Thank you for your review';
+      case 'update':
+        return 'Your review has been updated!';
+      case 'delete':
+        return 'Your review has been deleted';
+      default:
+        return 'Action completed successfully!';
     }
   }
 
