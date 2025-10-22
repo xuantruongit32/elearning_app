@@ -203,8 +203,12 @@ class _ReviewsSectionState extends State<ReviewsSection> {
               ),
             ),
             TextButton.icon(
-              onPressed: _isLoading ? null : () => _showReviewDialog(),
-              label: const Text('Write a review'),
+              onPressed: _isLoading
+                  ? null
+                  : () => _showReviewDialog(userReview),
+              label: Text(
+                userReview != null ? 'Edit Review' : 'Write a Review',
+              ),
               icon: const Icon(Icons.rate_review),
             ),
           ],
@@ -212,6 +216,17 @@ class _ReviewsSectionState extends State<ReviewsSection> {
         const SizedBox(height: 16),
         if (_isLoading)
           const Center(child: CircularProgressIndicator())
+        else if (_error != null)
+          Center(
+            child: Column(
+              children: [
+                const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                const SizedBox(height: 16),
+                Text(_error!, style: theme.textTheme.bodyLarge),
+                TextButton(onPressed: _loadReviews, child: const Text('Retry')),
+              ],
+            ),
+          )
         else if (_reviews.isEmpty)
           Center(
             child: Column(
@@ -247,10 +262,8 @@ class _ReviewsSectionState extends State<ReviewsSection> {
               final review = _reviews[index];
               return _buildReviewTile(
                 context,
-                name: review.userName,
-                rating: review.rating,
-                comment: review.comment,
-                date: _formatDate(review.createdAt),
+                review: review,
+                isCurrentUserReview: currentUser?.uid == review.userId,
               );
             },
           ),
@@ -276,10 +289,8 @@ class _ReviewsSectionState extends State<ReviewsSection> {
 
   Widget _buildReviewTile(
     BuildContext context, {
-    required String name,
-    required double rating,
-    required String comment,
-    required String date,
+    required Review review,
+    required bool isCurrentUserReview,
   }) {
     final theme = Theme.of(context);
     return Container(
@@ -304,7 +315,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
               CircleAvatar(
                 backgroundColor: AppColors.primary,
                 child: Text(
-                  name[0],
+                  review.userName[0],
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: Colors.white,
                   ),
@@ -316,7 +327,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      name,
+                      review.userName,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -325,14 +336,16 @@ class _ReviewsSectionState extends State<ReviewsSection> {
                       children: [
                         ...List.generate(5, (index) {
                           return Icon(
-                            index < rating ? Icons.star : Icons.star_border,
+                            index < review.rating
+                                ? Icons.star
+                                : Icons.star_border,
                             size: 16,
                             color: AppColors.primary,
                           );
                         }),
                         const SizedBox(width: 8),
                         Text(
-                          date,
+                          _formatDate(review.createdAt),
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: AppColors.secondary,
                           ),
@@ -344,7 +357,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
               ),
             ],
           ),
-          Text(comment, style: theme.textTheme.bodyMedium),
+          Text(review.comment, style: theme.textTheme.bodyMedium),
         ],
       ),
     );
