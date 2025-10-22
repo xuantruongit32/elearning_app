@@ -26,6 +26,12 @@ class DownloadCourse extends CourseEvent {
   DownloadCourse(this.courseId);
 }
 
+class RefreshCourseDetail extends CourseEvent {
+  final String courseId;
+
+  RefreshCourseDetail(this.courseId);
+}
+
 class LoadOfflineCourses extends CourseEvent {}
 
 class UpdateCourse extends CourseEvent {
@@ -34,7 +40,7 @@ class UpdateCourse extends CourseEvent {
   UpdateCourse(this.instructorId);
 }
 
-class DeleteCourse extends CourseEvent{
+class DeleteCourse extends CourseEvent {
   final String courseId;
 
   DeleteCourse(this.courseId);
