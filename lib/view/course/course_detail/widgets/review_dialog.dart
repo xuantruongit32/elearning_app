@@ -49,6 +49,12 @@ class _ReviewDialogState extends State<ReviewDialog> {
     }
   }
 
+  void _handleDelete(){
+    final result = {'action' : 'delete'};
+    _resetForm();
+    Get.back(result: result);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
