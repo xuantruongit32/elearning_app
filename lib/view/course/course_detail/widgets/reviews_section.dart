@@ -4,6 +4,7 @@ import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/review.dart';
 import 'package:elearning_app/respositories/review_respository.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/review_dialog.dart';
+import 'package:elearning_app/view/course/course_detail/widgets/shimmer_review_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -215,7 +216,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
         ),
         const SizedBox(height: 16),
         if (_isLoading)
-          const Center(child: CircularProgressIndicator())
+          Column(children: List.generate(3, (index) => const ShimmerReviewTile()))
         else if (_error != null)
           Center(
             child: Column(
@@ -357,7 +358,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
               ),
               if (isCurrentUserReview)
                 IconButton(
-                  onPressed: () => _showReviewDialog,
+                  onPressed: () => _showReviewDialog(review),
                   icon: const Icon(Icons.more_vert),
                 ),
             ],
