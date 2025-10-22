@@ -61,6 +61,10 @@ class Review {
     'userName': userName,
     'rating': rating,
     'comment': comment,
-    'createdAt': createdAt.toIso8601String(),
+    'createdAt': Timestamp.fromDate(createdAt),
   };
+
+  String toString() {
+    return 'Review(id: $id, courseId: $courseId, userId: $userId, userName: $userName, rating: $rating, comment: $comment, createdAt: $createdAt)';
+  }
 }
