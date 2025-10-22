@@ -1,8 +1,10 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/review.dart';
 import 'package:elearning_app/respositories/review_respository.dart';
+import 'package:elearning_app/view/course/course_detail/widgets/review_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ReviewsSection extends StatefulWidget {
   final String courseId;
@@ -51,9 +53,32 @@ class _ReviewsSectionState extends State<ReviewsSection> {
     }
   }
 
+  Future<void> _showReviewDialog([Review? existingReview]) async {
+    final result = await Get.dialog<Map<String, dynamic>>(
+      ReviewDialog(
+        courseId: widget.courseId,
+        key: UniqueKey(), // force new instance
+        existingReview: existingReview,
+      ),
+      barrierDismissible: false, // prevent closing by tapping outside
+    );
+
+    if (result != null) {
+      await _handleReviewAction(result);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final currentUser = _auth.currentUser;
+
+    final userReview = currentUser != null
+        ? _reviews.firstWhereOrNull(
+            (review) => review.userId == currentUser.uid,
+          )
+        : null;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -67,9 +92,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
               ),
             ),
             TextButton.icon(
-              onPressed: () async {
-                //code later
-              },
+              onPressed: _isLoading ? null : () => _showReviewDialog(),
               label: const Text('Write a review'),
               icon: const Icon(Icons.rate_review),
             ),

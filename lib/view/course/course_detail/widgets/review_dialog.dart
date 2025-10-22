@@ -1,10 +1,12 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
+import 'package:elearning_app/models/review.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReviewDialog extends StatefulWidget {
   final String courseId;
-  const ReviewDialog({super.key, required this.courseId});
+  final Review? existingReview;
+  const ReviewDialog({super.key, required this.courseId, this.existingReview});
 
   @override
   State<ReviewDialog> createState() => _ReviewDialogState();
