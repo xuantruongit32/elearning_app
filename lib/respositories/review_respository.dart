@@ -17,7 +17,6 @@ class ReviewRepository {
       final QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
           .collection('reviews')
           .where('courseId', isEqualTo: courseId)
-          .orderBy('createdAt', descending: true)
           .get();
 
       final reviews = snapshot.docs.map((doc) {
