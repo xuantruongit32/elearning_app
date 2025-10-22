@@ -41,7 +41,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
     if (_rating > 0) {
       final result = {
         'action': widget.existingReview != null ? 'update' : 'add',
-        'raing': _rating,
+        'rating': _rating,
         'review': _reviewController.text,
       };
       _resetForm();

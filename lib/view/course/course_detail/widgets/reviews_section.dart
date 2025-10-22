@@ -132,7 +132,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
               comment: comment,
               createdAt: DateTime.now(),
             );
-            await _reviewRepository.addReview(updatedReview);
+            await _reviewRepository.updateReview(updatedReview);
           }
           break;
 
@@ -355,6 +355,11 @@ class _ReviewsSectionState extends State<ReviewsSection> {
                   ],
                 ),
               ),
+              if (isCurrentUserReview)
+                IconButton(
+                  onPressed: () => _showReviewDialog,
+                  icon: const Icon(Icons.more_vert),
+                ),
             ],
           ),
           Text(review.comment, style: theme.textTheme.bodyMedium),
