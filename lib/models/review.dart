@@ -67,4 +67,24 @@ class Review {
   String toString() {
     return 'Review(id: $id, courseId: $courseId, userId: $userId, userName: $userName, rating: $rating, comment: $comment, createdAt: $createdAt)';
   }
+
+  Review copyWith({
+    String? id,
+    String? courseId,
+    String? userId,
+    String? userName,
+    double? rating,
+    String? comment,
+    DateTime? createdAt,
+  }) {
+    return Review(
+      id: id ?? this.id,
+      courseId: courseId ?? this.courseId,
+      userId: userId ?? this.userId,
+      userName: userName ?? this.userName,
+      rating: rating ?? this.rating,
+      comment: comment ?? this.comment,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }
