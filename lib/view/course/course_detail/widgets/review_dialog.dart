@@ -49,8 +49,8 @@ class _ReviewDialogState extends State<ReviewDialog> {
     }
   }
 
-  void _handleDelete(){
-    final result = {'action' : 'delete'};
+  void _handleDelete() {
+    final result = {'action': 'delete'};
     _resetForm();
     Get.back(result: result);
   }
@@ -112,7 +112,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
                       child: Text(
                         'Delete',
                         style: theme.textTheme.titleMedium?.copyWith(
-                          color: AppColors.secondary,
+                          color: Colors.red,
                         ),
                       ),
                     ),
