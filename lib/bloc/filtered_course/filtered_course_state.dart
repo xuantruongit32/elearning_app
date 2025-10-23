@@ -8,13 +8,13 @@ class FilteredCourseLoading extends FilteredCourseState {}
 
 class FilteredCourseError extends FilteredCourseState {
   final String message;
-  
+
   FilteredCourseError(this.message);
 }
 
 class FilteredCoursesLoaded extends FilteredCourseState {
   final List<Course> courses;
   final String categoryId;
-  
-  FilteredCoursesLoaded(this.categoryId, this.courses);
+
+  FilteredCoursesLoaded(this.courses, this.categoryId);
 }
