@@ -6,6 +6,7 @@ import 'package:elearning_app/models/user_model.dart';
 import 'package:elearning_app/respositories/instructor_respositories.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/view/home/widgets/recommended_course_card.dart';
+import 'package:elearning_app/view/home/widgets/shimmer_recommeneded_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -50,7 +51,7 @@ class _RecommendedSectionState extends State<RecommendedSection> {
       },
       builder: (context, state) {
         if (state is CourseLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const ShimmerRecommenededSection();
         }
 
         if (state is CoursesLoaded) {
