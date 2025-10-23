@@ -1,3 +1,5 @@
+import 'package:elearning_app/bloc/filtered_course/filtered_course_bloc.dart';
+import 'package:elearning_app/bloc/filtered_course/filtered_course_event.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/category.dart';
 import 'package:elearning_app/routes/app_routes.dart';
@@ -89,6 +91,13 @@ class CategorySection extends StatelessWidget {
   }
 
   void _handleCategoryTap(context, category) {
-    Get.toNamed(AppRoutes.courseList);
+    Get.toNamed(
+      AppRoutes.courseList,
+      arguments: {'category': category.id, 'categoryName': category.name},
+      parameters: {'category': category.id, 'categoryName': category.name},
+    );
+    context.read<FilteredCourseBloc>().add(
+      FilterCoursesByCategory(category.id),
+    );
   }
 }
