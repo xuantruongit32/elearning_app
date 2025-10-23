@@ -11,6 +11,7 @@ class FilteredCourseBloc
     : _courseRepository = courseRepository,
       super(FilteredCourseInitial()) {
     on<FilterCoursesByCategory>(_onFilterCoursesByCategory);
+    on<ClearFilteredCourses>(_onClearFilteredCourses);
   }
 
   Future<void> _onFilterCoursesByCategory(
@@ -19,12 +20,19 @@ class FilteredCourseBloc
   ) async {
     emit(FilteredCourseLoading());
     try {
-  final courses = await _courseRepository.getCourses(
-    categoryId: event.categoryId,
-  );
-  emit(FilteredCoursesLoaded(courses, event.categoryId));
-} catch () {
-  
-}
+      final courses = await _courseRepository.getCourses(
+        categoryId: event.categoryId,
+      );
+      emit(FilteredCoursesLoaded(courses, event.categoryId));
+    } catch (e) {
+      emit(FilteredCourseError(e.toString()));
+    }
+  }
+
+  void _onClearFilteredCourses(
+    ClearFilteredCourses event,
+    Emitter<FilteredCourseState> emit,
+  ) {
+    emit(FilteredCourseInitial());
   }
 }

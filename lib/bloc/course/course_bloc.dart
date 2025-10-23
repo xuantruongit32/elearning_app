@@ -31,9 +31,7 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
   ) async {
     emit(CourseLoading());
     try {
-      final courses = await _courseRepository.getCourses(
-        categoryId: event.categoryId,
-      );
+      final courses = await _courseRepository.getCourses();
       emit(CoursesLoaded(courses));
     } catch (e) {
       emit(CourseError(e.toString()));
