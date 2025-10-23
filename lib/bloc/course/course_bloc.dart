@@ -58,9 +58,25 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
     LoadCourseDetail event,
     Emitter<CourseState> emit,
   ) async {
-    emit(CourseLoading());
+    // first emit loading state
+    if (state is CoursesLoaded) {
+      final currentState = state as CoursesLoaded;
+      emit(CoursesLoaded(currentState.courses, selectedCourse: null));
+    } else {
+      emit(CourseLoading());
+    }
     try {
       final course = await _courseRepository.getCourseDetail(event.courseId);
+
+      // if we already have a courses list, update it with the selected course
+      if (state is CoursesLoaded) {
+        final currentState = state as CoursesLoaded;
+        emit(currentState.copyWith(selectedCourse: course));
+      } else {
+        // if we don't have a courses list, load all courses and set the selected on
+        final courses = await _courseRepository.getCourses();
+        emit(CoursesLoaded(courses, selectedCourse: course));
+      }
       emit(CourseDetailLoaded(course));
     } catch (e) {
       emit(CourseError(e.toString()));
