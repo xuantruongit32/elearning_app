@@ -81,6 +81,19 @@ class _CourseListScreenState extends State<CourseListScreen> {
     );
   }
 
+  Widget _buildAllCourselist(ThemeData theme) {
+    return BlocBuilder<CourseBloc, CourseState>(
+      builder: (context, state) {
+        return _buildCourseListView(
+          theme: theme,
+          isLoading: state is CourseLoading,
+          error: state is CourseError ? state.message : null,
+          courses: state is CoursesLoaded ? state.courses : null,
+        );
+      },
+    );
+  }
+
   Widget _buildCourseListView({
     required ThemeData theme,
     required bool isLoading,
