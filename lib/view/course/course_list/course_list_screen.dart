@@ -1,6 +1,8 @@
 import 'package:elearning_app/bloc/course/course_bloc.dart';
 import 'package:elearning_app/bloc/course/course_event.dart';
 import 'package:elearning_app/bloc/course/course_state.dart';
+import 'package:elearning_app/bloc/filtered_course/filtered_course_bloc.dart';
+import 'package:elearning_app/bloc/filtered_course/filtered_course_event.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/view/course/course_list/widgets/course_card.dart';
 import 'package:elearning_app/view/course/course_list/widgets/course_filter_dialog.dart';
@@ -31,7 +33,13 @@ class _CourseListScreenState extends State<CourseListScreen> {
     super.initState();
 
     //load courses when screen initialize
-    context.read<CourseBloc>().add(LoadCourses(categoryId: widget.categoryId));
+    if (widget.categoryId != null) {
+      context.read<FilteredCourseBloc>().add(
+        FilterCoursesByCategory(widget.categoryId!),
+      );
+    } else {
+      context.read<CourseBloc>().add(LoadCourses());
+    }
   }
 
   @override
