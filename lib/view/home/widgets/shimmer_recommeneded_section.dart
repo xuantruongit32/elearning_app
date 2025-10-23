@@ -16,7 +16,7 @@ class ShimmerRecommenededSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Recommended Courses',
+                'Recommended',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: AppColors.primary,
                   fontWeight: FontWeight.bold,
