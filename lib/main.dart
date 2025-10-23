@@ -1,6 +1,7 @@
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
 import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/bloc/course/course_bloc.dart';
+import 'package:elearning_app/bloc/filtered_course/filtered_course_bloc.dart';
 import 'package:elearning_app/bloc/font/font_bloc.dart';
 import 'package:elearning_app/bloc/font/font_state.dart';
 import 'package:elearning_app/bloc/profile/profile_bloc.dart';
@@ -42,6 +43,11 @@ class MyApp extends StatelessWidget {
             courseRepository: CourseRepository(),
           ),
         ),
+        BlocProvider<FilteredCourseBloc>(
+          create: (context) =>
+              FilteredCourseBloc(courseRepository: CourseRepository()),
+        ),
+        
       ],
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {

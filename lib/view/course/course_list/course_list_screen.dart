@@ -51,7 +51,7 @@ class _CourseListScreenState extends State<CourseListScreen> {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       body: widget.categoryId != null
-          ? _buildFilteredCourseList(theme)
+          ? _buildFilteredCourselist(theme)
           : _buildAllCourselist(theme),
     );
   }
@@ -120,7 +120,7 @@ class _CourseListScreenState extends State<CourseListScreen> {
                       );
                     }
                   },
-                  icon: const Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back, color: AppColors.accent),
                 )
               : null,
           actions: [
