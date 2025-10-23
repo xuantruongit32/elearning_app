@@ -77,7 +77,6 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
         final courses = await _courseRepository.getCourses();
         emit(CoursesLoaded(courses, selectedCourse: course));
       }
-      emit(CourseDetailLoaded(course));
     } catch (e) {
       emit(CourseError(e.toString()));
     }
