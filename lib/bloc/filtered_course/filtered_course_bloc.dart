@@ -9,12 +9,14 @@ class FilteredCourseBloc
   final CourseRepository _courseRepository;
   String? _currentCategoryId;
   String? _currentLevel;
+  String? _currentSearchQuery;
 
   FilteredCourseBloc({required CourseRepository courseRepository})
     : _courseRepository = courseRepository,
       super(FilteredCourseInitial()) {
     on<FilterCoursesByCategory>(_onFilterCoursesByCategory);
     on<FilterCoursesByLevel>(_onFilterCoursesByLevel);
+    on<SearchCourses>(_onSearchCourses);
 
     on<ClearFilteredCourses>(_onClearFilteredCourses);
   }
@@ -53,6 +55,7 @@ class FilteredCourseBloc
           courses,
           categoryId: _currentCategoryId,
           level: _currentLevel,
+          searchQuery: _currentSearchQuery,
         ),
       );
     } catch (e) {
@@ -71,7 +74,14 @@ class FilteredCourseBloc
       final courses = await _filterCourses();
 
       if (_currentCategoryId != null) {
-        emit(FilteredCoursesLoaded(courses, categoryId: _currentCategoryId));
+        emit(
+          FilteredCoursesLoaded(
+            courses,
+            categoryId: _currentCategoryId,
+            level: _currentLevel,
+            searchQuery: _currentSearchQuery,
+          ),
+        );
       } else {
         emit(FilteredCourseInitial());
       }
