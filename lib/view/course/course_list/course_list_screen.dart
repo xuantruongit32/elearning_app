@@ -106,11 +106,14 @@ class _CourseListScreenState extends State<CourseListScreen> {
   Widget _buildAllCourselist(ThemeData theme) {
     return BlocBuilder<CourseBloc, CourseState>(
       builder: (context, state) {
+        final courses = state is CoursesLoaded
+            ? _filterCoursesByLevel(state.courses)
+            : null;
         return _buildCourseListView(
           theme: theme,
           isLoading: state is CourseLoading,
           error: state is CourseError ? state.message : null,
-          courses: state is CoursesLoaded ? state.courses : null,
+          courses: courses,
         );
       },
     );
@@ -154,7 +157,7 @@ class _CourseListScreenState extends State<CourseListScreen> {
           flexibleSpace: FlexibleSpaceBar(
             titlePadding: const EdgeInsets.all(6),
             title: Text(
-              widget.categoryName ?? 'All Courses',
+              _buildScreenTitle(),
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 color: AppColors.accent,
                 fontWeight: FontWeight.bold,
@@ -216,5 +219,28 @@ class _CourseListScreenState extends State<CourseListScreen> {
           ),
       ],
     );
+  }
+
+  List<Course> _filterCoursesByLevel(List<Course> courses) {
+    if (_currentLevel == null || _currentLevel == 'All Levels') {
+      return courses;
+    }
+    return courses.where((course) => course.level == _currentLevel).toList();
+  }
+
+  String _buildScreenTitle() {
+    final List<String> titleParts = [];
+
+    if (widget.categoryName != null) {
+      titleParts.add(widget.categoryName!);
+    }
+
+    if (_currentLevel != null && _currentLevel != 'All Levels') {
+      titleParts.add(_currentLevel!);
+    }
+    if(titleParts.isEmpty){
+      return 'All Courses';
+    }
+    return titleParts.join(' - ');
   }
 }
