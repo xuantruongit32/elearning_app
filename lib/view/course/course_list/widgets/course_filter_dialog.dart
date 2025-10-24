@@ -64,14 +64,14 @@ class _CourseFilterDialogState extends State<CourseFilterDialog> {
             children: [
               Expanded(
                 child: TextButton(
-                  onPressed: () => _handleResetFilter,
+                  onPressed: _handleResetFilter,
                   child: const Text('Reset'),
                 ),
               ),
               const SizedBox(width: 16),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () => _handleApplyFilter,
+                  onPressed: _handleApplyFilter,
                   child: const Text('Apply'),
                 ),
               ),
