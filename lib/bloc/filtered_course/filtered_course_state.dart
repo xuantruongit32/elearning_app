@@ -14,7 +14,20 @@ class FilteredCourseError extends FilteredCourseState {
 
 class FilteredCoursesLoaded extends FilteredCourseState {
   final List<Course> courses;
-  final String categoryId;
+  final String? categoryId;
+  final String? level;
 
-  FilteredCoursesLoaded(this.courses, this.categoryId);
+  FilteredCoursesLoaded(this.courses, {this.categoryId, this.level});
+
+  FilteredCoursesLoaded copyWith({
+    List<Course>? courses,
+    String? categoryId,
+    String? level,
+  }) {
+    return FilteredCoursesLoaded(
+      courses ?? this.courses,
+      categoryId: categoryId ?? this.categoryId,
+      level: level ?? this.level,
+    );
+  }
 }
