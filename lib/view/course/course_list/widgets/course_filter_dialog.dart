@@ -1,8 +1,33 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class CourseFilterDialog extends StatelessWidget {
-  const CourseFilterDialog({super.key});
+class CourseFilterDialog extends StatefulWidget {
+  final Function(String) onLevelSelected;
+  final String? initialLevel;
+  const CourseFilterDialog({
+    super.key,
+    required this.onLevelSelected,
+    this.initialLevel,
+  });
+
+  @override
+  State<CourseFilterDialog> createState() => _CourseFilterDialogState();
+}
+
+class _CourseFilterDialogState extends State<CourseFilterDialog> {
+  late String _selectedLevel;
+  final List<String> _levels = [
+    'All Levels',
+    'Beginners',
+    'Intermediae',
+    'Advanced',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedLevel = widget.initialLevel ?? 'All Levels';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +45,7 @@ class CourseFilterDialog extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          _buildFilterOption(context, 'All levels', true),
-          _buildFilterOption(context, 'Beginner', false),
-          _buildFilterOption(context, 'Intermediate', false),
-          _buildFilterOption(context, 'Advanced', false),
-
+          ..._levels.map(_buildFilterOption),
           SizedBox(height: 16),
           Row(
             children: [
@@ -42,25 +63,23 @@ class CourseFilterDialog extends StatelessWidget {
                 ),
               ),
             ],
-            
           ),
         ],
       ),
     );
   }
 
-  Widget _buildFilterOption(
-    BuildContext context,
-    String label,
-    bool isSelected,
-  ) {
+  Widget _buildFilterOption(String level) {
+    final isSelected = _selectedLevel == level;
     return ListTile(
-      title: Text(label),
+      title: Text(level),
       trailing: isSelected
           ? const Icon(Icons.check_circle, color: AppColors.primary)
           : const Icon(Icons.circle_outlined),
       onTap: () {
-        Navigator.pop(context);
+        setState(() {
+          _selectedLevel = level;
+        });
       },
     );
   }
