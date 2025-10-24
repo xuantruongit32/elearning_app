@@ -16,18 +16,26 @@ class FilteredCoursesLoaded extends FilteredCourseState {
   final List<Course> courses;
   final String? categoryId;
   final String? level;
+  final String? searchQuery;
 
-  FilteredCoursesLoaded(this.courses, {this.categoryId, this.level});
+  FilteredCoursesLoaded(
+    this.courses, {
+    this.categoryId,
+    this.level,
+    this.searchQuery,
+  });
 
   FilteredCoursesLoaded copyWith({
     List<Course>? courses,
     String? categoryId,
     String? level,
+    String? searchQuery,
   }) {
     return FilteredCoursesLoaded(
       courses ?? this.courses,
       categoryId: categoryId ?? this.categoryId,
       level: level ?? this.level,
+      searchQuery: searchQuery ?? this.searchQuery,
     );
   }
 }
