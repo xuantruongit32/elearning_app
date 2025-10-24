@@ -30,6 +30,7 @@ class CourseListScreen extends StatefulWidget {
 }
 
 class _CourseListScreenState extends State<CourseListScreen> {
+  String? _currentLevel;
   @override
   void initState() {
     super.initState();
@@ -62,8 +63,29 @@ class _CourseListScreenState extends State<CourseListScreen> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) => CourseFilterDialog(),
+      builder: (context) => CourseFilterDialog(
+        onLevelSelected: _handleLevelFilter,
+        initialLevel: _currentLevel,
+      ),
     );
+  }
+
+  void _handleLevelFilter(String level) {
+    setState(() {
+      _currentLevel = level == 'All Levels' ? null : level;
+    });
+
+    if (widget.categoryId != null) {
+      // use FilteredCourseBloc for category-filtered courses
+      if (level == 'All Levels') {
+        context.read<FilteredCourseBloc>().add(ClearFilteredCourses());
+      } else {
+        context.read<FilteredCourseBloc>().add(FilterCoursesByLevel(level));
+      }
+    } else {
+      // for all courses, just reload and filter in the UI
+      context.read<CourseBloc>().add(LoadCourses());
+    }
   }
 
   Widget _buildFilteredCourselist(ThemeData theme) {

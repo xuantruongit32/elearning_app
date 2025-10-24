@@ -18,7 +18,7 @@ class _CourseFilterDialogState extends State<CourseFilterDialog> {
   late String _selectedLevel;
   final List<String> _levels = [
     'All Levels',
-    'Beginners',
+    'Beginner',
     'Intermediae',
     'Advanced',
   ];
@@ -29,18 +29,18 @@ class _CourseFilterDialogState extends State<CourseFilterDialog> {
     _selectedLevel = widget.initialLevel ?? 'All Levels';
   }
 
-  void _handleApplyFilter () {
-  widget.onLevelSelected(_selectedLevel);
-  Navigator.pop(context);
-}
+  void _handleApplyFilter() {
+    widget.onLevelSelected(_selectedLevel);
+    Navigator.pop(context);
+  }
 
-void _handleResetFilter() {
-  setState(() {
-    _selectedLevel = 'All Levels';
-  });
-  widget.onLevelSelected('All Levels');
-  Navigator.pop(context);
-}
+  void _handleResetFilter() {
+    setState(() {
+      _selectedLevel = 'All Levels';
+    });
+    widget.onLevelSelected('All Levels');
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ void _handleResetFilter() {
               const SizedBox(width: 16),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: ()  _handleApplyFilter,
+                  onPressed: () => _handleApplyFilter,
                   child: const Text('Apply'),
                 ),
               ),
