@@ -14,7 +14,29 @@ class FilteredCourseBloc
     : _courseRepository = courseRepository,
       super(FilteredCourseInitial()) {
     on<FilterCoursesByCategory>(_onFilterCoursesByCategory);
+    on<FilterCoursesByLevel>(_onFilterCoursesByLevel);
+
     on<ClearFilteredCourses>(_onClearFilteredCourses);
+  }
+
+  Future<void> _onFilterCoursesByLevel(
+    FilterCoursesByLevel event,
+    Emitter<FilteredCourseState> emit,
+  ) async {
+    emit(FilteredCourseLoading());
+    try {
+      _currentLevel = event.level;
+      final courses = await _filterCourses();
+      emit(
+        FilteredCoursesLoaded(
+          courses,
+          categoryId: _currentCategoryId,
+          level: _currentLevel,
+        ),
+      );
+    } catch (e) {
+      emit(FilteredCourseError(e.toString()));
+    }
   }
 
   Future<void> _onFilterCoursesByCategory(
