@@ -1,6 +1,8 @@
 import 'package:elearning_app/models/course.dart';
 
-abstract class FilteredCourseState {}
+abstract class FilteredCourseState {
+  get courses => null;
+}
 
 class FilteredCourseInitial extends FilteredCourseState {}
 
