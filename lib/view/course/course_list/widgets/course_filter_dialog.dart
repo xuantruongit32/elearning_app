@@ -34,6 +34,14 @@ class _CourseFilterDialogState extends State<CourseFilterDialog> {
   Navigator.pop(context);
 }
 
+void _handleResetFilter() {
+  setState(() {
+    _selectedLevel = 'All Levels';
+  });
+  widget.onLevelSelected('All Levels');
+  Navigator.pop(context);
+}
+
   @override
   Widget build(BuildContext context) {
     return Padding(
