@@ -21,6 +21,28 @@ class FilteredCourseBloc
     on<ClearFilteredCourses>(_onClearFilteredCourses);
   }
 
+  Future<void> _onSearchCourses(
+    SearchCourses event,
+    Emitter<FilteredCourseState> emit,
+  ) async {
+    emit(FilteredCourseLoading());
+
+    try {
+      _currentSearchQuery = event.query.trim();
+      final courses = await _filterCourses();
+      emit(
+        FilteredCoursesLoaded(
+          courses,
+          categoryId: _currentCategoryId,
+          level: _currentLevel,
+          searchQuery: _currentSearchQuery,
+        ),
+      );
+    } catch (e) {
+      emit(FilteredCourseError(e.toString()));
+    }
+  }
+
   Future<void> _onFilterCoursesByLevel(
     FilterCoursesByLevel event,
     Emitter<FilteredCourseState> emit,
@@ -28,6 +50,7 @@ class FilteredCourseBloc
     emit(FilteredCourseLoading());
     try {
       _currentLevel = event.level;
+      _currentSearchQuery = null;
       final courses = await _filterCourses();
       emit(
         FilteredCoursesLoaded(
@@ -96,11 +119,27 @@ class FilteredCourseBloc
       categoryId: _currentCategoryId,
     );
 
+    var filteredCourses = courses;
+
     // apply level filter if set
     if (_currentLevel != null && _currentLevel != 'All Levels') {
-      return courses.where((course) => course.level == _currentLevel).toList();
+      filteredCourses = filteredCourses
+          .where((course) => course.level == _currentLevel)
+          .toList();
     }
 
-    return courses;
+    //apply search filter if set
+    if (_currentSearchQuery != null && _currentSearchQuery!.isNotEmpty) {
+      final query = _currentSearchQuery!.toLowerCase();
+      filteredCourses = filteredCourses
+          .where(
+            (course) =>
+                course.title.toLowerCase().contains(query) ||
+                course.description.toLowerCase().contains(query),
+          )
+          .toList();
+    }
+
+    return filteredCourses;
   }
 }
