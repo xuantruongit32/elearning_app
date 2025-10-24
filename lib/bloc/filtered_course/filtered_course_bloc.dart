@@ -63,8 +63,21 @@ class FilteredCourseBloc
   void _onClearFilteredCourses(
     ClearFilteredCourses event,
     Emitter<FilteredCourseState> emit,
-  ) {
-    emit(FilteredCourseInitial());
+  ) async {
+    emit(FilteredCourseLoading());
+    try {
+      // only clear level filter, maintain category if exists
+      _currentLevel = null;
+      final courses = await _filterCourses();
+
+      if (_currentCategoryId != null) {
+        emit(FilteredCoursesLoaded(courses, categoryId: _currentCategoryId));
+      } else {
+        emit(FilteredCourseInitial());
+      }
+    } catch (e) {
+      emit(FilteredCourseError(e.toString()));
+    }
   }
 
   Future<List<Course>> _filterCourses() async {
