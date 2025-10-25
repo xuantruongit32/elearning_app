@@ -1,7 +1,10 @@
 import 'package:better_player_plus/better_player_plus.dart';
 import 'package:elearning_app/models/course.dart';
+import 'package:elearning_app/respositories/course_respository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,12 +14,15 @@ class LessonVideoController {
   final String lessonId;
   final Function(bool) onLoadingChanged;
   final Function(Course) onCertificateEarned;
+  final CourseRepository _courseRepository;
+  final FirebaseAuth _auth;
 
   LessonVideoController({
     required this.lessonId,
     required this.onLoadingChanged,
     required this.onCertificateEarned,
-  });
+  }) : _courseRepository = CourseRepository(),
+       _auth = FirebaseAuth.instance;
 
   Future<void> initializeVideo() async {
     try {
