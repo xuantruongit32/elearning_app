@@ -62,8 +62,41 @@ class CourseRepository {
       throw Exception('Failed to get completed lessons: $e');
     }
   }
-  
-  
+
+  Future<void> updateCourseProgress(String courseId, String studentId) async {
+    try {
+      // Get the course to count total lessons
+      final course = await getCourseDetail(courseId);
+      final totalLessons = course.lessons.length;
+
+      // get completed lessons
+      final completedLessons = await getCompletedLessons(courseId, studentId);
+
+      // calculate progress percentage
+      final progress = (completedLessons.length / totalLessons) * 100;
+
+      // get enrollment document
+      final enrollmentSnapshot = await _firestore
+          .collection('enrollments')
+          .where('courseId', isEqualTo: courseId)
+          .where('studentId', isEqualTo: studentId)
+          .get();
+
+      if (enrollmentSnapshot.docs.isNotEmpty) {
+        // update progress in enrollment document
+        await _firestore
+            .collection('enrollments')
+            .doc(enrollmentSnapshot.docs.first.id)
+            .update({
+              'progress': progress,
+              'updatedAt': FieldValue.serverTimestamp(),
+            });
+      }
+    } catch (e) {
+      throw Exception('Failed to update course progress: $e');
+    }
+  }
+
   Future<void> createCourse(Course course) async {
     try {
       final courseData = course.toJson();
