@@ -22,17 +22,38 @@ class CourseDetailScreen extends StatefulWidget {
   State<CourseDetailScreen> createState() => _CourseDetailScreenState();
 }
 
-class _CourseDetailScreenState extends State<CourseDetailScreen> {
+class _CourseDetailScreenState extends State<CourseDetailScreen>
+    with RouteAware {
+  @override
   void didPopNext() {
-    setState(() {});
+    // this is called when returning to this screen
+    _loadCourseDetail();
   }
 
   bool _isUnlocked = false;
+  final RouteObserver<PageRoute> _routeObserver =
+      Get.find<RouteObserver<PageRoute>>();
 
   @override
   void initState() {
     super.initState();
     context.read<CourseBloc>().add(LoadCourseDetail(widget.courseId));
+  }
+
+  void _loadCourseDetail() {
+    context.read<CourseBloc>().add(LoadCourseDetail(widget.courseId));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
+  }
+
+  @override
+  void dispose() {
+    _routeObserver.unsubscribe(this);
+    super.dispose();
   }
 
   @override
@@ -57,7 +78,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         }
 
         if (state is CoursesLoaded && state.selectedCourse != null) {
-
           final course = state.selectedCourse!;
           //if in progress -> scroll to last lesson
           WidgetsBinding.instance.addPostFrameCallback((_) {
