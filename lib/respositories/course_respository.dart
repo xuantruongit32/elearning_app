@@ -210,6 +210,30 @@ class CourseRepository {
     }
   }
 
+  Future<bool> isLessonUnlocked(
+    String courseId,
+    String lessonId,
+    String studentId,
+  ) async {
+    try {
+      final snapshot = await _firestore
+          .collection('lesson_student_progress')
+          .where('courseId', isEqualTo: courseId)
+          .where('lessonId', isEqualTo: lessonId)
+          .where('studentId', isEqualTo: studentId)
+          .get();
+
+      if (snapshot.docs.isEmpty) {
+        // if no progress record exists, first lesson is unlocked by default
+        final course = await getCourseDetail(courseId);
+        return course.lessons.first.id == lessonId;
+      }
+      return !snapshot.docs.first.data()['isUnlocked'];
+    } catch (e) {
+      throw Exception('Failed to check lesson unlock status: $e');
+    }
+  }
+
   Future<void> createCourse(Course course) async {
     try {
       final courseData = course.toJson();
