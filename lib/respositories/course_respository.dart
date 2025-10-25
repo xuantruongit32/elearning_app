@@ -234,6 +234,41 @@ class CourseRepository {
     }
   }
 
+  Future<void> enrollInCourse(
+    String courseId,
+    String studentId, {
+    bool isPremium = false,
+  }) async {
+    try {
+      // check if already enrolled
+      final existingEnrollment = await _firestore
+          .collection('enrollments')
+          .where('courseId', isEqualTo: courseId)
+          .where('studentId', isEqualTo: studentId)
+          .get();
+
+      if (existingEnrollment.docs.isEmpty) {
+        // create new enrollment with 0% progress
+        await _firestore.collection('enrollments').add({
+          'courseId': courseId,
+          'studentId': studentId,
+          'enrolledAt': FieldValue.serverTimestamp(),
+          'updatedAt': FieldValue.serverTimestamp(),
+          'isPremium': isPremium,
+          'progress': 0.0,
+        });
+
+        // unlock first lesson
+        final course = await getCourseDetail(courseId);
+        if (course.lessons.isNotEmpty) {
+          await unlockLesson(courseId, course.lessons.first.id, studentId);
+        }
+      }
+    } catch (e) {
+      throw Exception('Failed to enroll in course: $e');
+    }
+  }
+
   Future<void> createCourse(Course course) async {
     try {
       final courseData = course.toJson();
