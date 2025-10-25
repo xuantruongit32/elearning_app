@@ -191,11 +191,22 @@ class LessonVideoController {
 
       // unlock next lesson
       if (lessonIndex < course.lessons.length - 1) {
-        
+        await _courseRepository.unlockLesson(
+          courseId,
+          course.lessons[lessonIndex + 1].id,
+          user.uid,
+        );
       }
-
       final isLastLesson = lessonIndex == course.lessons.length - 1;
-      final allLessonsCompleted = DummyDataService.isCourseCompleted(courseId);
+      final allLessonsCompleted =
+          completedLessons.length + 1 == course.lessons.length;
+
+      // get updated progress
+      final progress = await _courseRepository.getCourseProgress(
+        courseId,
+        user.uid,
+      );
+
       Get.back(result: true);
 
       if (isLastLesson && allLessonsCompleted) {
@@ -206,9 +217,12 @@ class LessonVideoController {
           'You can now proceed to the next lesson',
           backgroundColor: Colors.green,
           colorText: Colors.white,
+          duration: const Duration(seconds: 3),
         );
       }
-    } catch (e) {}
+    } catch (e) {
+      debugPrint('Error marking lesson as completed: $e');
+    }
   }
 
   void dispose() {
