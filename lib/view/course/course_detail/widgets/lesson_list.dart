@@ -36,6 +36,17 @@ class _LessonListState extends State<LessonList> {
     _loadCourse();
   }
 
+  @override
+  void didUpdateWidget(LessonList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // reload course when widget is updated, courseId changes, or isUnlocked changes
+    if (oldWidget.courseId != widget.courseId ||
+        oldWidget.isUnlocked != widget.isUnlocked) {
+      _loadCourse();
+    }
+  }
+
   Future<void> _loadCourse() async {
     if (!mounted) return;
     setState(() {
