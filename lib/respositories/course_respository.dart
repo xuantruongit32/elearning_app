@@ -110,6 +110,27 @@ class CourseRepository {
     }
   }
 
+  Future<double> getCourseProgress(String courseId, String studentId) async {
+    try {
+      final enrollmentSnapshot = await _firestore
+          .collection('enrollments')
+          .where('courseId', isEqualTo: courseId)
+          .where('studentId', isEqualTo: studentId)
+          .get();
+
+      if (enrollmentSnapshot.docs.isEmpty) {
+        return 0.0;
+      }
+
+      return (enrollmentSnapshot.docs.first.data()['progress'] as num)
+          .toDouble();
+    } catch (e) {
+      throw Exception('Failed to get course progress: $e');
+    }
+  }
+
+
+
   Future<void> createCourse(Course course) async {
     try {
       final courseData = course.toJson();
