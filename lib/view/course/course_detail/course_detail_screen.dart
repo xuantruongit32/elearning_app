@@ -24,20 +24,19 @@ class CourseDetailScreen extends StatefulWidget {
 
 class _CourseDetailScreenState extends State<CourseDetailScreen>
     with RouteAware {
+  bool _isUnlocked = false;
+  final RouteObserver<PageRoute> _routeObserver =
+      Get.find<RouteObserver<PageRoute>>();
   @override
   void didPopNext() {
     // this is called when returning to this screen
     _loadCourseDetail();
   }
 
-  bool _isUnlocked = false;
-  final RouteObserver<PageRoute> _routeObserver =
-      Get.find<RouteObserver<PageRoute>>();
-
   @override
   void initState() {
     super.initState();
-    context.read<CourseBloc>().add(LoadCourseDetail(widget.courseId));
+    _loadCourseDetail();
   }
 
   void _loadCourseDetail() {

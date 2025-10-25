@@ -198,7 +198,6 @@ class LessonVideoController {
         courseId,
         user.uid,
       );
-
       Get.back(result: true);
 
       if (isLastLesson && allLessonsCompleted) {

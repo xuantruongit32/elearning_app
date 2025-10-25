@@ -50,7 +50,7 @@ class CourseRepository {
     try {
       final snapshot = await _firestore
           .collection('lesson_student_progress')
-          .where('courseID', isEqualTo: courseID)
+          .where('courseId', isEqualTo: courseID)
           .where('studentId', isEqualTo: studentId)
           .where('isCompleted', isEqualTo: true)
           .get();
@@ -100,7 +100,7 @@ class CourseRepository {
   Future<void> enrollCourse(String userId, String courseId) async {
     try {
       await _firestore.collection('enrollments').add({
-        'userId': userId,
+        'studentId': userId,
         'courseId': courseId,
         'enrolledAt': FieldValue.serverTimestamp(),
         'progress': 0,
@@ -228,7 +228,9 @@ class CourseRepository {
         final course = await getCourseDetail(courseId);
         return course.lessons.first.id == lessonId;
       }
-      return !snapshot.docs.first.data()['isUnlocked'];
+      final isLocked = snapshot.docs.first.data()['isLocked'] as bool? ?? true;
+
+      return !isLocked;
     } catch (e) {
       throw Exception('Failed to check lesson unlock status: $e');
     }
