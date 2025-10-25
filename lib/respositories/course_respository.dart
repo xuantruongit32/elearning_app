@@ -269,6 +269,20 @@ class CourseRepository {
     }
   }
 
+  Future<bool> isEnrolled(String courseId, String studentId) async {
+    try {
+      final snapshot = await _firestore
+          .collection('enrollments')
+          .where('courseId', isEqualTo: courseId)
+          .where('studentId', isEqualTo: studentId)
+          .get();
+
+      return snapshot.docs.isNotEmpty;
+    } catch (e) {
+      throw Exception('Failed to check enrollment status: $e');
+    }
+  }
+
   Future<void> createCourse(Course course) async {
     try {
       final courseData = course.toJson();
