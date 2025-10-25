@@ -43,11 +43,15 @@ class CourseRepository {
     }
   }
 
-  Future<Set<String>> getCompletedLessons(String courseID) async {
+  Future<Set<String>> getCompletedLessons(
+    String courseID,
+    String studentId,
+  ) async {
     try {
       final snapshot = await _firestore
-          .collection('lesson_progress')
+          .collection('lesson_student_progress')
           .where('courseID', isEqualTo: courseID)
+          .where('studentId', isEqualTo: studentId)
           .where('isCompleted', isEqualTo: true)
           .get();
 
@@ -58,7 +62,8 @@ class CourseRepository {
       throw Exception('Failed to get completed lessons: $e');
     }
   }
-
+  
+  
   Future<void> createCourse(Course course) async {
     try {
       final courseData = course.toJson();
