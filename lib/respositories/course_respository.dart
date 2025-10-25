@@ -129,7 +129,47 @@ class CourseRepository {
     }
   }
 
+  Future<void> markLessonAsCompleted(
+    String courseId,
+    String lessonId,
+    String studentId,
+  ) async {
+    try {
+      // check if progress document already exists
+      final existingProgress = await _firestore
+          .collection('lesson_student_progress')
+          .where('courseId', isEqualTo: courseId)
+          .where('lessonId', isEqualTo: lessonId)
+          .where('studentId', isEqualTo: studentId)
+          .get();
 
+      if (existingProgress.docs.isEmpty) {
+        // create new progress document
+        await _firestore.collection('lesson_student_progress').add({
+          'courseId': courseId,
+          'lessonId': lessonId,
+          'studentId': studentId,
+          'isCompleted': true,
+          'isLocked': false,
+          'completedAt': FieldValue.serverTimestamp(),
+        });
+      } else {
+        // update existing progress document
+        await _firestore
+            .collection('lesson_student_progress')
+            .doc(existingProgress.docs.first.id)
+            .update({
+              'isCompleted': true,
+              'completedAt': FieldValue.serverTimestamp(),
+            });
+      }
+
+      //update course progress after making lesson as completed
+      await updateCourseProgress(courseId, studentId);
+    } catch (e) {
+      throw Exception('Failed to mark lesson as completed: $e');
+    }
+  }
 
   Future<void> createCourse(Course course) async {
     try {
