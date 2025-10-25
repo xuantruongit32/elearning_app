@@ -4,7 +4,6 @@ import 'package:elearning_app/respositories/course_respository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,7 +41,14 @@ class LessonVideoController {
         return;
       }
 
-      final course = DummyDataService.getCourseById(courseId);
+      final user = _auth.currentUser;
+      if (user == null) {
+        debugPrint("No user logged in");
+        onLoadingChanged(false);
+        return;
+      }
+
+      final course = await _courseRepository.getCourseDetail(courseId);
       debugPrint("Course found: ${course.title}");
 
       if (course.isPremium && !DummyDataService.isCourseUnlocked(courseId)) {
