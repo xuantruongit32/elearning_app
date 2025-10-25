@@ -2,7 +2,6 @@ import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/course.dart';
 import 'package:elearning_app/respositories/course_respository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
-import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/lesson_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -111,20 +110,15 @@ class _LessonListState extends State<LessonList> {
       itemCount: _course!.lessons.length,
       itemBuilder: (context, index) {
         final lesson = _course!.lessons[index];
+        final _isCompleted = _completedLessons.contains(lesson.id);
         final isLocked =
             !lesson.isPreview &&
             (index > 0 &&
-                !DummyDataService.isLessonCompleted(
-                  _course!.id,
-                  _course!.lessons[index - 1].id,
-                ));
+                !_completedLessons.contains(_course!.lessons[index - 1].id));
         return LessonTile(
           title: lesson.title,
           duration: '${lesson.duration} mins',
-          isCompleted: DummyDataService.isLessonCompleted(
-            _course!.id,
-            lesson.id,
-          ),
+          isCompleted: _isCompleted,
           isLocked: isLocked,
 
           isUnlocked: widget.isUnlocked,
@@ -151,7 +145,9 @@ class _LessonListState extends State<LessonList> {
                 parameters: {'courseId': widget.courseId},
               );
               if (result == true) {
-                widget.onLessonComplete?.call();
+                await _loadCourse(); //reload course data when return from lesson
+                widget.onLessonComplete
+                    ?.call(); //notify parent about completion
               }
             }
           },
