@@ -171,6 +171,45 @@ class CourseRepository {
     }
   }
 
+  Future<void> unlockLesson(
+    String courseId,
+    String lessonId,
+    String studentId,
+  ) async {
+    try {
+      // check if progress document already
+      final existingProgress = await _firestore
+          .collection('lesson_student_progress')
+          .where('courseId', isEqualTo: courseId)
+          .where('lessonId', isEqualTo: lessonId)
+          .where('studentId', isEqualTo: studentId)
+          .get();
+
+      if (existingProgress.docs.isEmpty) {
+        // create new progress document
+        await _firestore.collection('lesson_student_progress').add({
+          'courseId': courseId,
+          'lessonId': lessonId,
+          'studentId': studentId,
+          'isCompleted': false,
+          'isLocked': false,
+          'unlockedAt': FieldValue.serverTimestamp(),
+        });
+      } else {
+        //update existing progress document
+        await _firestore
+            .collection('lesson_student_progress')
+            .doc(existingProgress.docs.first.id)
+            .update({
+              'isLocked': false,
+              'unlockedAt': FieldValue.serverTimestamp(),
+            });
+      }
+    } catch (e) {
+      throw Exception('Failed to unlock lesson: $e');
+    }
+  }
+
   Future<void> createCourse(Course course) async {
     try {
       final courseData = course.toJson();
