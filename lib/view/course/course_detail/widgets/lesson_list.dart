@@ -4,6 +4,7 @@ import 'package:elearning_app/respositories/course_respository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/lesson_tile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +28,7 @@ class _LessonListState extends State<LessonList> {
   Course? _course;
   bool _isLoading = true;
   Set<String> _completedLessons = {};
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -35,25 +37,51 @@ class _LessonListState extends State<LessonList> {
   }
 
   Future<void> _loadCourse() async {
+    if (!mounted) return;
+    setState(() {
+      _isLoading = true;
+    });
+    final user = _auth.currentUser;
+    if (user == null) {
+      setState(() {
+        _isLoading = false;
+      });
+      Get.snackbar(
+        'Error',
+        'Please login to view course progress',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
     try {
       final course = await _courseRepository.getCourseDetail(widget.courseId);
       final completedLessons = await _courseRepository.getCompletedLessons(
         widget.courseId,
+        user.uid,
       );
+      if (mounted) {
+        setState(() {
+          _course = course;
+          _completedLessons = completedLessons;
+          _isLoading = false;
+        });
+      }
       setState(() {
         _course = course;
         _completedLessons = completedLessons;
         _isLoading = false;
       });
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-      Get.snackbar(
-        'Error',
-        'Failed to load course lessons',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        Get.snackbar(
+          'Error',
+          'Failed to load course lessons',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
     }
   }
 
@@ -82,7 +110,10 @@ class _LessonListState extends State<LessonList> {
         return LessonTile(
           title: lesson.title,
           duration: '${lesson.duration} mins',
-          isCompleted: DummyDataService.isLessonCompleted(_course!.id, lesson.id),
+          isCompleted: DummyDataService.isLessonCompleted(
+            _course!.id,
+            lesson.id,
+          ),
           isLocked: isLocked,
 
           isUnlocked: widget.isUnlocked,
