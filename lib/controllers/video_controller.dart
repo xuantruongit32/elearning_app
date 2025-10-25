@@ -2,7 +2,6 @@ import 'package:better_player_plus/better_player_plus.dart';
 import 'package:elearning_app/models/course.dart';
 import 'package:elearning_app/respositories/course_respository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
-import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -181,13 +180,6 @@ class LessonVideoController {
           user.uid,
         );
       }
-
-      DummyDataService.updateLessonStatus(
-        courseId,
-        lessonId,
-        isCompleted: true,
-      );
-      debugPrint('✅ Lesson ${lessonId} marked completed.');
 
       // unlock next lesson
       if (lessonIndex < course.lessons.length - 1) {
