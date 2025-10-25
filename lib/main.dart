@@ -13,6 +13,7 @@ import 'package:elearning_app/routes/route_pages.dart';
 import 'package:elearning_app/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -21,6 +22,8 @@ void main() async {
   await FirebaseConfig.init();
   await GetStorage.init();
   await StorageService.init();
+  // register the RouteObserver
+  Get.put<RouteObserver<PageRoute>>(RouteObserver<PageRoute>());
   runApp(const MyApp());
 }
 
@@ -47,7 +50,6 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               FilteredCourseBloc(courseRepository: CourseRepository()),
         ),
-        
       ],
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -62,6 +64,7 @@ class MyApp extends StatelessWidget {
         },
         child: BlocBuilder<FontBloc, FontState>(
           builder: (context, fontState) {
+            final routeObserver = Get.find<RouteObserver<PageRoute>>();
             return GetMaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'E-Learning App',
@@ -70,6 +73,7 @@ class MyApp extends StatelessWidget {
               initialRoute: AppRoutes.splash,
               onGenerateRoute: AppRoutes.onGenerateRoute,
               getPages: AppPages.pages,
+              navigatorObservers: [routeObserver],
             );
           },
         ),
