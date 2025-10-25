@@ -5,7 +5,6 @@ import 'package:elearning_app/controllers/video_controller.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/course.dart';
 import 'package:elearning_app/models/lesson.dart';
-import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:elearning_app/view/course/lesson_screen/widgets/certificate_dialog.dart';
 import 'package:elearning_app/view/course/lesson_screen/widgets/resource_tile.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +46,8 @@ class _LessonScreenState extends State<LessonScreen> {
     }
     _videoController.initializeVideo();
   }
+
+
 
   @override
   void dispose() {
@@ -128,26 +129,47 @@ class _LessonScreenState extends State<LessonScreen> {
             ),
           );
         }
-        return Scaffold(
-          body: Column(
-            children: <Widget>[
-              AspectRatio(
-                aspectRatio: 16 / 9,
-                child: _isLoading
-                    ? Container(
-                        color: theme.colorScheme.surface,
-                        child: const Center(child: CircularProgressIndicator()),
-                      )
-                    : _videoController.betterPlayerController != null
-                    ? BetterPlayer(
-                        controller: _videoController.betterPlayerController!,
-                      )
-                    : Container(
-                        color: theme.colorScheme.surface,
-                        child: const Center(child: Text('Error loading video')),
-                      ),
+        if (state is CoursesLoaded && state.selectedCourse != null) {
+          final course = state.selectedCourse!;
+          final lesson = course.lessons.firstWhere(
+            (l) => l.id == widget.lessonId,
+            orElse: () => course.lessons.first,
+          );
+          return Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(Icons.arrow_back),
               ),
-              if (lesson != null)
+              title: Text(
+                lesson.title,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                ),
+              ),
+            ),
+            body: Column(
+              children: <Widget>[
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: _isLoading
+                      ? Container(
+                          color: theme.colorScheme.surface,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      : _videoController.betterPlayerController != null
+                      ? BetterPlayer(
+                          controller: _videoController.betterPlayerController!,
+                        )
+                      : Container(
+                          color: theme.colorScheme.surface,
+                          child: const Center(
+                            child: Text('Error loading video'),
+                          ),
+                        ),
+                ),
                 Expanded(
                   child: SingleChildScrollView(
                     padding: EdgeInsets.all(16),
@@ -208,9 +230,11 @@ class _LessonScreenState extends State<LessonScreen> {
                     ),
                   ),
                 ),
-            ],
-          ),
-        );
+              ],
+            ),
+          );
+        }
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
       },
     );
   }
