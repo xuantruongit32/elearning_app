@@ -51,7 +51,26 @@ class LessonVideoController {
       final course = await _courseRepository.getCourseDetail(courseId);
       debugPrint("Course found: ${course.title}");
 
-      if (course.isPremium && !DummyDataService.isCourseUnlocked(courseId)) {
+      // check if lesson is unlocked for this student
+      final isUnlocked = await _courseRepository.isLessonUnlocked(
+        courseId,
+        lessonId,
+        user.uid,
+      );
+      final isEnrolled = await _courseRepository.isEnrolled(courseId, user.uid);
+
+      if (!isUnlocked) {
+        onLoadingChanged(false);
+        Get.back();
+        Get.snackbar(
+          'Lesson Locked',
+          'Please complete previous lessons first',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+
+      if (course.isPremium && isEnrolled) {
         onLoadingChanged(false);
         Get.back();
         Get.toNamed(
