@@ -83,6 +83,12 @@ class LessonVideoController {
         );
         return;
       }
+      // if this is the first lesson of a non-premium course and user is not enrolled
+      if (!course.isPremium &&
+          !isEnrolled &&
+          course.lessons.first.id == lessonId) {
+        await _courseRepository.enrollInCourse(courseId, user.uid);
+      }
 
       final lesson = course.lessons.firstWhere(
         (lesson) => lesson.id == lessonId,
@@ -130,14 +136,14 @@ class LessonVideoController {
     }
   }
 
-  void _onBetterPlayerEvent(BetterPlayerEvent event) {
+  void _onBetterPlayerEvent(BetterPlayerEvent event) async {
     final courseId = Get.parameters['courseId'];
     if (courseId == null) return;
 
     switch (event.betterPlayerEventType) {
       case BetterPlayerEventType.finished:
         debugPrint('🎯 Video finished!');
-        markLessonAsCompleted(courseId);
+        await markLessonAsCompleted(courseId);
         break;
 
       case BetterPlayerEventType.progress:
@@ -156,37 +162,53 @@ class LessonVideoController {
     }
   }
 
-  void markLessonAsCompleted(String courseId) {
-    final course = DummyDataService.getCourseById(courseId);
-    final lessonIndex = course.lessons.indexWhere((l) => l.id == lessonId);
-    if (lessonIndex == -1) return;
+  Future<void> markLessonAsCompleted(String courseId) async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) return;
+      final course = await _courseRepository.getCourseDetail(courseId);
+      final lessonIndex = course.lessons.indexWhere((l) => l.id == lessonId);
+      if (lessonIndex == -1) return;
+      final completedLessons = await _courseRepository.getCompletedLessons(
+        courseId,
+        user.uid,
+      );
+      if (!completedLessons.contains(lessonId)) {
+        // mark lesson as completed (this will also update course progress)
+        await _courseRepository.markLessonAsCompleted(
+          courseId,
+          lessonId,
+          user.uid,
+        );
+      }
 
-    DummyDataService.updateLessonStatus(courseId, lessonId, isCompleted: true);
-    debugPrint('✅ Lesson ${lessonId} marked completed.');
-
-    // Mở khóa bài kế tiếp
-    if (lessonIndex < course.lessons.length - 1) {
       DummyDataService.updateLessonStatus(
         courseId,
-        course.lessons[lessonIndex + 1].id,
-        isCompleted: false,
+        lessonId,
+        isCompleted: true,
       );
-    }
+      debugPrint('✅ Lesson ${lessonId} marked completed.');
 
-    final isLastLesson = lessonIndex == course.lessons.length - 1;
-    final allLessonsCompleted = DummyDataService.isCourseCompleted(courseId);
-    Get.back(result: true);
+      // unlock next lesson
+      if (lessonIndex < course.lessons.length - 1) {
+        
+      }
 
-    if (isLastLesson && allLessonsCompleted) {
-      onCertificateEarned(course);
-    } else {
-      Get.snackbar(
-        'Lesson Completed',
-        'You can now proceed to the next lesson',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-    }
+      final isLastLesson = lessonIndex == course.lessons.length - 1;
+      final allLessonsCompleted = DummyDataService.isCourseCompleted(courseId);
+      Get.back(result: true);
+
+      if (isLastLesson && allLessonsCompleted) {
+        onCertificateEarned(course);
+      } else {
+        Get.snackbar(
+          'Lesson Completed',
+          'You can now proceed to the next lesson',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {}
   }
 
   void dispose() {
