@@ -97,6 +97,19 @@ class CourseRepository {
     }
   }
 
+  Future<void> enrollCourse(String userId, String courseId) async {
+    try {
+      await _firestore.collection('enrollments').add({
+        'userId': userId,
+        'courseId': courseId,
+        'enrolledAt': FieldValue.serverTimestamp(),
+        'progress': 0,
+      });
+    } catch (e) {
+      throw Exception('Failed to enroll in course: $e');
+    }
+  }
+
   Future<void> createCourse(Course course) async {
     try {
       final courseData = course.toJson();
