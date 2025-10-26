@@ -179,37 +179,35 @@ class LessonVideoController {
           lessonId,
           user.uid,
         );
-      }
-
-      // unlock next lesson
-      if (lessonIndex < course.lessons.length - 1) {
-        await _courseRepository.unlockLesson(
+        //
+        if (lessonIndex < course.lessons.length - 1) {
+          await _courseRepository.unlockLesson(
+            courseId,
+            course.lessons[lessonIndex + 1].id,
+            user.uid,
+          );
+        }
+        final isLastLesson = lessonIndex == course.lessons.length - 1;
+        final allLessonsCompleted =
+            completedLessons.length + 1 == course.lessons.length;
+        // get updated progress
+        final progress = await _courseRepository.getCourseProgress(
           courseId,
-          course.lessons[lessonIndex + 1].id,
           user.uid,
         );
-      }
-      final isLastLesson = lessonIndex == course.lessons.length - 1;
-      final allLessonsCompleted =
-          completedLessons.length + 1 == course.lessons.length;
+        Get.back(result: true);
 
-      // get updated progress
-      final progress = await _courseRepository.getCourseProgress(
-        courseId,
-        user.uid,
-      );
-      Get.back(result: true);
-
-      if (isLastLesson && allLessonsCompleted) {
-        onCertificateEarned(course);
-      } else {
-        Get.snackbar(
-          'Lesson Completed',
-          'You can now proceed to the next lesson',
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-          duration: const Duration(seconds: 3),
-        );
+        if (isLastLesson && allLessonsCompleted) {
+          onCertificateEarned(course);
+        } else {
+          Get.snackbar(
+            'Lesson Completed',
+            'Course Progress:${progress.toStringAsFixed(1)}%',
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+            duration: const Duration(seconds: 3),
+          );
+        }
       }
     } catch (e) {
       debugPrint('Error marking lesson as completed: $e');
