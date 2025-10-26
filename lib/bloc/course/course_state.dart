@@ -15,13 +15,24 @@ class CourseError extends CourseState {
 class CoursesLoaded extends CourseState {
   final List<Course> courses;
   final Course? selectedCourse;
+  final bool? isSelectedCourseCompleted;
 
-  CoursesLoaded(this.courses, {this.selectedCourse});
+  CoursesLoaded(
+    this.courses, {
+    this.selectedCourse,
+    this.isSelectedCourseCompleted,
+  });
 
-  CoursesLoaded copyWith({List<Course>? courses, Course? selectedCourse}) {
+  CoursesLoaded copyWith({
+    List<Course>? courses,
+    Course? selectedCourse,
+    bool? isSelectedCourseCompleted,
+  }) {
     return CoursesLoaded(
       courses ?? this.courses,
       selectedCourse: selectedCourse ?? this.selectedCourse,
+      isSelectedCourseCompleted:
+          isSelectedCourseCompleted ?? this.isSelectedCourseCompleted,
     );
   }
 }

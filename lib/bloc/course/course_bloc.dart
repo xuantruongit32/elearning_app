@@ -66,14 +66,35 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
     try {
       final course = await _courseRepository.getCourseDetail(event.courseId);
 
+      final userId = _authBloc.state.userModel?.uid;
+      bool isCompleted = false;
+
+      if (userId != null) {
+        isCompleted = await _courseRepository.isCourseCompleted(
+          event.courseId,
+          userId,
+        );
+      }
+
       // if we already have a courses list, update it with the selected course
       if (state is CoursesLoaded) {
         final currentState = state as CoursesLoaded;
-        emit(currentState.copyWith(selectedCourse: course));
+        emit(
+          currentState.copyWith(
+            selectedCourse: course,
+            isSelectedCourseCompleted: isCompleted,
+          ),
+        );
       } else {
         // if we don't have a courses list, load all courses and set the selected on
         final courses = await _courseRepository.getCourses();
-        emit(CoursesLoaded(courses, selectedCourse: course));
+        emit(
+          CoursesLoaded(
+            courses,
+            selectedCourse: course,
+            isSelectedCourseCompleted: isCompleted,
+          ),
+        );
       }
     } catch (e) {
       emit(CourseError(e.toString()));
