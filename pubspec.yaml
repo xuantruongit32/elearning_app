@@ -54,6 +54,9 @@ dependencies:
   fluttertoast: ^8.2.4
   intl: ^0.20.2
   image_gallery_saver_plus: ^4.0.1
+  permission_handler: ^11.3.0
+  open_file: ^3.3.2
+  device_info_plus: ^9.1.2
   flutter:
     sdk: flutter
 
