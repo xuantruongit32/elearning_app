@@ -359,4 +359,20 @@ class CourseRepository {
       throw Exception('Failed to delete course: $e');
     }
   }
+
+  Future<bool> isCourseCompleted(String courseId, String studentId) async {
+    try {
+      // get the course to count total lessons
+      final course = await getCourseDetail(courseId);
+      final totalLessons = course.lessons.length;
+
+      // Get completed lessons
+      final completedLessons = await getCompletedLessons(courseId, studentId);
+
+      // course is completed if all lessons are completed
+      return completedLessons.length == totalLessons;
+    } catch (e) {
+      throw Exception('Failed to check course completion status: $e');
+    }
+  }
 }
