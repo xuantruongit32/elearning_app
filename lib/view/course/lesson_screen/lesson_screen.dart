@@ -2,7 +2,6 @@ import 'package:elearning_app/bloc/course/course_bloc.dart';
 import 'package:elearning_app/bloc/course/course_event.dart';
 import 'package:elearning_app/bloc/course/course_state.dart';
 import 'package:elearning_app/controllers/video_controller.dart';
-import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/course.dart';
 import 'package:elearning_app/models/lesson.dart';
 import 'package:elearning_app/view/course/lesson_screen/widgets/certificate_dialog.dart';
@@ -47,8 +46,6 @@ class _LessonScreenState extends State<LessonScreen> {
     _videoController.initializeVideo();
   }
 
-
-
   @override
   void dispose() {
     _videoController.betterPlayerController?.pause();
@@ -61,22 +58,8 @@ class _LessonScreenState extends State<LessonScreen> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return CertificateDialog(
-          course: course,
-          onDownload: () => _downloadCertificate(course),
-        );
+        return CertificateDialog(course: course);
       },
-    );
-  }
-
-  void _downloadCertificate(Course course) {
-    //Now no dowload, just show success
-    Get.snackbar(
-      'Certificate Ready!',
-      "Your certificate for ${course.title} has been generated",
-      backgroundColor: AppColors.primary,
-      colorText: Colors.white,
-      duration: const Duration(seconds: 5),
     );
   }
 
