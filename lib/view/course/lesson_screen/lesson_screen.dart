@@ -206,7 +206,8 @@ class _LessonScreenState extends State<LessonScreen> {
                           (Resource resource) => ResourceTile(
                             title: resource.title,
                             icon: _getIconForResourceType(resource.type),
-                            onTap: () {},
+                            url: resource.url,
+                            type: resource.type,
                           ),
                         ),
                       ],
