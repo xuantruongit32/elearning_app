@@ -216,7 +216,9 @@ class _ReviewsSectionState extends State<ReviewsSection> {
         ),
         const SizedBox(height: 16),
         if (_isLoading)
-          Column(children: List.generate(3, (index) => const ShimmerReviewTile()))
+          Column(
+            children: List.generate(3, (index) => const ShimmerReviewTile()),
+          )
         else if (_error != null)
           Center(
             child: Column(
@@ -333,6 +335,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    const SizedBox(height: 3),
                     Row(
                       children: [
                         ...List.generate(5, (index) {

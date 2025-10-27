@@ -56,7 +56,7 @@ class Review {
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'courseID': courseId,
+    'courseId': courseId,
     'userId': userId,
     'userName': userName,
     'rating': rating,

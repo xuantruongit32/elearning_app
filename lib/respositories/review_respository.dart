@@ -126,7 +126,6 @@ class ReviewRepository {
       if (courseId != null) {
         await _updateCourseRating(courseId);
       }
-      
     } catch (e) {
       throw Exception('Failed to delete review: $e');
     }
