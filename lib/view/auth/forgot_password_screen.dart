@@ -45,7 +45,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         } else if (!state.isLoading && state.error == null) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Password reset email sent successfully!'),
+              content: Text('Email đặt lại mật khẩu đã được gửi thành công!'),
               backgroundColor: Colors.green,
             ),
           );
@@ -68,12 +68,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Forgot Password',
+                'Quên mật khẩu',
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Text(
-                'Enter your email address to reset password',
+                'Nhập địa chỉ email của bạn',
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
               const SizedBox(height: 10),
@@ -94,7 +94,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
                   return CustomButton(
-                    text: 'Rest Password',
+                    text: 'Đặt lại mật khẩu',
                     onPressed: _handleResetPassword,
                   );
                 },

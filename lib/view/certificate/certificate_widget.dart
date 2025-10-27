@@ -40,7 +40,7 @@ class CertificateWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'CERTIFICATE',
+              'CHỨNG NHẬN',
               style: TextStyle(
                 fontSize: 48 * scale,
                 fontWeight: FontWeight.bold,
@@ -49,7 +49,7 @@ class CertificateWidget extends StatelessWidget {
               ),
             ),
             Text(
-              'OF COMPLETION',
+              'HOÀN THÀNH KHÓA HỌC',
               style: TextStyle(
                 fontSize: 28 * scale,
                 fontWeight: FontWeight.w600,
@@ -59,7 +59,7 @@ class CertificateWidget extends StatelessWidget {
             ),
             SizedBox(height: 40 * scale),
             Text(
-              'This is to certify that',
+              'Chứng nhận rằng',
               style: TextStyle(fontSize: 24 * scale, color: Colors.grey[600]),
             ),
             SizedBox(height: 20 * scale),
@@ -73,7 +73,7 @@ class CertificateWidget extends StatelessWidget {
             ),
             SizedBox(height: 20 * scale),
             Text(
-              'has successfully completed the course',
+              'đã hoàn thành xuất sắc khóa học',
               style: TextStyle(fontSize: 20 * scale, color: Colors.grey[600]),
             ),
             SizedBox(height: 20 * scale),
@@ -88,7 +88,7 @@ class CertificateWidget extends StatelessWidget {
             ),
             SizedBox(height: 30 * scale),
             Text(
-              'Completed on ${DateFormat('MMMM dd, yyyy').format(DateTime.now())}',
+              'Hoàn thành vào ngày ${DateFormat('dd/MM/yyyy').format(DateTime.now())}',
               style: TextStyle(fontSize: 18 * scale, color: Colors.grey[600]),
             ),
             SizedBox(height: 40 * scale),
@@ -112,7 +112,7 @@ class CertificateWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Course Instructor',
+                      'Giảng viên khóa học',
                       style: TextStyle(
                         fontSize: 14 * scale,
                         color: Colors.grey[600],
@@ -134,7 +134,7 @@ class CertificateWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 8 * scale),
                     Text(
-                      'TT Company',
+                      'Hoàng Trường',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16 * scale,
@@ -142,7 +142,7 @@ class CertificateWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Platform Diretor',
+                      'Giám đốc nền tảng',
                       style: TextStyle(
                         fontSize: 14 * scale,
                         color: Colors.grey[600],

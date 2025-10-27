@@ -22,7 +22,7 @@ class _CertificatePreviewScreenState extends State<CertificatePreviewScreen> {
   final TransformationController _transformationController =
       TransformationController();
   final InstructorRepository _instructorRepository = InstructorRepository();
-  String _instructorName = 'Course Instructor';
+  String _instructorName = 'Giảng viên khóa học';
 
   @override
   void initState() {
@@ -38,11 +38,11 @@ class _CertificatePreviewScreenState extends State<CertificatePreviewScreen> {
 
       if (instructor != null && mounted) {
         setState(() {
-          _instructorName = instructor.fullName ?? 'Course Instructor';
+          _instructorName = instructor.fullName ?? 'Giảng viên khóa học';
         });
       }
     } catch (e) {
-      print('Error loading instructor name: $e');
+      print('Lỗi khi tải tên giảng viên: $e');
     }
   }
 
@@ -53,7 +53,7 @@ class _CertificatePreviewScreenState extends State<CertificatePreviewScreen> {
     });
     try {
       final studentName =
-          context.read<AuthBloc>().state.userModel?.fullName ?? 'Student';
+          context.read<AuthBloc>().state.userModel?.fullName ?? 'Học viên';
 
       final certificateBytes = await CertificateService.generateCertificate(
         course: widget.course,
@@ -68,15 +68,15 @@ class _CertificatePreviewScreenState extends State<CertificatePreviewScreen> {
         );
         if (success) {
           Get.snackbar(
-            'Success',
-            'Certificate saved to gallery',
+            'Thành công',
+            'Chứng chỉ đã được lưu vào thư viện ảnh',
             backgroundColor: Colors.green,
             colorText: Colors.white,
           );
         } else {
           Get.snackbar(
-            'Error',
-            'Failed to save certificate',
+            'Lỗi',
+            'Không thể lưu chứng chỉ',
             backgroundColor: Colors.red,
             colorText: Colors.white,
           );
@@ -84,8 +84,8 @@ class _CertificatePreviewScreenState extends State<CertificatePreviewScreen> {
       }
     } catch (e) {
       Get.snackbar(
-        'Error',
-        'Failed to save certificate',
+        'Lỗi',
+        'Không thể lưu chứng chỉ',
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -104,7 +104,7 @@ class _CertificatePreviewScreenState extends State<CertificatePreviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Certificate Preview'),
+        title: const Text('Xem trước chứng chỉ'),
         actions: [
           if (!_isGenerating)
             IconButton(
@@ -112,11 +112,13 @@ class _CertificatePreviewScreenState extends State<CertificatePreviewScreen> {
                 _transformationController.value = Matrix4.identity();
               },
               icon: const Icon(Icons.zoom_out),
+              tooltip: 'Thu nhỏ',
             ),
           if (!_isGenerating)
             IconButton(
               onPressed: _downloadCertificate,
               icon: const Icon(Icons.download),
+              tooltip: 'Tải chứng chỉ',
             ),
         ],
       ),
@@ -131,7 +133,7 @@ class _CertificatePreviewScreenState extends State<CertificatePreviewScreen> {
                 course: widget.course,
                 studentName:
                     context.read<AuthBloc>().state.userModel?.fullName ??
-                    'Student',
+                    'Học viên',
                 instructorName: _instructorName,
                 certificateKey: certificateKey,
               ),
@@ -140,7 +142,19 @@ class _CertificatePreviewScreenState extends State<CertificatePreviewScreen> {
           if (_isGenerating)
             Container(
               color: Colors.black45,
-              child: const Center(child: CircularProgressIndicator()),
+              child: const Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 12),
+                    Text(
+                      'Đang tạo chứng chỉ...',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
             ),
         ],
       ),

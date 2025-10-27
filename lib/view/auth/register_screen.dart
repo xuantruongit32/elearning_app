@@ -85,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Create Account',
+                            'Tạo tài khoản',
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           SizedBox(height: 10),
                           Text(
-                            'Start your learning journey',
+                            'Bắt đầu hành trình học tập của bạn',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white70,
@@ -117,7 +117,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           //fullname textfield
                           CustomTextField(
-                            label: 'Full Name',
+                            label: 'Họ và tên',
                             prefixIcon: Icons.person_outlined,
                             controller: _fullNameController,
                             validator: FormValidator.validateFullName,
@@ -132,7 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           const SizedBox(height: 20),
                           CustomTextField(
-                            label: 'Password',
+                            label: 'Mật khẩu',
                             prefixIcon: Icons.lock_outlined,
                             controller: _passwordController,
                             validator: FormValidator.validatePassword,
@@ -140,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           const SizedBox(height: 20),
                           CustomTextField(
-                            label: 'Confirm Password',
+                            label: 'Xác nhận mật khẩu',
                             prefixIcon: Icons.lock_outline,
                             controller: _confirmPasswordController,
                             validator: (value) =>
@@ -157,7 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(height: 20),
                     DropdownButtonFormField<UserRole>(
                       decoration: InputDecoration(
-                        labelText: 'Role',
+                        labelText: 'Vai trò',
                         prefixIcon: const Icon(Icons.person_outlined),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -183,7 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     BlocBuilder<AuthBloc, AuthState>(
                       builder: (context, state) {
                         return CustomButton(
-                          text: 'Register',
+                          text: 'Đăng ký',
                           onPressed: _handleRegister,
                         );
                       },
@@ -194,11 +194,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        const Text('Already have an account?'),
+                        const Text('Đã có tài khoản?'),
                         TextButton(
                           onPressed: () => Get.toNamed(AppRoutes.login),
                           child: Text(
-                            "Login",
+                            "Đăng nhập",
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.bold,
@@ -230,7 +230,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } else if (_selectedRole == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please select a role'),
+          content: Text('Vui lòng chọn vai trò'),
           backgroundColor: Colors.red,
         ),
       );

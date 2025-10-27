@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -84,14 +85,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.school,
-                            size: 50,
-                            color: Colors.white,
-                          ), // Icon
+                          Icon(Icons.school, size: 50, color: Colors.white),
                           SizedBox(height: 10),
                           Text(
-                            'Welcome Back!',
+                            'Chào mừng trở lại!',
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -122,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           const SizedBox(height: 20),
                           CustomTextField(
-                            label: 'Password',
+                            label: 'Mật khẩu',
                             prefixIcon: Icons.lock_outline,
                             controller: _passwordController,
                             obscureText: true,
@@ -137,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () =>
                                   Get.toNamed(AppRoutes.forgotPassword),
                               child: Text(
-                                'Forgot Password?',
+                                'Quên mật khẩu?',
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                 ),
@@ -145,11 +142,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          //login button
+
+                          // Login button
                           BlocBuilder<AuthBloc, AuthState>(
                             builder: (context, state) {
                               return CustomButton(
-                                text: 'Login',
+                                text: 'Đăng nhập',
                                 onPressed: _handleLogin,
                                 isLoading: state.isLoading,
                               );
@@ -165,14 +163,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         Expanded(child: Divider(color: Colors.grey.shade300)),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text('Or continue with'),
+                          child: Text('Hoặc tiếp tục với'),
                         ),
                         Expanded(child: Divider(color: Colors.grey.shade300)),
                       ],
                     ),
                     const SizedBox(height: 20),
 
-                    //social login buttons
+                    // social login buttons
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -188,15 +186,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     const SizedBox(height: 20),
+
                     // register link
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Don't have an account?"),
+                        const Text("Chưa có tài khoản?"),
                         TextButton(
                           onPressed: () => Get.toNamed(AppRoutes.register),
                           child: Text(
-                            'Register',
+                            'Đăng ký',
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.bold,
