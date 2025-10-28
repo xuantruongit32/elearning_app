@@ -97,8 +97,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
       });
     } catch (e) {
       Get.snackbar(
-        'Error',
-        'Failed to load courses: $e',
+        'Lỗi',
+        'Tải khóa học thất bại: $e',
         snackPosition: SnackPosition.BOTTOM,
       );
     }
@@ -119,8 +119,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
       });
     } catch (e) {
       Get.snackbar(
-        'Error',
-        'Failed to load categories: $e',
+        'Lỗi',
+        'Tải danh mục thất bại: $e',
         snackPosition: SnackPosition.BOTTOM,
       );
     }
@@ -160,12 +160,12 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                         const SizedBox(height: 32),
                         CustomTextField(
                           controller: _titleController,
-                          label: 'Course Title',
-                          hint: 'Enter course title',
+                          label: 'Tiêu đề khóa học',
+                          hint: 'Nhập tiêu đề khóa học',
                           maxLines: 1,
                           validator: (value) {
                             if (value?.isEmpty ?? true) {
-                              return 'Please enter a title';
+                              return 'Vui lòng nhập tiêu đề';
                             }
                             return null;
                           },
@@ -173,12 +173,12 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                         const SizedBox(height: 24),
                         CustomTextField(
                           controller: _descriptionController,
-                          label: 'Description',
-                          hint: 'Enter course description',
+                          label: 'Mô tả',
+                          hint: 'Nhập mô tả khóa học',
                           maxLines: 3,
                           validator: (value) {
                             if (value?.isEmpty ?? true) {
-                              return 'Please enter a description';
+                              return 'Vui lòng nhập mô tả';
                             }
                             return null;
                           },
@@ -189,12 +189,12 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                           children: [
                             CustomTextField(
                               controller: _priceController,
-                              label: 'Price',
-                              hint: 'Enter price',
+                              label: 'Giá',
+                              hint: 'Nhập giá',
                               keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value?.isEmpty ?? true) {
-                                  return 'Required';
+                                  return 'Bắt buộc';
                                 }
                                 return null;
                               },
@@ -211,17 +211,17 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                         _buildPrerequisitesDropdown(),
                         const SizedBox(height: 32),
                         _buildDynamicList(
-                          title: 'Course Requirements',
+                          title: 'Yêu cầu của khóa học',
                           items: _requirements,
                           onRemove: (index) => _requirements.removeAt(index),
                           onAdd: () => _requirements.add(''),
                         ),
                         const SizedBox(height: 32),
                         _buildDynamicList(
-                          title: 'What You Will Learn',
-                          items: _requirements,
-                          onRemove: (index) => _requirements.removeAt(index),
-                          onAdd: () => _requirements.add(''),
+                          title: 'Bạn sẽ học được gì',
+                          items: _learningPoints,
+                          onRemove: (index) => _learningPoints.removeAt(index),
+                          onAdd: () => _learningPoints.add(''),
                         ),
                         const SizedBox(height: 32),
                         _buildLessonsSection(),
@@ -272,7 +272,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              'Course Lessons',
+              'Các bài học',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -282,7 +282,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             TextButton.icon(
               onPressed: _addLesson,
               icon: const Icon(Icons.add),
-              label: const Text('Add Lesson'),
+              label: const Text('Thêm bài học'),
             ),
           ],
         ),
@@ -327,14 +327,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Lesson ${index + 1}',
+                  'Bài học ${index + 1}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Row(
                   children: [
                     Row(
                       children: [
-                        const Text('Preview'),
+                        const Text('Xem trước'),
                         Switch(
                           value: lesson.isPreview,
                           onChanged: (value) =>
@@ -353,23 +353,26 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             ),
             const SizedBox(height: 8),
             CustomTextField(
-              label: 'Lesson Title',
-              hint: 'Enter lesson title',
+              label: 'Tiêu đề bài học',
+              hint: 'Nhập tiêu đề bài học',
               initialValue: lesson.title,
               onChanged: (value) => _updateLesson(index, title: value),
             ),
             const SizedBox(height: 8),
             CustomTextField(
-              label: 'Lesson Description',
-              hint: 'Enter lesson description',
+              label: 'Mô tả bài học',
+              hint: 'Nhập mô tả bài học',
               maxLines: 3,
+              initialValue: lesson.description,
               onChanged: (value) => _updateLesson(index, description: value),
             ),
             const SizedBox(height: 8),
             CustomTextField(
-              label: 'Duration (minutes)',
-              hint: 'Enter duration',
-              initialValue: lesson.duration.toString(),
+              label: 'Thời lượng (phút)',
+              hint: 'Nhập thời lượng',
+              initialValue: lesson.duration == 0
+                  ? ''
+                  : lesson.duration.toString(),
               keyboardType: TextInputType.number,
               onChanged: (value) => _updateLesson(
                 index,
@@ -398,10 +401,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                         : const Icon(Icons.video_library),
                     label: Text(
                       _isUploadingVideo[index] == true
-                          ? 'Uploading...'
+                          ? 'Đang tải lên...'
                           : lesson.videoUrl.isEmpty
-                          ? 'Add Video'
-                          : 'Change Video',
+                          ? 'Thêm Video'
+                          : 'Đổi Video',
                     ),
                   ),
                 ),
@@ -441,7 +444,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
               ),
             const SizedBox(height: 16),
             const Text(
-              'Resources',
+              'Tài nguyên',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -474,8 +477,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   : () => _addResource(index),
               label: Text(
                 _isUploadingResource[index] == true
-                    ? 'Uploading...'
-                    : 'Add Resouce',
+                    ? 'Đang tải lên...'
+                    : 'Thêm tài nguyên',
               ),
               style: TextButton.styleFrom(foregroundColor: AppColors.primary),
             ),
@@ -518,8 +521,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
         _isUploadingResource[lessonIndex] = false;
       });
       Get.snackbar(
-        'Error',
-        'Failed to add resource: $e',
+        'Lỗi',
+        'Thêm tài nguyên thất bại: $e',
         snackPosition: SnackPosition.BOTTOM,
       );
     }
@@ -555,8 +558,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
         _isUploadingVideo[lessonIndex] = false;
       });
       Get.snackbar(
-        'Error',
-        'Failed to pick video: $e',
+        'Lỗi',
+        'Chọn video thất bại: $e',
         snackPosition: SnackPosition.BOTTOM,
       );
     }
@@ -566,10 +569,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     try {
       _betterPlayerControllers[lessonIndex]?.dispose();
 
-      /*    final videoController = BetterPlayerController(
-      BetterPlayerConfiguration(),
-      betterPlayerDataSource: BetterPlayerDataSource.network(videoUrl),
-    );
+      /*    final videoController = BetterPlayerController(
+      BetterPlayerConfiguration(),
+      betterPlayerDataSource: BetterPlayerDataSource.network(videoUrl),
+    );
 final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
       final betterPlayerController = BetterPlayerController(
         const BetterPlayerConfiguration(
@@ -591,8 +594,8 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
     } catch (e) {
       if (mounted) {
         Get.snackbar(
-          'Error',
-          'Failed to initialize player: $e',
+          'Lỗi',
+          'Khởi tạo trình phát thất bại: $e',
           snackPosition: SnackPosition.BOTTOM,
         );
       }
@@ -603,7 +606,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
     setState(() {
       final updatedResources = List<Resource>.from(
         _lessons[lessonIndex].resources,
-      );
+      )..removeAt(resourceIndex);
       _updateLesson(lessonIndex, resources: updatedResources);
     });
   }
@@ -676,7 +679,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
                       ),
                       child: CustomTextField(
                         label: '',
-                        hint: 'Enter $title',
+                        hint: 'Nhập $title',
                         initialValue: items[index],
                         onChanged: (value) => items[index] = value,
                       ),
@@ -685,7 +688,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
                   IconButton(
                     onPressed: () {
                       setState(() {
-                        if (items.length > 1) {
+                        if (items.length > 1 || items[index].isNotEmpty) {
                           onRemove(index);
                         }
                       });
@@ -707,7 +710,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
             });
           },
           icon: const Icon(Icons.add),
-          label: Text('Add $title'),
+          label: Text('Thêm $title'),
           style: TextButton.styleFrom(foregroundColor: AppColors.primary),
         ),
       ],
@@ -725,7 +728,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(
-            'Premium Course',
+            'Khóa học Premium',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Switch(
@@ -747,7 +750,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Prerequisites',
+          'Điều kiện tiên quyết',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -765,7 +768,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               isExpanded: true,
-              hint: const Text('Select Prerequisites'),
+              hint: const Text('Chọn khóa học tiên quyết'),
               value: null,
               items: _availableCourses.map<DropdownMenuItem<String>>((course) {
                 return DropdownMenuItem<String>(
@@ -791,7 +794,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
             final course = _availableCourses.firstWhere(
               (c) => c.id == courseId,
               orElse: () =>
-                  PrerequisiteCourse(id: courseId, title: 'Unknown Course'),
+                  PrerequisiteCourse(id: courseId, title: 'Khóa học không rõ'),
             );
 
             return Chip(
@@ -809,6 +812,12 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
   }
 
   Widget _buildDropdown() {
+    final Map<String, String> levelMap = {
+      'Beginner': 'Cơ bản',
+      'Intermediate': 'Trung bình',
+      'Advanced': 'Nâng cao',
+    };
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -818,9 +827,12 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: _selectedLevel,
-          items: ['Beginner', 'Intermediate', 'Advanced']
+          items: levelMap.keys
               .map(
-                (level) => DropdownMenuItem(value: level, child: Text(level)),
+                (levelKey) => DropdownMenuItem(
+                  value: levelKey,
+                  child: Text(levelMap[levelKey]!),
+                ),
               )
               .toList(),
           onChanged: (value) {
@@ -848,7 +860,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
             child: DropdownButton(
               value: _selectedCategoryId,
               isExpanded: true,
-              hint: const Text('Select Category'),
+              hint: const Text('Chọn danh mục'),
               items: _categories.map<DropdownMenuItem<String>>((category) {
                 return DropdownMenuItem<String>(
                   value: category['id'] as String,
@@ -921,7 +933,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
                         Icon(Icons.add_photo_alternate, size: 48),
                         SizedBox(height: 8),
                         Text(
-                          'Add Course Thumbnail',
+                          'Thêm ảnh bìa khóa học',
                           style: TextStyle(color: Colors.grey, fontSize: 16),
                         ),
                       ],
@@ -933,7 +945,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.3),
+                  color: Colors.black.withAlpha(80),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Center(
@@ -943,7 +955,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
                       Icon(Icons.edit, color: Colors.white, size: 32),
                       SizedBox(height: 8),
                       Text(
-                        'Change Thumbnail',
+                        'Đổi ảnh bìa',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -952,7 +964,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
                             Shadow(
                               offset: const Offset(0, 1),
                               blurRadius: 3,
-                              color: Colors.black.withValues(alpha: 0.5),
+                              color: Colors.black.withAlpha(120),
                             ),
                           ],
                         ),
@@ -972,8 +984,8 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
     //validate course thumb
     if (_courseImageUrl == null) {
       Get.snackbar(
-        'Error',
-        'Please select a course thumbnail',
+        'Lỗi',
+        'Vui lòng chọn ảnh bìa khóa học',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red[100],
         colorText: Colors.red[900],
@@ -983,8 +995,8 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
     //Validate category
     if (_selectedCategoryId == null) {
       Get.snackbar(
-        'Error',
-        'Please select a category',
+        'Lỗi',
+        'Vui lòng chọn danh mục',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red[100],
         colorText: Colors.red[900],
@@ -994,8 +1006,8 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
     //validate lesson
     if (_lessons.isEmpty) {
       Get.snackbar(
-        'Error',
-        'Please add at least one lesson',
+        'Lỗi',
+        'Vui lòng thêm ít nhất một bài học',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red[100],
         colorText: Colors.red[900],
@@ -1005,7 +1017,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
     String? _lessonError = _validatelessons();
     if (_lessonError != null) {
       Get.snackbar(
-        'Error',
+        'Lỗi',
         _lessonError,
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red[100],
@@ -1026,6 +1038,7 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
         price: double.parse(_priceController.text),
         lessons: _lessons,
         level: _selectedLevel,
+        isPremium: _isPremium,
         requirements: _requirements.where((r) => r.isNotEmpty).toList(),
         whatYouWillLearn: _learningPoints.where((r) => r.isNotEmpty).toList(),
         createdAt: widget.course?.createdAt ?? DateTime.now(),
@@ -1043,8 +1056,8 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
         );
         Get.back();
         Get.snackbar(
-          'Success',
-          'Course updated successfully',
+          'Thành công',
+          'Cập nhật khóa học thành công',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green[100],
           colorText: Colors.green[900],
@@ -1053,8 +1066,8 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
         await _courseRepository.createCourse(course);
         Get.back();
         Get.snackbar(
-          'Success',
-          'Course created successfully',
+          'Thành công',
+          'Tạo khóa học thành công',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green[100],
           colorText: Colors.green[900],
@@ -1062,8 +1075,8 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
       }
     } catch (e) {
       Get.snackbar(
-        'Error',
-        'Failed to create course: $e',
+        'Lỗi',
+        'Tạo khóa học thất bại: $e',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red[100],
         colorText: Colors.red[900],
@@ -1079,21 +1092,21 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
 
       // validate lesson title
       if (lesson.title.isEmpty) {
-        return 'Please enter a title for Lesson ${i + 1}';
+        return 'Vui lòng nhập tiêu đề cho Bài học ${i + 1}';
       }
 
       // validate lesson description
       if (lesson.description.isEmpty) {
-        return 'Please enter a description for Lesson ${i + 1}';
+        return 'Vui lòng nhập mô tả cho Bài học ${i + 1}';
       }
 
       //validate lesson video
       if (lesson.videoUrl.isEmpty) {
-        return 'Please upload a video for Lesson ${i + 1}';
+        return 'Vui lòng tải video lên cho Bài học ${i + 1}';
       }
       //validate lesson video
       if (lesson.duration <= 0) {
-        return 'Please enter a valid duration for Lesson ${i + 1}';
+        return 'Vui lòng nhập thời lượng hợp lệ cho Bài học ${i + 1}';
       }
     }
     return null;
@@ -1126,8 +1139,8 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
         _isUploadingImage = false;
       });
       Get.snackbar(
-        'Error',
-        'Failed to pick image: $e',
+        'Lỗi',
+        'Chọn ảnh thất bại: $e',
         snackPosition: SnackPosition.BOTTOM,
       );
     }
