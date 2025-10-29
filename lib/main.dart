@@ -8,6 +8,7 @@ import 'package:elearning_app/bloc/profile/profile_bloc.dart';
 import 'package:elearning_app/config/firebase_config.dart';
 import 'package:elearning_app/core/theme/app_theme.dart';
 import 'package:elearning_app/respositories/course_respository.dart';
+import 'package:elearning_app/respositories/teacher_repository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/routes/route_pages.dart';
 import 'package:elearning_app/services/storage_service.dart';
@@ -23,6 +24,8 @@ void main() async {
   await StorageService.init();
   // register the RouteObserver
   Get.put<RouteObserver<PageRoute>>(RouteObserver<PageRoute>());
+  Get.put(TeacherRepository());
+
   runApp(const MyApp());
 }
 
@@ -30,6 +33,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
