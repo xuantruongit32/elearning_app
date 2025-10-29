@@ -1,4 +1,6 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
+import 'package:elearning_app/respositories/teacher_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -16,10 +18,13 @@ class WithdrawalScreen extends StatefulWidget {
 class _WithdrawalScreenState extends State<WithdrawalScreen> {
   final _formKey = GlobalKey<FormState>();
   final _amountController = TextEditingController();
-  // THÊM CONTROLLERS MỚI
   final _accountNumberController = TextEditingController();
   final _accountNameController = TextEditingController();
   String? _selectedBank;
+
+  bool _isLoading = false;
+  final TeacherRepository _repository = Get.find<TeacherRepository>();
+  final String? teacherId = FirebaseAuth.instance.currentUser?.uid;
 
   final List<String> _banks = [
     'Vietcombank',
@@ -49,6 +54,67 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
     super.dispose();
   }
 
+  Future<void> _handleConfirmWithdrawal() async {
+    if (teacherId == null) {
+      Get.snackbar(
+        'Lỗi người dùng',
+        'Không thể xác định người dùng. Vui lòng đăng nhập lại.',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    if (_isLoading) return;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final amount = double.tryParse(_amountController.text) ?? 0;
+      final accountName = _accountNameController.text.toUpperCase();
+
+      await _repository.createWithdrawal(
+        teacherId: teacherId!,
+        amount: amount,
+        bankName: _selectedBank!,
+        accountNumber: _accountNumberController.text,
+        accountName: accountName,
+      );
+
+      Get.back();
+      Get.back();
+      Get.snackbar(
+        "Yêu cầu đã được gửi",
+        "Tiền của bạn sẽ về tài khoản trong 3-5 ngày làm việc.",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
+      );
+    } catch (e) {
+      Get.back();
+      Get.snackbar(
+        'Gửi yêu cầu thất bại',
+        e.toString().replaceAll("Exception: ", ""),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
   void _onWithdrawPressed() {
     if (_formKey.currentState!.validate()) {
       FocusManager.instance.primaryFocus?.unfocus();
@@ -70,7 +136,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
           'Rút $formattedAmount về tài khoản:\n\n'
           'Ngân hàng: $_selectedBank\n'
           'STK: $accountNumber\n'
-          'Chủ TK: $accountName\n\n'
+          'Chủ TK: ${accountName.toUpperCase()}\n\n'
           'Bạn có chắc chắn không?',
           style: const TextStyle(height: 1.5),
         ),
@@ -87,23 +153,12 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            onPressed: () {
-              Get.back();
-              Get.back();
-              Get.snackbar(
-                "Yêu cầu đã được gửi",
-                "Tiền của bạn sẽ về tài khoản trong 3-5 ngày làm việc.",
-                snackPosition: SnackPosition.TOP,
-                backgroundColor: Colors.green,
-                colorText: Colors.white,
-                margin: const EdgeInsets.all(12),
-                borderRadius: 8,
-              );
-            },
+            onPressed: _handleConfirmWithdrawal,
             child: const Text('Xác nhận'),
           ),
         ],
       ),
+      barrierDismissible: false,
     );
   }
 
@@ -119,7 +174,6 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
         backgroundColor: AppColors.primary,
         iconTheme: const IconThemeData(color: AppColors.accent),
       ),
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -154,7 +208,6 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-
                 TextFormField(
                   controller: _accountNumberController,
                   keyboardType: TextInputType.number,
@@ -175,7 +228,6 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                   },
                 ),
                 const SizedBox(height: 24),
-
                 TextFormField(
                   controller: _accountNameController,
                   textCapitalization: TextCapitalization.words,
@@ -195,9 +247,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                     return null;
                   },
                 ),
-
                 const SizedBox(height: 24),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -249,9 +299,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                     return null;
                   },
                 ),
-
                 const SizedBox(height: 32),
-
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: Text(
@@ -264,11 +312,10 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                     ),
                   ),
                 ),
-
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: _onWithdrawPressed,
+                    onPressed: _isLoading ? null : _onWithdrawPressed,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: AppColors.accent,
@@ -278,13 +325,22 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                       ),
                       elevation: 5,
                     ),
-                    child: const Text(
-                      'Rút tiền',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child: _isLoading
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 3,
+                            ),
+                          )
+                        : const Text(
+                            'Rút tiền',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ],
