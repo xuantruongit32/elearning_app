@@ -23,6 +23,7 @@ import 'package:elearning_app/view/settings/settings_screen.dart';
 import 'package:elearning_app/view/splash/splash_screen.dart';
 import 'package:elearning_app/view/teacher/create_course/create_course_screen.dart';
 import 'package:elearning_app/view/teacher/my_courses/my_courses_screen.dart';
+import 'package:elearning_app/view/teacher/payment/teacher_payment_screen.dart';
 import 'package:elearning_app/view/teacher/student_progress/student_progress_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_analytics/teacher_analytics_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart';
@@ -47,6 +48,7 @@ class AppRoutes {
   static const String createCourse = '/teacher/courses/create';
   static const String teacherAnalytics = '/teacher/analytics';
   static const String studentProgress = '/teacher/students';
+  static const String teacherPayments = '/teacher/payments';
 
   //course routes
   static const String courseList = '/courses';
@@ -154,6 +156,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const MyCoursesScreen());
       case createCourse:
         return MaterialPageRoute(builder: (_) => const CreateCourseScreen());
+      case teacherPayments:
+        return MaterialPageRoute(builder: (_) => const TeacherPaymentsScreen());
       case teacherAnalytics:
         return MaterialPageRoute(
           builder: (_) => const TeacherAnalyticsScreen(),

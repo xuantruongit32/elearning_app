@@ -34,7 +34,7 @@ class TeacherHomeScreen extends StatelessWidget {
             ],
             flexibleSpace: FlexibleSpaceBar(
               title: const Text(
-                'Teacher Dashboard',
+                'Bảng điều khiển',
                 style: TextStyle(color: AppColors.accent),
               ),
               background: Container(
@@ -53,29 +53,34 @@ class TeacherHomeScreen extends StatelessWidget {
             sliver: SliverGrid(
               delegate: SliverChildListDelegate([
                 DashboardCard(
-                  title: 'My Course',
+                  title: 'Khóa học của tôi',
                   icon: Icons.book,
                   onTap: () => Get.toNamed(AppRoutes.myCourses),
                 ),
                 DashboardCard(
-                  title: 'Create Course',
+                  title: 'Tạo khóa học',
                   icon: Icons.add_circle,
                   onTap: () => Get.toNamed(AppRoutes.createCourse),
                 ),
                 DashboardCard(
-                  title: 'Analytics',
+                  title: 'Phân tích',
                   icon: Icons.analytics,
                   onTap: () => Get.toNamed(AppRoutes.teacherAnalytics),
                 ),
                 DashboardCard(
-                  title: 'Student Progress',
+                  title: 'Tiến độ học viên',
                   icon: Icons.people,
                   onTap: () => Get.toNamed(AppRoutes.studentProgress),
                 ),
                 DashboardCard(
-                  title: 'Messages',
+                  title: 'Tin nhắn',
                   icon: Icons.chat,
                   onTap: () => Get.toNamed(AppRoutes.teacherChats),
+                ),
+                DashboardCard(
+                  title: 'Thanh toán',
+                  icon: Icons.payment,
+                  onTap: () => Get.toNamed(AppRoutes.teacherPayments),
                 ),
               ]),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
