@@ -21,7 +21,6 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
   final _accountNameController = TextEditingController();
   String? _selectedBank;
 
-  // Dữ liệu giả cho ngân hàng - ĐÃ CẬP NHẬT
   final List<String> _banks = [
     'Vietcombank',
     'Techcombank',
@@ -45,7 +44,6 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
   @override
   void dispose() {
     _amountController.dispose();
-    // DISPOSE CONTROLLERS MỚI
     _accountNumberController.dispose();
     _accountNameController.dispose();
     super.dispose();
@@ -53,18 +51,14 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
 
   void _onWithdrawPressed() {
     if (_formKey.currentState!.validate()) {
-      // Ẩn bàn phím
       FocusManager.instance.primaryFocus?.unfocus();
-      // Hiển thị dialog
       _showConfirmationDialog();
     }
   }
 
-  // --- HÀM NÀY ĐÃ ĐƯỢC CẬP NHẬT ---
   void _showConfirmationDialog() {
     final amount = double.tryParse(_amountController.text) ?? 0;
     final formattedAmount = _currencyFormatter.format(amount);
-    // Lấy thông tin tài khoản
     final accountNumber = _accountNumberController.text;
     final accountName = _accountNameController.text;
 
@@ -72,7 +66,6 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
       AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text('Xác nhận rút tiền'),
-        // Cập nhật nội dung dialog để hiển thị đầy đủ thông tin
         content: Text(
           'Rút $formattedAmount về tài khoản:\n\n'
           'Ngân hàng: $_selectedBank\n'
@@ -83,7 +76,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: () => Get.back(), // Đóng dialog
+            onPressed: () => Get.back(),
             child: Text('Hủy', style: TextStyle(color: Colors.grey[700])),
           ),
           ElevatedButton(
@@ -95,11 +88,8 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
               ),
             ),
             onPressed: () {
-              // 1. Đóng dialog
               Get.back();
-              // 2. Quay về trang Quản lý thanh toán
               Get.back();
-              // 3. Hiển thị thông báo (snackbar)
               Get.snackbar(
                 "Yêu cầu đã được gửi",
                 "Tiền của bạn sẽ về tài khoản trong 3-5 ngày làm việc.",
@@ -129,7 +119,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
         backgroundColor: AppColors.primary,
         iconTheme: const IconThemeData(color: AppColors.accent),
       ),
-      // --- THÊM WIDGET NÀY ---
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -138,9 +128,8 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 1. Chọn ngân hàng
                 DropdownButtonFormField<String>(
-                  value: _selectedBank,
+                  initialValue: _selectedBank,
                   hint: const Text('Chọn ngân hàng nhận tiền'),
                   items: _banks
                       .map(
@@ -166,8 +155,6 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // --- THÊM MỚI ---
-                // 2. Số tài khoản
                 TextFormField(
                   controller: _accountNumberController,
                   keyboardType: TextInputType.number,
@@ -189,10 +176,8 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                 ),
                 const SizedBox(height: 24),
 
-                // 3. Tên chủ tài khoản
                 TextFormField(
                   controller: _accountNameController,
-                  // Tự động viết hoa chữ cái đầu
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     labelText: 'Tên chủ tài khoản',
@@ -211,10 +196,8 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                   },
                 ),
 
-                // --- KẾT THÚC THÊM MỚI ---
                 const SizedBox(height: 24),
 
-                // 4. Nhập số tiền (trước là 2)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -223,13 +206,11 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.primary.withOpacity(0.8),
+                        color: AppColors.primary.withValues(alpha: 0.8),
                       ),
                     ),
-                    // Nút gợi ý số dư
                     TextButton(
                       onPressed: () {
-                        // Sử dụng toStringAsFixed(0) để bỏ phần .00
                         _amountController.text = widget.currentBalance
                             .toStringAsFixed(0);
                       },
@@ -244,7 +225,6 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                 TextFormField(
                   controller: _amountController,
                   keyboardType: TextInputType.number,
-                  // Chỉ cho phép nhập số
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                     hintText: 'Nhập số tiền',
@@ -270,10 +250,8 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                   },
                 ),
 
-                // --- THAY ĐỔI SPACER THÀNH SIZEDBOX ---
                 const SizedBox(height: 32),
 
-                // --- THÊM DÒNG CẢNH BÁO ---
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: Text(
@@ -286,9 +264,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                     ),
                   ),
                 ),
-                // --- KẾT THÚC CẢNH BÁO ---
 
-                // 5. Nút rút tiền (trước là 3)
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
