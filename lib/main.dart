@@ -22,7 +22,6 @@ void main() async {
   await FirebaseConfig.init();
   await GetStorage.init();
   await StorageService.init();
-  // register the RouteObserver
   Get.put<RouteObserver<PageRoute>>(RouteObserver<PageRoute>());
   Get.put(TeacherRepository());
 
@@ -32,13 +31,12 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<FontBloc>(create: (context) => FontBloc()), // BlocProvider
+        BlocProvider<FontBloc>(create: (context) => FontBloc()), 
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<ProfileBloc>(
           create: (context) => ProfileBloc(authBloc: context.read<AuthBloc>()),
@@ -70,7 +68,7 @@ class MyApp extends StatelessWidget {
             final routeObserver = Get.find<RouteObserver<PageRoute>>();
             return GetMaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'E-Learning App',
+              title: 'TT Elearning',
               theme: AppTheme.getLightTheme(fontState),
               themeMode: ThemeMode.light,
               initialRoute: AppRoutes.splash,
