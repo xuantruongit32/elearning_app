@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elearning_app/respositories/teacher_repository.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:elearning_app/view/course/payment/widgets/payment_success_dialog.dart';
 import 'package:elearning_app/view/course/payment/widgets/payment_webview.dart';
@@ -6,6 +8,10 @@ import 'package:get/get.dart';
 import 'package:vnpay_flutter/vnpay_flutter.dart';
 
 class PaymentService {
+ 
+  static final TeacherRepository _teacherRepo = Get.find<TeacherRepository>();
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   static Future<void> processPayment({
     required String courseId,
     required double amount,
@@ -44,11 +50,33 @@ class PaymentService {
     );
 
     if (result == true) {
-      //payment success
+      try {
+        final courseDoc = await _firestore
+            .collection('courses')
+            .doc(courseId)
+            .get();
+
+        final teacherId = courseDoc.data()?['instructorId'] as String?;
+
+        if (teacherId != null && teacherId.isNotEmpty) {
+          await _teacherRepo.addDeposit(
+            teacherId: teacherId,
+            amount: amount,
+          );
+        } else {
+          debugPrint(
+            'Payment Success: Could not find teacherId for course $courseId',
+          );
+        }
+      } catch (e) {
+        debugPrint(
+          'Payment Success: Failed to update teacher balance. Error: $e',
+        );
+      }
+
       DummyDataService.addPurchasedCourse(courseId);
       Get.dialog(const PaymentSuccessDialog(), barrierDismissible: false);
     } else {
-      //payment failed
       Get.snackbar(
         'Lỗi thanh toán',
         'Giao dịch không thành công, vui lòng thử lại.',
