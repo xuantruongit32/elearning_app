@@ -1,23 +1,27 @@
+import 'package:elearning_app/bloc/auth/auth_bloc.dart'; // <-- THÊM IMPORT NÀY
 import 'package:elearning_app/bloc/filtered_course/filtered_course_event.dart';
 import 'package:elearning_app/bloc/filtered_course/filtered_course_state.dart';
 import 'package:elearning_app/models/course.dart';
-import 'package:elearning_app/respositories/course_respository.dart';
+import 'package:elearning_app/respositories/course_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilteredCourseBloc
     extends Bloc<FilteredCourseEvent, FilteredCourseState> {
   final CourseRepository _courseRepository;
+  final AuthBloc _authBloc; // <-- THÊM DÒNG NÀY
   String? _currentCategoryId;
   String? _currentLevel;
   String? _currentSearchQuery;
 
-  FilteredCourseBloc({required CourseRepository courseRepository})
-    : _courseRepository = courseRepository,
-      super(FilteredCourseInitial()) {
+  FilteredCourseBloc({
+    required CourseRepository courseRepository,
+    required AuthBloc authBloc, // <-- THÊM DÒNG NÀY
+  }) : _courseRepository = courseRepository,
+       _authBloc = authBloc, // <-- THÊM DÒNG NÀY
+       super(FilteredCourseInitial()) {
     on<FilterCoursesByCategory>(_onFilterCoursesByCategory);
     on<FilterCoursesByLevel>(_onFilterCoursesByLevel);
     on<SearchCourses>(_onSearchCourses);
-
     on<ClearFilteredCourses>(_onClearFilteredCourses);
   }
 
@@ -29,10 +33,23 @@ class FilteredCourseBloc
 
     try {
       _currentSearchQuery = event.query.trim();
-      final courses = await _filterCourses();
+
+      final userId = _authBloc.state.userModel?.uid;
+      final results = await Future.wait([
+        _filterCourses(), 
+        if (userId != null) 
+          _courseRepository.getEnrolledCourseIds(userId)
+        else
+          Future.value(<String>{}), 
+      ]);
+
+      final courses = results[0] as List<Course>;
+      final enrolledIds = results[1] as Set<String>;
+
       emit(
         FilteredCoursesLoaded(
           courses,
+          enrolledCourseIds: enrolledIds,
           categoryId: _currentCategoryId,
           level: _currentLevel,
           searchQuery: _currentSearchQuery,
@@ -50,11 +67,23 @@ class FilteredCourseBloc
     emit(FilteredCourseLoading());
     try {
       _currentLevel = event.level;
-      _currentSearchQuery = null;
-      final courses = await _filterCourses();
+      _currentSearchQuery = null; 
+      final userId = _authBloc.state.userModel?.uid;
+      final results = await Future.wait([
+        _filterCourses(), 
+        if (userId != null) 
+          _courseRepository.getEnrolledCourseIds(userId)
+        else
+          Future.value(<String>{}),
+      ]);
+
+      final courses = results[0] as List<Course>;
+      final enrolledIds = results[1] as Set<String>;
+
       emit(
         FilteredCoursesLoaded(
           courses,
+          enrolledCourseIds: enrolledIds,
           categoryId: _currentCategoryId,
           level: _currentLevel,
         ),
@@ -70,15 +99,29 @@ class FilteredCourseBloc
   ) async {
     emit(FilteredCourseLoading());
     try {
+      // Reset tất cả filter khi chọn category mới
       _currentCategoryId = event.categoryId;
-      final courses = await _filterCourses();
+      _currentLevel = null;
+      _currentSearchQuery = null;
+
+      final userId = _authBloc.state.userModel?.uid;
+      final results = await Future.wait([
+        _filterCourses(), 
+        if (userId != null) 
+          _courseRepository.getEnrolledCourseIds(userId)
+        else
+          Future.value(<String>{}),
+      ]);
+
+      final courses = results[0] as List<Course>;
+      final enrolledIds = results[1] as Set<String>;
 
       emit(
         FilteredCoursesLoaded(
           courses,
-          categoryId: _currentCategoryId,
+          enrolledCourseIds: enrolledIds, 
           level: _currentLevel,
-          searchQuery: _currentSearchQuery,
+          searchQuery: _currentSearchQuery, 
         ),
       );
     } catch (e) {
@@ -86,27 +129,44 @@ class FilteredCourseBloc
     }
   }
 
-  void _onClearFilteredCourses(
+  Future<void> _onClearFilteredCourses(
     ClearFilteredCourses event,
     Emitter<FilteredCourseState> emit,
   ) async {
     emit(FilteredCourseLoading());
     try {
-      // only clear level filter, maintain category if exists
       _currentLevel = null;
-      final courses = await _filterCourses();
 
+      final userId = _authBloc.state.userModel?.uid;
+      final results = await Future.wait([
+        _filterCourses(), 
+        if (userId != null) 
+          _courseRepository.getEnrolledCourseIds(userId)
+        else
+          Future.value(<String>{}),
+      ]);
+
+      final courses = results[0] as List<Course>;
+      final enrolledIds = results[1] as Set<String>;
+    
       if (_currentCategoryId != null) {
         emit(
           FilteredCoursesLoaded(
             courses,
+            enrolledCourseIds: enrolledIds, 
             categoryId: _currentCategoryId,
             level: _currentLevel,
             searchQuery: _currentSearchQuery,
           ),
         );
       } else {
-        emit(FilteredCourseInitial());
+        
+        emit(
+          FilteredCoursesLoaded(
+            courses, 
+            enrolledCourseIds: enrolledIds, 
+          ),
+        );
       }
     } catch (e) {
       emit(FilteredCourseError(e.toString()));
