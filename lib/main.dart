@@ -7,7 +7,7 @@ import 'package:elearning_app/bloc/font/font_state.dart';
 import 'package:elearning_app/bloc/profile/profile_bloc.dart';
 import 'package:elearning_app/config/firebase_config.dart';
 import 'package:elearning_app/core/theme/app_theme.dart';
-import 'package:elearning_app/respositories/course_respository.dart';
+import 'package:elearning_app/respositories/course_repository.dart';
 import 'package:elearning_app/respositories/teacher_repository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/routes/route_pages.dart';
@@ -31,12 +31,11 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<FontBloc>(create: (context) => FontBloc()), 
+        BlocProvider<FontBloc>(create: (context) => FontBloc()),
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<ProfileBloc>(
           create: (context) => ProfileBloc(authBloc: context.read<AuthBloc>()),
@@ -48,8 +47,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
         BlocProvider<FilteredCourseBloc>(
-          create: (context) =>
-              FilteredCourseBloc(courseRepository: CourseRepository()),
+          create: (context) => FilteredCourseBloc(
+            courseRepository: CourseRepository(),
+            authBloc: context.read<AuthBloc>(),
+          ),
         ),
       ],
       child: BlocListener<AuthBloc, AuthState>(
