@@ -10,6 +10,7 @@ class LoadCourseDetail extends CourseEvent {
   final String courseId;
 
   LoadCourseDetail(this.courseId);
+
 }
 
 class EnrollCourse extends CourseEvent {
