@@ -19,12 +19,14 @@ class FilteredCoursesLoaded extends FilteredCourseState {
   final String? categoryId;
   final String? level;
   final String? searchQuery;
+  final Set<String> enrolledCourseIds;
 
   FilteredCoursesLoaded(
     this.courses, {
     this.categoryId,
     this.level,
     this.searchQuery,
+    this.enrolledCourseIds = const {},
   });
 
   FilteredCoursesLoaded copyWith({
@@ -32,12 +34,14 @@ class FilteredCoursesLoaded extends FilteredCourseState {
     String? categoryId,
     String? level,
     String? searchQuery,
+    Set<String>? enrolledCourseIds,
   }) {
     return FilteredCoursesLoaded(
       courses ?? this.courses,
       categoryId: categoryId ?? this.categoryId,
       level: level ?? this.level,
       searchQuery: searchQuery ?? this.searchQuery,
+      enrolledCourseIds: enrolledCourseIds ?? this.enrolledCourseIds,
     );
   }
 }
