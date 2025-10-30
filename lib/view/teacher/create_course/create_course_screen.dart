@@ -6,7 +6,7 @@ import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/course.dart';
 import 'package:elearning_app/models/lesson.dart';
 import 'package:elearning_app/models/prerequisite_course.dart';
-import 'package:elearning_app/respositories/course_respository.dart';
+import 'package:elearning_app/respositories/course_repository.dart';
 import 'package:elearning_app/services/cloudinary_service.dart';
 import 'package:elearning_app/view/onboarding/widgets/common/custom_textfield.dart';
 import 'package:elearning_app/view/teacher/create_course/widgets/create_course_app_bar.dart';

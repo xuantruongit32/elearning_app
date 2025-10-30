@@ -1,6 +1,6 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/course.dart';
-import 'package:elearning_app/respositories/course_respository.dart';
+import 'package:elearning_app/respositories/course_repository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/lesson_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
