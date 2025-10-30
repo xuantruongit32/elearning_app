@@ -2,8 +2,6 @@ import 'package:elearning_app/bloc/course/course_bloc.dart';
 import 'package:elearning_app/bloc/course/course_event.dart';
 import 'package:elearning_app/bloc/course/course_state.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
-import 'package:elearning_app/models/course.dart';
-import 'package:elearning_app/respositories/course_respository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/action_buttons.dart';
 import 'package:elearning_app/view/course/course_detail/widgets/course_detail_app_bar.dart';
@@ -24,7 +22,6 @@ class CourseDetailScreen extends StatefulWidget {
 
 class _CourseDetailScreenState extends State<CourseDetailScreen>
     with RouteAware {
-  bool _isUnlocked = false;
   final RouteObserver<PageRoute> _routeObserver =
       Get.find<RouteObserver<PageRoute>>();
   @override
@@ -63,6 +60,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
     return BlocBuilder<CourseBloc, CourseState>(
       builder: (context, state) {
         //show loading scaffold when in loading state or when selected course is null  in CourseLoaded state
+
         if (state is CourseLoading ||
             (state is CoursesLoaded && state.selectedCourse == null)) {
           return const Scaffold(
@@ -78,6 +76,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
 
         if (state is CoursesLoaded && state.selectedCourse != null) {
           final course = state.selectedCourse!;
+          final bool isUnlocked = state.isEnrolled;
+
           //if in progress -> scroll to last lesson
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (lastLesson != null) {
@@ -143,20 +143,20 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                         const SizedBox(height: 16),
                         LessonList(
                           courseId: widget.courseId,
-                          isUnlocked: _isUnlocked,
+                          isUnlocked: isUnlocked,
                           onLessonComplete: () => setState(() {}),
                         ),
                         const SizedBox(height: 24),
                         ReviewsSection(courseId: widget.courseId),
                         const SizedBox(height: 16),
-                        ActionButtons(course: course, isUnlocked: _isUnlocked),
+                        ActionButtons(course: course, isUnlocked: isUnlocked),
                       ],
                     ),
                   ),
                 ),
               ],
             ),
-            bottomNavigationBar: course.isPremium && !_isUnlocked
+            bottomNavigationBar: course.isPremium && !isUnlocked
                 ? Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
