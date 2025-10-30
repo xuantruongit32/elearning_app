@@ -31,11 +31,10 @@ class CourseListScreen extends StatefulWidget {
 
 class _CourseListScreenState extends State<CourseListScreen> {
   String? _currentLevel;
-  @override
+  bool _showPurchasedOnly = false;
   void initState() {
     super.initState();
 
-    //load courses when screen initialize
     if (widget.categoryId != null) {
       context.read<FilteredCourseBloc>().add(
         FilterCoursesByCategory(widget.categoryId!),
@@ -66,8 +65,16 @@ class _CourseListScreenState extends State<CourseListScreen> {
       builder: (context) => CourseFilterDialog(
         onLevelSelected: _handleLevelFilter,
         initialLevel: _currentLevel,
+        onPurchasedToggle: _handlePurchasedFilter,
+        initialShowPurchased: _showPurchasedOnly,
       ),
     );
+  }
+
+  void _handlePurchasedFilter(bool isPurchased) {
+    setState(() {
+      _showPurchasedOnly = isPurchased;
+    });
   }
 
   void _handleLevelFilter(String level) {
@@ -91,13 +98,18 @@ class _CourseListScreenState extends State<CourseListScreen> {
   Widget _buildFilteredCourselist(ThemeData theme) {
     return BlocBuilder<FilteredCourseBloc, FilteredCourseState>(
       builder: (context, state) {
+        List<Course>? finalCourses;
+
+        if (state is FilteredCoursesLoaded) {
+          final enrolledIds = state.enrolledCourseIds;
+          finalCourses = _filterCoursesByPurchased(state.courses, enrolledIds);
+        }
+
         return _buildCourseListView(
           theme: theme,
           isLoading: state is FilteredCourseLoading,
-          error: state is FilteredCourseError
-              ? (state as FilteredCourseError).message
-              : null,
-          courses: state is FilteredCoursesLoaded ? state.courses : null,
+          error: state is FilteredCourseError ? state.message : null,
+          courses: finalCourses,
         );
       },
     );
@@ -106,14 +118,19 @@ class _CourseListScreenState extends State<CourseListScreen> {
   Widget _buildAllCourselist(ThemeData theme) {
     return BlocBuilder<CourseBloc, CourseState>(
       builder: (context, state) {
-        final courses = state is CoursesLoaded
-            ? _filterCoursesByLevel(state.courses)
-            : null;
+        List<Course>? finalCourses;
+
+        if (state is CoursesLoaded) {
+          final enrolledIds = state.enrolledCourseIds;
+          var levelFiltered = _filterCoursesByLevel(state.courses);
+          finalCourses = _filterCoursesByPurchased(levelFiltered, enrolledIds);
+        }
+
         return _buildCourseListView(
           theme: theme,
           isLoading: state is CourseLoading,
           error: state is CourseError ? state.message : null,
-          courses: courses,
+          courses: finalCourses,
         );
       },
     );
@@ -221,6 +238,16 @@ class _CourseListScreenState extends State<CourseListScreen> {
     );
   }
 
+  List<Course> _filterCoursesByPurchased(
+    List<Course> courses,
+    Set<String> enrolledIds,
+  ) {
+    if (!_showPurchasedOnly) {
+      return courses;
+    }
+    return courses.where((course) => enrolledIds.contains(course.id)).toList();
+  }
+
   List<Course> _filterCoursesByLevel(List<Course> courses) {
     if (_currentLevel == null || _currentLevel == 'All Levels') {
       return courses;
@@ -238,7 +265,12 @@ class _CourseListScreenState extends State<CourseListScreen> {
     if (_currentLevel != null && _currentLevel != 'All Levels') {
       titleParts.add(_currentLevel!);
     }
-    if(titleParts.isEmpty){
+
+    if (_showPurchasedOnly) {
+      titleParts.add('Purchased');
+    }
+
+    if (titleParts.isEmpty) {
       return 'All Courses';
     }
     return titleParts.join(' - ');
