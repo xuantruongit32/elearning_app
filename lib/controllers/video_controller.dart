@@ -1,6 +1,6 @@
 import 'package:better_player_plus/better_player_plus.dart';
 import 'package:elearning_app/models/course.dart';
-import 'package:elearning_app/respositories/course_respository.dart';
+import 'package:elearning_app/respositories/course_repository.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +69,7 @@ class LessonVideoController {
         );
       }
 
-      if (course.isPremium && isEnrolled) {
+      if (course.isPremium && !isEnrolled) {
         onLoadingChanged(false);
         Get.back();
         Get.toNamed(
