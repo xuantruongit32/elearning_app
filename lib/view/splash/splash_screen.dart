@@ -52,7 +52,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     final authState = context.read<AuthBloc>().state;
     if (StorageService.isFirstTime()) {
-      // navigate to onboarding screen
       StorageService.setFirstTime(false);
       Get.offNamed(AppRoutes.onboarding);
     } else if (authState.userModel != null) {
@@ -61,10 +60,8 @@ class _SplashScreenState extends State<SplashScreen>
       } else {
         Get.offNamed(AppRoutes.main);
       }
-      // navigate to home screen
       Get.offNamed(AppRoutes.main);
     } else {
-      // navigate to login screen
       Get.offNamed(AppRoutes.login);
     }
   }
@@ -121,7 +118,7 @@ class _SplashScreenState extends State<SplashScreen>
                     child: Column(
                       children: [
                         Text(
-                          'TT Company',
+                          'TT Elearning',
                           style: theme.textTheme.displayMedium?.copyWith(
                             color: theme.colorScheme.surface,
                             letterSpacing: 1.5,
@@ -129,7 +126,7 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'Learn Anywhere, Achieve Everywhere',
+                          'Học thông minh, sống tự do',
                           style: theme.textTheme.bodyLarge?.copyWith(
                             color: theme.colorScheme.surface.withOpacity(0.7),
                             letterSpacing: 1.5,
@@ -140,7 +137,6 @@ class _SplashScreenState extends State<SplashScreen>
                   ),
                 ),
                 const SizedBox(height: 60),
-
                 FadeTransition(
                   opacity: _fadeAnimation,
                   child: CircularProgressIndicator(
