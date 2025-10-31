@@ -1,6 +1,7 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/view/teacher/teacher_analytics/widgets/enrollment_chart_widget.dart';
 import 'package:elearning_app/view/teacher/teacher_analytics/widgets/overview_cards_widget.dart';
+import 'package:elearning_app/view/teacher/teacher_analytics/widgets/revenue_stats_widgets.dart';
 import 'package:elearning_app/view/teacher/teacher_analytics/widgets/student_engagement_widget.dart';
 import 'package:elearning_app/view/teacher/teacher_analytics/widgets/teacher_analytics_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,8 @@ class TeacherAnalyticsScreen extends StatelessWidget {
                   EnrollmentChartWidget(instructorId: instructorId),
                   const SizedBox(height: 24),
                   StudentEngagementWidget(instructorId: instructorId),
+                  const SizedBox(height: 24),
+                  RevenueStatsWidgets(),
                 ],
               ),
             ),

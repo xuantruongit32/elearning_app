@@ -24,20 +24,20 @@ class RevenueStatsWidgets extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Revenue Statistics',
+            'Thống kê doanh thu',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildRevenueMetric('Monthly Revenue', '\$2,345'),
-              _buildRevenueMetric('Annual Revenue', '\$28,345'),
+              _buildRevenueMetric('Doanh thu tháng', '\$2,345'),
+              _buildRevenueMetric('Doanh thu năm', '\$28,345'),
             ],
           ),
           const SizedBox(height: 24),
           const Text(
-            'Revenue by Course',
+            'Doanh thu theo khóa học',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
@@ -71,12 +71,7 @@ class RevenueStatsWidgets extends StatelessWidget {
                     sideTitles: SideTitles(
                       showTitles: true,
                       getTitlesWidget: (value, meta) {
-                        const titles = [
-                          'Course 1',
-                          'Course 2',
-                          'Course 3',
-                          'Course 4',
-                        ];
+                        const titles = ['Khóa 1', 'Khóa 2', 'Khóa 3', 'Khóa 4'];
                         return Text(
                           titles[value.toInt()],
                           style: const TextStyle(fontSize: 12),
