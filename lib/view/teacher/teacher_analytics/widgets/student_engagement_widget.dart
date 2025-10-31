@@ -27,25 +27,24 @@ class StudentEngagementWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Student Engagement',
+            'Mức độ tương tác',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 24),
           _buildEngagementMetric(
-            'Average Completion Rate',
+            'Tỷ lệ hoàn thành',
             '${(engagement.averageCompletionRate * 100).toInt()}%',
             Icons.school,
           ),
           Divider(height: 32, color: Colors.grey.shade300),
           _buildEngagementMetric(
-            'Average Time per Lesson',
-            '${engagement.averageTimePerLesson} mins ',
+            'Thời gian trung bình',
+            '${engagement.averageTimePerLesson} phút',
             Icons.timer,
           ),
           Divider(height: 32, color: Colors.grey.shade300),
-
           _buildEngagementMetric(
-            'Active Students this Week',
+            'Hoạt động trong tuần',
             engagement.activeStudentsThisWeek.toString(),
             Icons.people,
           ),
