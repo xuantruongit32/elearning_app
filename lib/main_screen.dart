@@ -38,22 +38,22 @@ class MainScreen extends StatelessWidget {
                 NavigationDestination(
                   icon: Icon(Icons.home_outlined),
                   selectedIcon: Icon(Icons.home),
-                  label: 'Home',
+                  label: 'Trang chủ',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.play_lesson_outlined),
                   selectedIcon: Icon(Icons.play_lesson),
-                  label: 'My Courses',
+                  label: 'Khóa học',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.quiz_outlined),
                   selectedIcon: Icon(Icons.quiz),
-                  label: 'Quizess',
+                  label: 'Kiểm tra',
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.person_outlined),
                   selectedIcon: Icon(Icons.person),
-                  label: 'Profile',
+                  label: 'Hồ sơ',
                 ),
               ],
               selectedIndex: state.currentIndex,
