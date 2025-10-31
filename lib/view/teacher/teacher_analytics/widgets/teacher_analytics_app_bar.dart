@@ -23,7 +23,7 @@ class TeacherAnalyticsAppBar extends StatelessWidget {
           bottom: 16,
         ),
         title: Text(
-          'Course Analytics',
+          'Thống kê khóa học',
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             color: AppColors.accent,
             fontWeight: FontWeight.bold,
@@ -35,6 +35,17 @@ class TeacherAnalyticsAppBar extends StatelessWidget {
               colors: [AppColors.primary, AppColors.primaryLight],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
+            ),
+          ),
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Icon(
+                Icons.analytics_outlined,
+                color: Colors.white.withValues(alpha: 0.3),
+                size: 100,
+              ),
             ),
           ),
         ),
