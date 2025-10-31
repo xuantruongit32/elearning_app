@@ -18,22 +18,22 @@ class OverviewCardsWidget extends StatelessWidget {
       childAspectRatio: 1.2,
       children: [
         _buildStatCard(
-          'Total Students',
+          'Tổng số học viên',
           '${stats.totalStudents}',
           Icons.people,
         ),
         _buildStatCard(
-          'Active Courses',
+          'Khóa học hoạt động',
           '${stats.activeCourses}',
           Icons.school,
         ),
         _buildStatCard(
-          'Total Revenue',
+          'Tổng doanh thu',
           '\$${stats.totalRevenue.toStringAsFixed(2)}',
           Icons.attach_money,
         ),
         _buildStatCard(
-          'Avg. Rating',
+          'Đánh giá trung bình',
           stats.averageRating.toString(),
           Icons.star,
         ),
