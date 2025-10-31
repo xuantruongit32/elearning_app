@@ -26,7 +26,7 @@ class EnrollmentChartWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Enrollment Trends',
+            'Xu hướng đăng ký học',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 24),
@@ -53,7 +53,7 @@ class EnrollmentChartWidget extends StatelessWidget {
             sideTitles: SideTitles(
               showTitles: true,
               getTitlesWidget: (value, meta) {
-                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+                const months = ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6'];
                 if (value.toInt() >= 0 && value.toInt() < months.length) {
                   return Text(
                     months[value.toInt()],
