@@ -47,7 +47,7 @@ class CreateCourseAppBar extends StatelessWidget {
           bottom: 16,
         ),
         title: Text(
-          course != null ? 'Edit Course' : 'Create Course',
+          course != null ? 'Chỉnh sửa khóa học' : 'Tạo khóa học',
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             color: AppColors.accent,
             fontWeight: FontWeight.bold,
