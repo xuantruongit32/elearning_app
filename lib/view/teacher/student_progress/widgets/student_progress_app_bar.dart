@@ -23,7 +23,7 @@ class StudentProgressAppBar extends StatelessWidget {
           bottom: 64,
         ),
         title: Text(
-          "Student Progress",
+          "Tiến độ học tập",
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             color: AppColors.accent,
             fontWeight: FontWeight.bold,
@@ -46,8 +46,8 @@ class StudentProgressAppBar extends StatelessWidget {
           labelColor: AppColors.accent,
           unselectedLabelColor: AppColors.accent.withValues(alpha: 0.7),
           tabs: const [
-            Tab(text: 'Course Progress'),
-            Tab(text: 'Performance'),
+            Tab(text: 'Tiến độ'),
+            Tab(text: 'Hiệu suất'),
           ],
         ),
       ),
