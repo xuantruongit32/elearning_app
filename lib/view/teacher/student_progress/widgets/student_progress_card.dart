@@ -33,7 +33,7 @@ class StudentProgressCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: () {
-            //student detail
+            // Chi tiết học viên
           },
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -118,17 +118,17 @@ class StudentProgressCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _buildMetric(
-                      "Completed",
+                      "Đã hoàn thành",
                       '${progress.completedLessons}/${progress.totalLessons}',
                       Icons.check_circle,
                     ),
                     _buildMetric(
-                      "Time Spent",
+                      "Thời gian học",
                       '${progress.averageTimePerLesson}h',
                       Icons.access_time,
                     ),
                     _buildMetric(
-                      "Avg. Score",
+                      "Điểm trung bình",
                       '${(progress.averageScore * 100).toInt()}%',
                       Icons.analytics,
                     ),
