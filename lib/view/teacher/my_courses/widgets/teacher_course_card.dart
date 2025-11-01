@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:intl/intl.dart';
 
 class TeacherCourseCard extends StatelessWidget {
   final Course course;
@@ -18,21 +19,21 @@ class TeacherCourseCard extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Course'),
+        title: const Text('Xóa khóa học'),
         content: const Text(
-          "Are you sure you want to delete this course? This action can't be undone!",
+          "Bạn có chắc chắn muốn xóa khóa học này không? Hành động này không thể hoàn tác!",
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: const Text('Hủy'),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               context.read<CourseBloc>().add(DeleteCourse(course.id));
             },
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            child: const Text('Xóa', style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -41,6 +42,8 @@ class TeacherCourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatCurrency = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -65,7 +68,7 @@ class TeacherCourseCard extends StatelessWidget {
               Stack(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.vertical(
+                    borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(16),
                     ),
                     child: CachedNetworkImage(
@@ -108,7 +111,7 @@ class TeacherCourseCard extends StatelessWidget {
                             Icon(Icons.star, color: Colors.white, size: 16),
                             SizedBox(width: 4),
                             Text(
-                              'Premium',
+                              'Cao cấp',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -141,12 +144,12 @@ class TeacherCourseCard extends StatelessWidget {
                         Icon(Icons.people, size: 16, color: Colors.grey[600]),
                         const SizedBox(width: 4),
                         Text(
-                          '${course.enrollmentCount} students',
+                          '${course.enrollmentCount} học viên',
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                         const SizedBox(width: 16),
                         Text(
-                          course.rating.toString(),
+                          '${course.rating} ★',
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
@@ -156,8 +159,10 @@ class TeacherCourseCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '\$${course.price}',
-                          style: TextStyle(
+                          course.price == 0
+                              ? "Miễn phí"
+                              : formatCurrency.format(course.price),
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: AppColors.primary,
@@ -172,13 +177,13 @@ class TeacherCourseCard extends StatelessWidget {
                                 );
                               },
                               icon: const Icon(Icons.edit),
-                              label: const Text("Edit"),
+                              label: const Text("Sửa"),
                             ),
                             TextButton.icon(
                               onPressed: () => _showDeleteConfirmation(context),
                               icon: const Icon(Icons.delete, color: Colors.red),
                               label: const Text(
-                                "Delete",
+                                "Xóa",
                                 style: TextStyle(color: Colors.red),
                               ),
                             ),

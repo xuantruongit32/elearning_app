@@ -19,7 +19,7 @@ class EmptyCoursesState extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Start Your Teaching Journey',
+            'Bắt đầu hành trình giảng dạy',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -28,12 +28,11 @@ class EmptyCoursesState extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Share your knowledge — start your first course.',
+            'Chia sẻ kiến thức của bạn — tạo khóa học đầu tiên',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16, color: Colors.grey[600]),
           ),
           const SizedBox(height: 24),
-
           ElevatedButton(
             onPressed: () => Get.toNamed(AppRoutes.createCourse),
             style: ElevatedButton.styleFrom(
@@ -44,7 +43,7 @@ class EmptyCoursesState extends StatelessWidget {
               elevation: 5,
               backgroundColor: AppColors.primary,
             ),
-            child: const Text('Create Course', style: TextStyle(fontSize: 16)),
+            child: const Text('Tạo khóa học', style: TextStyle(fontSize: 16)),
           ),
         ],
       ),

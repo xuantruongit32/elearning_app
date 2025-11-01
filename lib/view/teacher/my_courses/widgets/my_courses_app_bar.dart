@@ -29,7 +29,7 @@ class MyCoursesAppBar extends StatelessWidget {
           bottom: 16,
         ),
         title: Text(
-          'My Courses',
+          'Khóa học của tôi',
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
             color: AppColors.accent,
             fontWeight: FontWeight.bold,

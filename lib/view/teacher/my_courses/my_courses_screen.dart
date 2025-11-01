@@ -35,7 +35,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
     final instructorId = userService.getCurrentUserId();
 
     if (instructorId == null) {
-      return const Center(child: Text('User not logged in'));
+      return const Center(child: Text('Người dùng chưa đăng nhập'));
     }
 
     return BlocConsumer<CourseBloc, CourseState>(
@@ -57,7 +57,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
           return Scaffold(
             backgroundColor: AppColors.lightBackground,
             appBar: AppBar(
-              title: const Text('My Courses'),
+              title: const Text('Khóa học của tôi'),
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
               leading: IconButton(
@@ -74,14 +74,14 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
             ),
           );
         } else if (state is CourseError) {
-          return Center(child: Text('Error: \\${state.message}'));
+          return Center(child: Text('Lỗi: ${state.message}'));
         } else if (state is CoursesLoaded) {
           final teacherCourses = state.courses;
           if (teacherCourses.isEmpty) {
             return Scaffold(
               backgroundColor: AppColors.lightBackground,
               appBar: AppBar(
-                title: const Text('My Courses'),
+                title: const Text('Khóa học của tôi'),
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
                 leading: IconButton(
@@ -119,7 +119,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
           return Scaffold(
             backgroundColor: AppColors.lightBackground,
             appBar: AppBar(
-              title: const Text('My Courses'),
+              title: const Text('Khóa học của tôi'),
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
               leading: IconButton(

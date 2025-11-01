@@ -1,6 +1,6 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // Cần thêm gói 'intl' vào pubspec.yaml
+import 'package:intl/intl.dart'; 
 
 class BalanceCard extends StatelessWidget {
   final double balance;
@@ -9,7 +9,6 @@ class BalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Sử dụng NumberFormat để định dạng tiền tệ
     final currencyFormatter = NumberFormat.currency(
       locale: 'vi_VN',
       symbol: '₫',
