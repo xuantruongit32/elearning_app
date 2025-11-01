@@ -57,13 +57,16 @@ class PerformanceCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                _buildPerformanceMetric('Course Completion', completionRate),
                 _buildPerformanceMetric(
-                  'Average Time per Lesson',
-                  averageTimePerLesson / 60,
+                  'Tỷ lệ hoàn thành khóa học',
+                  completionRate,
+                ),
+                _buildTimeMetric(
+                  'Thời gian trung bình mỗi bài học',
+                  averageTimePerLesson,
                 ),
                 _buildPerformanceMetric(
-                  'Overall Progress',
+                  'Tiến độ tổng thể',
                   averageCompletionRate,
                 ),
               ],
@@ -74,6 +77,7 @@ class PerformanceCard extends StatelessWidget {
     );
   }
 
+  /// Hiển thị các chỉ số theo phần trăm
   Widget _buildPerformanceMetric(String label, double value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,6 +105,36 @@ class PerformanceCard extends StatelessWidget {
             minHeight: 8,
           ),
         ),
+        const SizedBox(height: 12),
+      ],
+    );
+  }
+
+  /// Hiển thị thời gian trung bình mỗi bài học theo phút
+  Widget _buildTimeMetric(String label, int minutes) {
+    final hours = (minutes / 60).floor();
+    final mins = minutes % 60;
+    final displayTime = hours > 0
+        ? '${hours}h ${mins}p'
+        : '${mins}p'; // ví dụ: "1h 20p" hoặc "45p"
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(label, style: TextStyle(color: Colors.grey[600])),
+            Text(
+              displayTime,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
       ],
     );
   }
