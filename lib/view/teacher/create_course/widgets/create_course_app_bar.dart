@@ -34,7 +34,7 @@ class CreateCourseAppBar extends StatelessWidget {
             ),
             onPressed: onSubmit,
             child: Text(
-              course != null ? 'Update' : 'Create',
+              course != null ? 'Update' : 'Tạo',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
