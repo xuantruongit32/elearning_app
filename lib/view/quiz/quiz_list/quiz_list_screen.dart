@@ -23,7 +23,7 @@ class QuizListScreen extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: const EdgeInsets.all(16),
               title: Text(
-                'Quizzes',
+                'Bài kiểm tra',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   color: AppColors.accent,
                   fontWeight: FontWeight.bold,
