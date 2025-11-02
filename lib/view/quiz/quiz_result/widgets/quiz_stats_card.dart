@@ -25,7 +25,7 @@ class QuizStatsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Quiz Statistics',
+            'Thống kê bài kiểm tra',
             style: theme.textTheme.titleLarge?.copyWith(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,
@@ -34,13 +34,13 @@ class QuizStatsCard extends StatelessWidget {
           const SizedBox(height: 16),
           _buildStatRow(
             theme,
-            'Time Spent',
-            '${(attempt.timeSpent ~/ 60)}m ${attempt.timeSpent % 60}s',
+            'Thời gian làm bài',
+            '${(attempt.timeSpent ~/ 60)}p ${attempt.timeSpent % 60}g',
             Icons.timer,
           ),
           _buildStatRow(
             theme,
-            'Correct Answers',
+            'Câu trả lời đúng',
             '$correctAnswers/${quiz.questions.length}',
             Icons.check_circle,
           ),
