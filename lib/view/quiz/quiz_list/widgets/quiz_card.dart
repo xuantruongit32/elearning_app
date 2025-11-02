@@ -64,13 +64,13 @@ class QuizCard extends StatelessWidget {
                     _buildQuizStat(
                       theme,
                       Icons.quiz_outlined,
-                      '$questionCount Questions',
+                      '$questionCount câu hỏi',
                     ),
                     const SizedBox(height: 20),
                     _buildQuizStat(
                       theme,
                       Icons.timer_outlined,
-                      '$timeLimit minutes',
+                      '$timeLimit phút',
                     ),
                   ],
                 ),
