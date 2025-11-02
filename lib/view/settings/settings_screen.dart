@@ -19,8 +19,7 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       appBar: AppBar(
-        title: const Text('Settings', style: TextStyle(color: Colors.white)),
-
+        title: const Text('Cài đặt', style: TextStyle(color: Colors.white)),
         backgroundColor: AppColors.primary,
         leading: IconButton(
           onPressed: () => Get.back(),
@@ -36,10 +35,10 @@ class SettingsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SettingSection(
-                title: 'Preferences',
+                title: 'Tùy chọn',
                 children: [
                   SettingTile(
-                    title: 'Download over Wifi only',
+                    title: 'Chỉ tải xuống qua Wi-Fi',
                     icon: Icons.wifi_outlined,
                     trailing: Switch(
                       value: true,
@@ -51,16 +50,16 @@ class SettingsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               SettingSection(
-                title: 'Content',
+                title: 'Nội dung',
                 children: [
                   SettingTile(
-                    title: 'Download Quality',
+                    title: 'Chất lượng tải xuống',
                     icon: Icons.high_quality_outlined,
                     trailing: DropdownButton<String>(
                       onChanged: (value) {},
                       underline: const SizedBox(),
-                      value: 'High',
-                      items: ['Low', 'Medium', 'High']
+                      value: 'Cao',
+                      items: ['Thấp', 'Trung bình', 'Cao']
                           .map(
                             (e) => DropdownMenuItem(value: e, child: Text(e)),
                           )
@@ -68,7 +67,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                   SettingTile(
-                    title: 'Auto-play Videos',
+                    title: 'Tự động phát video',
                     icon: Icons.play_circle_outlined,
                     trailing: Switch(
                       value: false,
@@ -80,15 +79,15 @@ class SettingsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               SettingSection(
-                title: 'Privacy',
+                title: 'Quyền riêng tư',
                 children: [
                   SettingTile(
-                    title: 'Privacy Policy',
+                    title: 'Chính sách bảo mật',
                     icon: Icons.privacy_tip_outlined,
                     onTap: () => Get.toNamed(AppRoutes.privacyPolicy),
                   ),
                   SettingTile(
-                    title: 'Terms of Service',
+                    title: 'Điều khoản dịch vụ',
                     icon: Icons.description_outlined,
                     onTap: () => Get.toNamed(AppRoutes.termsConditions),
                   ),
@@ -96,28 +95,42 @@ class SettingsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               SettingSection(
-                title: 'Text Settings',
+                title: 'Cài đặt văn bản',
                 children: [
                   SettingTile(
-                    title: 'Font Size',
+                    title: 'Kích thước chữ',
                     icon: Icons.format_size,
                     trailing: DropdownButton<String>(
                       value: FontService.currentFontScale == 0.8
-                          ? 'Small'
+                          ? 'Nhỏ'
                           : FontService.currentFontScale == 1.0
-                          ? 'Normal'
+                          ? 'Bình thường'
                           : FontService.currentFontScale == 1.2
-                          ? 'Large'
-                          : 'Extra Large',
-                      items: FontService.fontSizeScales.keys
-                          .map(
-                            (e) => DropdownMenuItem(value: e, child: Text(e)),
-                          )
-                          .toList(),
+                          ? 'Lớn'
+                          : 'Rất lớn',
+                      items:
+                          {
+                                'Nhỏ': 0.8,
+                                'Bình thường': 1.0,
+                                'Lớn': 1.2,
+                                'Rất lớn': 1.4,
+                              }.keys
+                              .map(
+                                (e) =>
+                                    DropdownMenuItem(value: e, child: Text(e)),
+                              )
+                              .toList(),
                       onChanged: (value) async {
                         if (value != null) {
                           context.read<FontBloc>().add(
-                            UpdateFontScale(FontService.fontSizeScales[value]!),
+                            UpdateFontScale(
+                              {
+                                'Nhỏ': 0.8,
+                                'Bình thường': 1.0,
+                                'Lớn': 1.2,
+                                'Rất lớn': 1.4,
+                              }[value]!,
+                            ),
                           );
                         }
                       },
@@ -125,7 +138,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                   SettingTile(
-                    title: 'Font Family',
+                    title: 'Phông chữ',
                     icon: Icons.font_download,
                     trailing: DropdownButton<String>(
                       value: FontService.availableFonts.entries
@@ -154,10 +167,10 @@ class SettingsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               SettingSection(
-                title: 'App Info',
+                title: 'Thông tin ứng dụng',
                 children: [
                   SettingTile(
-                    title: 'Version',
+                    title: 'Phiên bản',
                     icon: Icons.info_outline,
                     trailing: Text(
                       '1.0.0',
