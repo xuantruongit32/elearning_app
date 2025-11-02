@@ -35,16 +35,16 @@ class QuizNavigationBar extends StatelessWidget {
           _buildNavigationButton(
             theme: theme,
             icon: Icons.arrow_back_rounded,
-            label: 'Previous',
+            label: 'Câu trước',
             onPressed: onPreviousPressed,
             isNext: false,
           ),
           _buildNavigationButton(
             theme: theme,
             icon: Icons.forward_rounded,
-            label: 'Next',
+            label: isLastPage ? 'Nộp bài' : 'Câu tiếp',
             onPressed: onNextPressed,
-            isNext: false,
+            isNext: true,
           ),
         ],
       ),
@@ -74,40 +74,38 @@ class QuizNavigationBar extends StatelessWidget {
             ? AppColors.primary.withValues(alpha: 0.5)
             : AppColors.accent.withValues(alpha: 0.5),
       ),
-      child: TextButton(
-        onPressed: onPressed,
-        child: Row(
-          children: [
-            if (!isNext)
-              Icon(
-                icon,
-                color: isEnabled
-                    ? AppColors.primary
-                    : AppColors.primary.withValues(alpha: 0.5),
-                size: 20,
-              ),
-            if (!isNext) const SizedBox(width: 8),
-            Text(
-              label,
-              style: theme.textTheme.labelLarge?.copyWith(
-                color: isEnabled
-                    ? (isNext ? AppColors.accent : AppColors.primary)
-                    : (isNext ? AppColors.accent : AppColors.primary)
-                          .withValues(alpha: 0.5),
-                fontWeight: FontWeight.bold,
-              ),
+      child: Row(
+        children: [
+          if (!isNext)
+            Icon(
+              icon,
+              color: isEnabled
+                  ? AppColors.primary
+                  : AppColors.primary.withValues(alpha: 0.5),
+              size: 20,
             ),
-            if (isNext) const SizedBox(width: 8),
-            if (isNext)
-              Icon(
-                icon,
-                color: isEnabled
-                    ? AppColors.accent
-                    : AppColors.accent.withValues(alpha: 0.5),
-                size: 20,
-              ),
-          ],
-        ),
+          if (!isNext) const SizedBox(width: 8),
+          Text(
+            label,
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: isEnabled
+                  ? (isNext ? AppColors.accent : AppColors.primary)
+                  : (isNext ? AppColors.accent : AppColors.primary).withValues(
+                      alpha: 0.5,
+                    ),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          if (isNext) const SizedBox(width: 8),
+          if (isNext)
+            Icon(
+              icon,
+              color: isEnabled
+                  ? AppColors.accent
+                  : AppColors.accent.withValues(alpha: 0.5),
+              size: 20,
+            ),
+        ],
       ),
     );
   }
