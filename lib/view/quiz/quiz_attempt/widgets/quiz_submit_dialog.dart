@@ -16,19 +16,19 @@ class QuizSubmitDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Submit Quiz"),
-      content: const Text("Are you sure you want to submit your answers?"),
+      title: const Text("Nộp bài kiểm tra"),
+      content: const Text("Bạn có chắc chắn muốn nộp bài không?"),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Hủy'),
         ),
         FilledButton(
           onPressed: () {
             Navigator.pop(context);
             Get.off(() => QuizResultScreen(attempt: attempt, quiz: quiz));
           },
-          child: const Text('Submit'),
+          child: const Text('Nộp bài'),
         ),
       ],
     );
