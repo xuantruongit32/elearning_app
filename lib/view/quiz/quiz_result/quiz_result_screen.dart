@@ -38,7 +38,7 @@ class QuizResultScreen extends StatelessWidget {
               onPressed: () => Get.offAllNamed(
                 AppRoutes.main,
                 arguments: {
-                  'initialIndex': 2, //2 : index for quiz tab
+                  'initialIndex': 2, //2: tab Quiz
                 },
               ),
               icon: Icon(Icons.close, color: AppColors.accent),
@@ -46,7 +46,7 @@ class QuizResultScreen extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: const EdgeInsets.all(16),
               title: Text(
-                'Quiz Results',
+                'Kết quả bài kiểm tra',
                 style: theme.textTheme.headlineMedium?.copyWith(
                   color: AppColors.accent,
                   fontWeight: FontWeight.bold,
