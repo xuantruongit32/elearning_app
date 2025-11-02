@@ -34,7 +34,7 @@ class QuizQuestionPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
-              'Question $questionNumber of $totalQuestions',
+              'Câu hỏi $questionNumber trên $totalQuestions',
               style: theme.textTheme.titleMedium?.copyWith(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w500,
