@@ -27,7 +27,7 @@ class QuizQuestionAnalysis extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Question Analysis',
+            'Phân tích câu hỏi',
             style: theme.textTheme.titleLarge?.copyWith(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,
