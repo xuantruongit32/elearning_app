@@ -51,7 +51,7 @@ class QuizAttemptAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             child: Text(
-              'Sumbit',
+              'Nộp bài',
               style: theme.textTheme.labelLarge?.copyWith(
                 color: AppColors.accent,
                 fontWeight: FontWeight.bold,
