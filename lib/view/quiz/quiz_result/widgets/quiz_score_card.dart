@@ -30,7 +30,7 @@ class QuizScoreCard extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            isPassed ? 'Congratulations!' : 'Keep Practicing!',
+            isPassed ? 'Chúc mừng bạn!' : 'Hãy tiếp tục luyện tập!',
             style: theme.textTheme.headlineSmall?.copyWith(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,
@@ -45,7 +45,7 @@ class QuizScoreCard extends StatelessWidget {
             ),
           ),
           Text(
-            'Score',
+            'Điểm số',
             style: theme.textTheme.titleMedium?.copyWith(
               color: AppColors.secondary,
             ),
