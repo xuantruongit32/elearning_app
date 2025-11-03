@@ -16,10 +16,10 @@ class ProfilePictureBottomSheet extends StatelessWidget {
     if (pickedFile != null) {
       if (!context.mounted) return;
 
-      //close bottom sheet after selected
+      // Đóng bottom sheet sau khi chọn ảnh
       Navigator.pop(context);
 
-      //start upload process
+      // Bắt đầu quá trình tải ảnh lên
       final bloc = context.read<ProfileBloc>();
       bloc.add(UpdateProfilePhotoRequested(pickedFile.path));
     }
@@ -34,8 +34,8 @@ class ProfilePictureBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Change Profile Picture',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            'Thay đổi ảnh đại diện',
+            style: theme.textTheme.titleLarge?.copyWith(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,
             ),
@@ -46,7 +46,7 @@ class ProfilePictureBottomSheet extends StatelessWidget {
               backgroundColor: AppColors.primary,
               child: Icon(Icons.photo_library, color: Colors.white),
             ),
-            title: const Text('Choose from Gallery'),
+            title: const Text('Chọn từ thư viện'),
             onTap: () => _pickImage(context, ImageSource.gallery),
           ),
           const SizedBox(height: 8),
@@ -55,7 +55,7 @@ class ProfilePictureBottomSheet extends StatelessWidget {
               backgroundColor: AppColors.primary,
               child: Icon(Icons.camera_alt, color: Colors.white),
             ),
-            title: const Text('Take a photo'),
+            title: const Text('Chụp ảnh mới'),
             onTap: () => _pickImage(context, ImageSource.camera),
           ),
           const SizedBox(height: 8),
@@ -65,11 +65,10 @@ class ProfilePictureBottomSheet extends StatelessWidget {
               child: Icon(Icons.delete_outline, color: Colors.white),
             ),
             title: const Text(
-              'Remove photo',
+              'Xóa ảnh',
               style: TextStyle(color: AppColors.error),
             ),
             onTap: () {
-              // TODO: Remove photo
               Navigator.pop(context);
             },
           ),
