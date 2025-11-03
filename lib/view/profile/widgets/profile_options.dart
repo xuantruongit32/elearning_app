@@ -15,32 +15,32 @@ class ProfileOptions extends StatelessWidget {
     return Column(
       children: [
         ProfileOptionCard(
-          title: 'Edit Profile',
-          subtitle: 'Update your personal information',
+          title: 'Chỉnh sửa hồ sơ',
+          subtitle: 'Cập nhật thông tin cá nhân của bạn',
           icon: Icons.edit_outlined,
           onTap: () => Get.toNamed(AppRoutes.editProfile),
         ),
         ProfileOptionCard(
-          title: 'Notifications',
-          subtitle: 'Manage your notifications',
+          title: 'Thông báo',
+          subtitle: 'Quản lý cài đặt thông báo của bạn',
           icon: Icons.notifications_outlined,
           onTap: () => Get.toNamed(AppRoutes.notifications),
         ),
         ProfileOptionCard(
-          title: 'Settings',
-          subtitle: 'Preferences and more',
+          title: 'Cài đặt',
+          subtitle: 'Tùy chỉnh và các thiết lập khác',
           icon: Icons.settings_outlined,
           onTap: () => Get.toNamed(AppRoutes.settings),
         ),
         ProfileOptionCard(
-          title: 'Help & Support',
-          subtitle: 'Get help or contact support',
+          title: 'Trợ giúp & Hỗ trợ',
+          subtitle: 'Nhận trợ giúp hoặc liên hệ với bộ phận hỗ trợ',
           icon: Icons.help_outlined,
           onTap: () => Get.toNamed(AppRoutes.helpSupport),
         ),
         ProfileOptionCard(
-          title: 'Logout',
-          subtitle: 'Sign out of your account',
+          title: 'Đăng xuất',
+          subtitle: 'Thoát khỏi tài khoản của bạn',
           icon: Icons.logout,
           onTap: () async {
             final confirm = await AppDialogs.showLogoutDialog();
