@@ -19,7 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    //load profile only once when screen is first create
+    // Tải hồ sơ chỉ một lần khi màn hình được khởi tạo
     context.read<ProfileBloc>().add(LoadProfile());
   }
 
@@ -35,12 +35,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
         final profile = state.profile;
         if (profile == null) {
-          return const Scaffold(body: Center(child: Text('Profile not found')));
+          return const Scaffold(body: Center(child: Text('Không tìm thấy hồ sơ')));
         }
         return Scaffold(
           backgroundColor: AppColors.lightBackground,
           body: CustomScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             slivers: [
               ProfileAppBar(
                 nickname: profile.fullName
@@ -55,9 +55,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsetsGeometry.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
-                    children: [
+                    children: const [
                       ProfileStatsCard(),
                       SizedBox(height: 24),
                       ProfileOptions(),
