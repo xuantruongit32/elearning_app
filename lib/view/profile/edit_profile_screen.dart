@@ -53,12 +53,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       );
 
-      context.read<ProfileBloc>().stream.firstWhere(
-        ((state) => !state.isLoading),
-      );
-
-      //wait for the update to complete before navigation back
-
+      // Chờ cập nhật hoàn tất trước khi quay lại
       context
           .read<ProfileBloc>()
           .stream
@@ -80,7 +75,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
-                //profile picture with gradient backgr
+                // Ảnh đại diện với nền chuyển sắc
                 children: [
                   Container(
                     width: double.infinity,
@@ -90,7 +85,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(30),
                         bottomRight: Radius.circular(30),
                       ),
@@ -190,7 +185,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'Edit Your Profile',
+                          'Chỉnh sửa hồ sơ của bạn',
                           style: Theme.of(context).textTheme.titleLarge
                               ?.copyWith(
                                 color: AppColors.accent,
@@ -200,7 +195,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ],
                     ),
                   ),
-                  //Form
+                  // Form thông tin cá nhân
                   Padding(
                     padding: const EdgeInsets.all(24),
                     child: Column(
@@ -209,7 +204,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16, left: 4),
                           child: Text(
-                            'Personal Information',
+                            'Thông tin cá nhân',
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
                                   color: AppColors.primary,
@@ -220,7 +215,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ],
                     ),
                   ),
-                  //forms in card
+                  // Các ô nhập thông tin
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -237,7 +232,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     child: Column(
                       children: [
                         CustomTextField(
-                          label: 'Full Name',
+                          label: 'Họ và tên',
                           prefixIcon: Icons.person_outline,
                           controller: _fullNameController,
                         ),
@@ -246,11 +241,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           label: 'Email',
                           prefixIcon: Icons.email_outlined,
                           initialValue: profile.email,
-                          enabled: false, //email cannot edit
+                          enabled: false, // Không cho phép chỉnh sửa email
                         ),
                         const SizedBox(height: 16),
                         CustomTextField(
-                          label: 'Phone',
+                          label: 'Số điện thoại',
                           prefixIcon: Icons.phone_outlined,
                           controller: _phoneController,
                         ),
@@ -259,11 +254,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   const SizedBox(height: 24),
 
-                  //Bio
+                  // Giới thiệu
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16, left: 4),
                     child: Text(
-                      'About You',
+                      'Giới thiệu bản thân',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
@@ -284,7 +279,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     padding: const EdgeInsets.all(20),
                     child: CustomTextField(
-                      label: 'Bio',
+                      label: 'Giới thiệu',
                       prefixIcon: Icons.info_outline,
                       maxLines: 3,
                       controller: _bioController,
@@ -292,7 +287,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   const SizedBox(height: 32),
                   CustomButton(
-                    text: 'Save Changes',
+                    text: 'Lưu thay đổi',
                     onPressed: _handleSave,
                     icon: Icons.check_circle_outline,
                     isLoading: state.isLoading,
