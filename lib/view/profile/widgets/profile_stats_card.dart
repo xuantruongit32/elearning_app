@@ -25,9 +25,9 @@ class ProfileStatsCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildStat(theme, '12', 'Courses'),
-            _buildStat(theme, '156', 'Hours'),
-            _buildStat(theme, '86%', 'Success'),
+            _buildStat(theme, '12', 'Khóa học'),
+            _buildStat(theme, '156', 'Giờ học'),
+            _buildStat(theme, '86%', 'Hoàn thành'),
           ],
         ),
       ),
