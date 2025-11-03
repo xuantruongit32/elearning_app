@@ -10,7 +10,10 @@ class EditProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Edit Profile', style: TextStyle(color: Colors.white)),
+      title: const Text(
+        'Chỉnh sửa hồ sơ',
+        style: TextStyle(color: Colors.white),
+      ),
       backgroundColor: AppColors.primary,
       leading: IconButton(
         onPressed: () => Get.back(),
@@ -20,8 +23,8 @@ class EditProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         TextButton(
           onPressed: onSave,
-          child: Text(
-            'Save',
+          child: const Text(
+            'Lưu',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
