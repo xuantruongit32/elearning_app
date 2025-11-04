@@ -22,8 +22,8 @@ class NotificationSettingsSection extends StatelessWidget {
       child: Column(
         children: [
           NotificationSettingTile(
-            title: 'Push Notifications',
-            subtitle: 'Receive push notifications',
+            title: 'Thông báo đẩy',
+            subtitle: 'Nhận thông báo đẩy từ hệ thống',
             icon: Icons.notifications_outlined,
             trailing: Switch(
               value: true,
@@ -33,8 +33,8 @@ class NotificationSettingsSection extends StatelessWidget {
           ),
           _buildDivider(),
           NotificationSettingTile(
-            title: 'Course Updates',
-            subtitle: 'Get notified about course updates',
+            title: 'Cập nhật khóa học',
+            subtitle: 'Nhận thông báo khi có cập nhật khóa học',
             icon: Icons.school_outlined,
             trailing: Switch(
               value: true,
@@ -44,8 +44,8 @@ class NotificationSettingsSection extends StatelessWidget {
           ),
           _buildDivider(),
           NotificationSettingTile(
-            title: 'Quiz Reminders',
-            subtitle: 'Receive quiz deadline reminders',
+            title: 'Nhắc nhở bài kiểm tra',
+            subtitle: 'Nhận thông báo khi sắp đến hạn làm bài kiểm tra',
             icon: Icons.quiz_outlined,
             trailing: Switch(
               value: false,
