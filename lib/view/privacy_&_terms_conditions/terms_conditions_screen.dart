@@ -12,7 +12,7 @@ class TermsConditionsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Terms & Conditions',
+          'Điều khoản & Điều kiện',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: AppColors.primary,
@@ -27,70 +27,70 @@ class TermsConditionsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Last Updated: November 15, 2025',
+              'Cập nhật lần cuối: 15 Tháng 11, 2025',
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: AppColors.secondary,
               ),
             ),
             const SizedBox(height: 24),
             const LegalDocumentSection(
-              title: "1. Acceptance of Terms",
+              title: "1. Chấp nhận Điều khoản",
               content:
-                  "By accessing or using our services, you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree, you must not use our platform.",
+                  "Bằng việc truy cập hoặc sử dụng dịch vụ của chúng tôi, bạn đồng ý tuân theo các Điều khoản và Chính sách quyền riêng tư này. Nếu bạn không đồng ý, vui lòng không sử dụng nền tảng của chúng tôi.",
             ),
 
             const LegalDocumentSection(
-              title: "2. User Accounts",
+              title: "2. Tài khoản người dùng",
               content:
-                  "To access certain features, you may need to create an account. You are responsible for maintaining the confidentiality of your account credentials and for all activities under your account.",
+                  "Để truy cập một số tính năng nhất định, bạn có thể cần tạo tài khoản. Bạn chịu trách nhiệm bảo mật thông tin đăng nhập và mọi hoạt động diễn ra trong tài khoản của mình.",
             ),
 
             const LegalDocumentSection(
-              title: "3. Course Content",
+              title: "3. Nội dung khóa học",
               content:
-                  "All courses, videos, and materials provided on our platform are for personal learning use only. You may not copy, distribute, or resell any content without written permission.",
+                  "Tất cả khóa học, video và tài liệu trên nền tảng chỉ được sử dụng cho mục đích học tập cá nhân. Bạn không được sao chép, phân phối hoặc bán lại bất kỳ nội dung nào nếu không có sự cho phép bằng văn bản.",
             ),
 
             const LegalDocumentSection(
-              title: "4. Payment Terms",
+              title: "4. Điều khoản thanh toán",
               content:
-                  "All payments for courses or subscriptions must be made through approved methods. Fees are non-refundable except as required by law or stated otherwise in specific promotions.",
+                  "Tất cả khoản thanh toán cho khóa học hoặc gói đăng ký phải được thực hiện thông qua các phương thức được chấp thuận. Phí sẽ không được hoàn lại trừ khi pháp luật yêu cầu hoặc được quy định cụ thể trong chương trình khuyến mãi.",
             ),
 
             const LegalDocumentSection(
-              title: "5. Intellectual Property",
+              title: "5. Quyền sở hữu trí tuệ",
               content:
-                  "All content, including text, graphics, logos, and software, is owned by or licensed to us. You may not reproduce, modify, or exploit any part of the platform without prior consent.",
+                  "Tất cả nội dung, bao gồm văn bản, hình ảnh, logo và phần mềm, đều thuộc sở hữu hoặc được cấp phép cho chúng tôi. Bạn không được sao chép, chỉnh sửa hoặc khai thác bất kỳ phần nào của nền tảng khi chưa có sự đồng ý trước.",
             ),
 
             const LegalDocumentSection(
-              title: "6. Prohibited Activities",
+              title: "6. Hành vi bị cấm",
               content:
-                  "You agree not to misuse the platform, including but not limited to hacking, data mining, spreading malware, or engaging in activities that disrupt the experience of other users.",
+                  "Bạn đồng ý không sử dụng sai mục đích nền tảng, bao gồm nhưng không giới hạn ở việc tấn công, khai thác dữ liệu, phát tán phần mềm độc hại hoặc gây gián đoạn trải nghiệm của người dùng khác.",
             ),
 
             const LegalDocumentSection(
-              title: "7. Termination",
+              title: "7. Chấm dứt tài khoản",
               content:
-                  "We reserve the right to suspend or terminate your account if you violate these Terms or engage in fraudulent, abusive, or illegal behavior on the platform.",
+                  "Chúng tôi có quyền tạm ngưng hoặc chấm dứt tài khoản của bạn nếu bạn vi phạm các Điều khoản này hoặc tham gia vào hành vi gian lận, lạm dụng hoặc bất hợp pháp trên nền tảng.",
             ),
 
             const LegalDocumentSection(
-              title: "8. Limitation of Liability",
+              title: "8. Giới hạn trách nhiệm",
               content:
-                  "We are not liable for any indirect, incidental, or consequential damages arising from your use of our platform. Use the service at your own risk.",
+                  "Chúng tôi không chịu trách nhiệm cho bất kỳ thiệt hại gián tiếp, ngẫu nhiên hoặc hậu quả nào phát sinh từ việc bạn sử dụng nền tảng. Việc sử dụng dịch vụ là rủi ro của riêng bạn.",
             ),
 
             const LegalDocumentSection(
-              title: "9. Changes to Terms",
+              title: "9. Thay đổi Điều khoản",
               content:
-                  "We may update these Terms and Conditions periodically. Continued use of the platform after changes constitutes acceptance of the new terms.",
+                  "Chúng tôi có thể cập nhật các Điều khoản và Điều kiện này theo thời gian. Việc tiếp tục sử dụng nền tảng sau khi thay đổi đồng nghĩa với việc bạn chấp nhận các điều khoản mới.",
             ),
 
             const LegalDocumentSection(
-              title: "10. Contact Information",
+              title: "10. Thông tin liên hệ",
               content:
-                  "If you have any questions or concerns about these Terms and Conditions, please contact us at: support@example.com.",
+                  "Nếu bạn có bất kỳ câu hỏi hoặc thắc mắc nào về các Điều khoản và Điều kiện này, vui lòng liên hệ với chúng tôi qua email: support@example.com.",
             ),
           ],
         ),
