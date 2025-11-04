@@ -23,19 +23,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       image: 'assets/images/onboarding/onboarding1.png',
       title: 'Học mọi lúc, mọi nơi',
       description:
-          'Truy cập các khóa học bất cứ lúc nào, ở bất kỳ đâu. Học theo tốc độ của riêng bạn với nền tảng linh hoạt của chúng tôi.',
+          'Truy cập khóa học bất cứ lúc nào và học theo tốc độ của riêng bạn.',
     ),
     OnboardingItem(
       image: 'assets/images/onboarding/onboarding2.png',
       title: 'Học tương tác',
       description:
-          'Tham gia vào các bài kiểm tra tương tác, buổi học trực tiếp và dự án thực hành để nâng cao trải nghiệm học tập của bạn.',
+          'Tham gia bài kiểm tra, lớp trực tiếp và dự án thực hành thú vị.',
     ),
     OnboardingItem(
       image: 'assets/images/onboarding/onboarding3.png',
       title: 'Theo dõi tiến trình',
       description:
-          'Theo dõi quá trình học tập, nhận chứng chỉ và đạt được mục tiêu học tập của bạn với các báo cáo và phân tích chi tiết.',
+          'Theo dõi quá trình học và nhận chứng chỉ khi hoàn thành mục tiêu.',
     ),
   ];
 
