@@ -21,23 +21,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<OnboardingItem> _pages = [
     OnboardingItem(
       image: 'assets/images/onboarding/onboarding1.png',
-      title: 'Learn Anywhere',
+      title: 'Học mọi lúc, mọi nơi',
       description:
-          'Access your courses anytime, anywhere. Learn at your own pace with our flexible learning platform.',
+          'Truy cập các khóa học bất cứ lúc nào, ở bất kỳ đâu. Học theo tốc độ của riêng bạn với nền tảng linh hoạt của chúng tôi.',
     ),
     OnboardingItem(
       image: 'assets/images/onboarding/onboarding2.png',
-      title: 'Interactive Learning',
+      title: 'Học tương tác',
       description:
-          'Engage with interactive quizzes, live sessions, and hands-on projects to enhance your learning experience.',
+          'Tham gia vào các bài kiểm tra tương tác, buổi học trực tiếp và dự án thực hành để nâng cao trải nghiệm học tập của bạn.',
     ),
     OnboardingItem(
       image: 'assets/images/onboarding/onboarding3.png',
-      title: 'Track Progress',
+      title: 'Theo dõi tiến trình',
       description:
-          'Monitor your progress, earn certificates, and achieve your learning goals with detailed analytics and reports.',
+          'Theo dõi quá trình học tập, nhận chứng chỉ và đạt được mục tiêu học tập của bạn với các báo cáo và phân tích chi tiết.',
     ),
   ];
+
   void _completeOnboarding() async {
     await StorageService.setFirstTime(false);
     Get.offAllNamed(AppRoutes.login);
@@ -69,7 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: TextButton(
               onPressed: () => _completeOnboarding(),
               child: const Text(
-                'Skip',
+                'Bỏ qua',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
@@ -120,7 +121,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                   child: Text(
-                    _currentPage == _pages.length - 1 ? 'Get Started' : 'Next',
+                    _currentPage == _pages.length - 1 ? 'Bắt đầu' : 'Tiếp theo',
                     style: const TextStyle(
                       color: AppColors.primary,
                       fontSize: 16,
