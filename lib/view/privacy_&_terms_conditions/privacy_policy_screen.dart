@@ -12,7 +12,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Privacy Policy',
+          'Chính sách quyền riêng tư',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: AppColors.primary,
@@ -27,70 +27,70 @@ class PrivacyPolicyScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Last Updated: November 15, 2025',
+              'Cập nhật lần cuối: 15 Tháng 11, 2025',
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: AppColors.secondary,
               ),
             ),
             const SizedBox(height: 24),
             const LegalDocumentSection(
-              title: "1. Information We Collect",
+              title: "1. Thông tin chúng tôi thu thập",
               content:
-                  "We collect information that you provide directly to us, including but not limited to your name, email address, phone number, payment details, and any other data you choose to share when using our services.",
+                  "Chúng tôi thu thập thông tin mà bạn cung cấp trực tiếp, bao gồm nhưng không giới hạn ở họ tên, địa chỉ email, số điện thoại, thông tin thanh toán và bất kỳ dữ liệu nào khác mà bạn chia sẻ khi sử dụng dịch vụ của chúng tôi.",
             ),
 
             const LegalDocumentSection(
-              title: "2. How We Use Your Information",
+              title: "2. Cách chúng tôi sử dụng thông tin của bạn",
               content:
-                  "We use your information to provide, maintain, and improve our services, process transactions, send updates or promotional materials, and ensure a personalized experience. We may also use data for analytics, research, and to enhance security.",
+                  "Chúng tôi sử dụng thông tin của bạn để cung cấp, duy trì và cải thiện dịch vụ, xử lý giao dịch, gửi thông báo hoặc tài liệu khuyến mãi, và mang đến trải nghiệm cá nhân hóa. Chúng tôi cũng có thể sử dụng dữ liệu cho phân tích, nghiên cứu và tăng cường bảo mật.",
             ),
 
             const LegalDocumentSection(
-              title: "3. Data Security",
+              title: "3. Bảo mật dữ liệu",
               content:
-                  "We implement appropriate technical and organizational measures to protect your data from unauthorized access, loss, misuse, or alteration. However, please note that no method of transmission over the internet is 100% secure.",
+                  "Chúng tôi áp dụng các biện pháp kỹ thuật và tổ chức phù hợp để bảo vệ dữ liệu của bạn khỏi truy cập trái phép, mất mát, lạm dụng hoặc thay đổi. Tuy nhiên, xin lưu ý rằng không có phương thức truyền dữ liệu nào qua Internet đảm bảo an toàn tuyệt đối 100%.",
             ),
 
             const LegalDocumentSection(
-              title: "4. Your Rights",
+              title: "4. Quyền của bạn",
               content:
-                  "You have the right to access, correct, or delete your personal data. You may also withdraw consent or object to certain processing activities, in accordance with applicable data protection laws.",
+                  "Bạn có quyền truy cập, chỉnh sửa hoặc xóa dữ liệu cá nhân của mình. Bạn cũng có thể rút lại sự đồng ý hoặc phản đối một số hoạt động xử lý dữ liệu, phù hợp với các quy định về bảo vệ dữ liệu hiện hành.",
             ),
 
             const LegalDocumentSection(
-              title: "5. Data Retention",
+              title: "5. Lưu trữ dữ liệu",
               content:
-                  "We retain your personal information only as long as necessary to fulfill the purposes outlined in this policy, comply with legal obligations, resolve disputes, and enforce agreements.",
+                  "Chúng tôi chỉ lưu giữ thông tin cá nhân của bạn trong thời gian cần thiết để thực hiện các mục đích được nêu trong chính sách này, tuân thủ nghĩa vụ pháp lý, giải quyết tranh chấp và thực thi các thỏa thuận.",
             ),
 
             const LegalDocumentSection(
-              title: "6. Third-Party Services",
+              title: "6. Dịch vụ bên thứ ba",
               content:
-                  "Our services may contain links or integrations with third-party platforms. We are not responsible for the privacy practices of such third parties, and we encourage you to review their respective privacy policies.",
+                  "Dịch vụ của chúng tôi có thể chứa liên kết hoặc tích hợp với các nền tảng bên thứ ba. Chúng tôi không chịu trách nhiệm về các chính sách quyền riêng tư của các bên này và khuyến khích bạn đọc kỹ chính sách của họ.",
             ),
 
             const LegalDocumentSection(
-              title: "7. Cookies and Tracking Technologies",
+              title: "7. Cookie và công nghệ theo dõi",
               content:
-                  "We use cookies and similar technologies to enhance user experience, analyze site traffic, and deliver personalized content. You may control cookie settings through your browser preferences.",
+                  "Chúng tôi sử dụng cookie và các công nghệ tương tự để cải thiện trải nghiệm người dùng, phân tích lưu lượng truy cập và cung cấp nội dung cá nhân hóa. Bạn có thể quản lý cài đặt cookie trong trình duyệt của mình.",
             ),
 
             const LegalDocumentSection(
-              title: "8. Children’s Privacy",
+              title: "8. Quyền riêng tư của trẻ em",
               content:
-                  "Our services are not intended for children under the age of 13. We do not knowingly collect personal data from minors. If you believe a child has provided us with personal information, please contact us for deletion.",
+                  "Dịch vụ của chúng tôi không dành cho trẻ em dưới 13 tuổi. Chúng tôi không cố ý thu thập dữ liệu cá nhân từ trẻ vị thành niên. Nếu bạn tin rằng trẻ đã cung cấp thông tin cho chúng tôi, vui lòng liên hệ để được hỗ trợ xóa dữ liệu.",
             ),
 
             const LegalDocumentSection(
-              title: "9. Updates to This Policy",
+              title: "9. Cập nhật chính sách",
               content:
-                  "We may update this Privacy Policy from time to time. The updated version will be posted on this page with a new 'last updated' date. Continued use of our services constitutes acceptance of any changes.",
+                  "Chúng tôi có thể cập nhật Chính sách quyền riêng tư này theo thời gian. Phiên bản cập nhật sẽ được đăng trên trang này với ngày 'cập nhật lần cuối' mới. Việc tiếp tục sử dụng dịch vụ đồng nghĩa với việc bạn chấp nhận các thay đổi đó.",
             ),
 
             const LegalDocumentSection(
-              title: "10. Contact Us",
+              title: "10. Liên hệ với chúng tôi",
               content:
-                  "If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us at: privacy@example.com.",
+                  "Nếu bạn có bất kỳ câu hỏi, thắc mắc hoặc yêu cầu nào liên quan đến Chính sách quyền riêng tư này hoặc cách chúng tôi xử lý dữ liệu, vui lòng liên hệ với chúng tôi qua email: privacy@example.com.",
             ),
           ],
         ),
