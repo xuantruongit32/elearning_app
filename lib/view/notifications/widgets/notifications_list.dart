@@ -12,11 +12,11 @@ class NotificationsList extends StatelessWidget {
       itemCount: 5,
       itemBuilder: (context, index) {
         return NotificationCard(
-          title: 'New Course Available',
-          message: 'Check out new Flutter Advanced course!',
-          time: '2 hours ago',
+          title: 'Khóa học mới đã có',
+          message: 'Hãy xem ngay khóa học Flutter nâng cao mới!',
+          time: '2 giờ trước',
           icon: Icons.school,
-          isUnread: index ==0,
+          isUnread: index == 0,
         );
       },
     );
