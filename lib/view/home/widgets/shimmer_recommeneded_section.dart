@@ -16,13 +16,13 @@ class ShimmerRecommenededSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Recommended',
+                'Gợi ý cho bạn',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: AppColors.primary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const TextButton(onPressed: null, child: Text('See All')),
+              const TextButton(onPressed: null, child: Text('Xem tất cả')),
             ],
           ),
         ),
