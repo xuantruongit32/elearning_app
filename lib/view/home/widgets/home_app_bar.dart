@@ -37,13 +37,13 @@ class HomeAppBar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Welcome back,',
+                  'Chào mừng trở lại,',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: AppColors.accent.withValues(alpha: 0.7),
                   ),
                 ),
                 Text(
-                  profile?.fullName ?? 'Loading...',
+                  profile?.fullName ?? 'Đang tải...',
                   style: theme.textTheme.titleLarge?.copyWith(
                     color: AppColors.accent.withValues(alpha: 0.7),
                   ),
