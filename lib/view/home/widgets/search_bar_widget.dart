@@ -32,7 +32,7 @@ class SearchBarWidget extends StatelessWidget {
                 const Icon(Icons.search, color: AppColors.secondary),
                 const SizedBox(width: 12),
                 Text(
-                  'Search courses...',
+                  'Tìm kiếm...',
                   style: TextStyle(
                     color: AppColors.secondary.withValues(alpha: 0.7),
                   ),
