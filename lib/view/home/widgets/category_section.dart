@@ -18,7 +18,7 @@ class CategorySection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Categories',
+          'Danh mục',
           style: theme.textTheme.titleLarge?.copyWith(
             color: AppColors.primary,
             fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class CategorySection extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${category.courseCount} courses',
+                  '${category.courseCount} khóa học',
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: AppColors.secondary),
