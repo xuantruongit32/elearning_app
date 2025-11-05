@@ -58,10 +58,7 @@ class _RecommendedSectionState extends State<RecommendedSection> {
           final courses = state.courses;
 
           if (courses.isEmpty) {
-            return const Center(child: Text('No courses available'));
-          }
-          if (courses.isEmpty) {
-            return const Center(child: Text('No courses available'));
+            return const Center(child: Text('Không có khóa học nào'));
           }
 
           return Column(
@@ -71,14 +68,14 @@ class _RecommendedSectionState extends State<RecommendedSection> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Recommended',
+                    'Gợi ý cho bạn',
                     style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   TextButton(
                     onPressed: () => Get.toNamed(AppRoutes.courseList),
-                    child: const Text('See all'),
+                    child: const Text('Xem tất cả'),
                   ),
                 ],
               ),
@@ -99,7 +96,7 @@ class _RecommendedSectionState extends State<RecommendedSection> {
                         title: course.title,
                         imageUrl: course.imageUrl,
                         instructorName:
-                            instructor?.fullName ?? 'Unknown Instructor',
+                            instructor?.fullName ?? 'Giảng viên',
                         isPremium: course.isPremium,
                         price: course.price,
                         rating: course.rating,
