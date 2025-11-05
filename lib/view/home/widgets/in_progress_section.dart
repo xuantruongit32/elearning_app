@@ -18,13 +18,13 @@ class InProgressSection extends StatelessWidget {
               !course.lessons.every((lesson) => false),
         )
         .toList();
-    print('In progress count: ${inProgressCourses.length}');
+    print('Số khóa học đang học: ${inProgressCourses.length}');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (inProgressCourses.isNotEmpty)
           Text(
-            'In Progress',
+            'Đang học',
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
