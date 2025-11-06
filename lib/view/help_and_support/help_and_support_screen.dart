@@ -14,7 +14,7 @@ class HelpAndSupportScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Help & Support',
+          'Trợ giúp & Hỗ trợ',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: AppColors.primary,
@@ -34,94 +34,94 @@ class HelpAndSupportScreen extends StatelessWidget {
               const HelpSearchBar(),
               const SizedBox(height: 24),
               const HelpSection(
-                title: 'Frequently Asked Questions',
+                title: 'Câu hỏi thường gặp',
                 children: [
                   FaqTile(
-                    questions: 'How do I reset my password?',
+                    questions: 'Làm thế nào để đặt lại mật khẩu?',
                     answer:
-                        'Go to the login screen and tap on "Forgot Password". Follow the instructions sent to your email.',
+                        'Vào màn hình đăng nhập và nhấn vào “Quên mật khẩu”. Làm theo hướng dẫn được gửi đến email của bạn.',
                   ),
 
                   FaqTile(
-                    questions: 'How do I download courses for offline viewing?',
+                    questions: 'Làm sao để tải khóa học về xem offline?',
                     answer:
-                        'Open a course and tap the download icon. Make sure you have enough storage space.',
+                        'Mở khóa học và nhấn vào biểu tượng tải xuống. Hãy đảm bảo thiết bị có đủ dung lượng lưu trữ.',
                   ),
 
                   FaqTile(
-                    questions: 'Can I get a refund?',
+                    questions: 'Tôi có thể được hoàn tiền không?',
                     answer:
-                        'Yes, within 30 days of purchase if you’re not satisfied with the course. Please contact our support team for assistance.',
+                        'Có, trong vòng 30 ngày kể từ ngày mua nếu bạn không hài lòng với khóa học. Vui lòng liên hệ đội ngũ hỗ trợ để được giúp đỡ.',
                   ),
 
                   FaqTile(
-                    questions: 'Are there any free courses available?',
+                    questions: 'Có khóa học miễn phí không?',
                     answer:
-                        'Yes! We offer a selection of free courses that you can access without payment or subscription.',
+                        'Có! Chúng tôi cung cấp một số khóa học miễn phí mà bạn có thể học mà không cần thanh toán hay đăng ký.',
                   ),
 
                   FaqTile(
-                    questions: 'Can I access my courses on multiple devices?',
+                    questions: 'Tôi có thể học trên nhiều thiết bị không?',
                     answer:
-                        'Yes, you can log in using the same account across multiple devices, including mobile and desktop.',
+                        'Có, bạn có thể đăng nhập cùng một tài khoản trên nhiều thiết bị, bao gồm cả điện thoại và máy tính.',
                   ),
 
                   FaqTile(
-                    questions: 'Will my progress sync between devices?',
+                    questions: 'Tiến trình học có được đồng bộ giữa các thiết bị không?',
                     answer:
-                        'Absolutely! Your progress, notes, and quiz results are automatically synced across all your devices.',
+                        'Tất nhiên! Tiến trình học, ghi chú và kết quả bài kiểm tra của bạn sẽ được đồng bộ tự động trên tất cả các thiết bị.',
                   ),
 
                   FaqTile(
-                    questions: 'Do courses come with a certificate?',
+                    questions: 'Khóa học có cấp chứng chỉ không?',
                     answer:
-                        'Yes, upon completing a course, you will receive a digital certificate that you can download or share.',
+                        'Có, sau khi hoàn thành khóa học, bạn sẽ nhận được chứng chỉ kỹ thuật số có thể tải về hoặc chia sẻ.',
                   ),
 
                   FaqTile(
-                    questions: 'How do I contact support?',
+                    questions: 'Làm sao để liên hệ với bộ phận hỗ trợ?',
                     answer:
-                        'You can reach our support team via the "Help & Support" section in the app or email us at support@example.com.',
+                        'Bạn có thể liên hệ với đội ngũ hỗ trợ qua mục “Trợ giúp & Hỗ trợ” trong ứng dụng hoặc gửi email đến support@example.com.',
                   ),
 
                   FaqTile(
-                    questions: 'Can instructors update course content?',
+                    questions: 'Giảng viên có thể cập nhật nội dung khóa học không?',
                     answer:
-                        'Yes, instructors can update or add new lessons anytime. You’ll automatically get access to all updates.',
+                        'Có, giảng viên có thể cập nhật hoặc thêm bài học mới bất cứ lúc nào. Bạn sẽ tự động nhận được các nội dung cập nhật này.',
                   ),
 
                   FaqTile(
-                    questions: 'Do courses expire after purchase?',
+                    questions: 'Khóa học có hết hạn sau khi mua không?',
                     answer:
-                        'No, once you purchase a course, you get lifetime access unless stated otherwise on the course page.',
+                        'Không, sau khi mua, bạn sẽ có quyền truy cập trọn đời trừ khi có ghi chú khác trên trang khóa học.',
                   ),
 
                   FaqTile(
-                    questions: 'Can I share my account with others?',
+                    questions: 'Tôi có thể chia sẻ tài khoản với người khác không?',
                     answer:
-                        'No, sharing accounts is against our Terms of Service. Each account is for individual use only.',
+                        'Không, việc chia sẻ tài khoản vi phạm Điều khoản dịch vụ. Mỗi tài khoản chỉ dành cho một người sử dụng.',
                   ),
                 ],
               ),
               const SizedBox(height: 24),
               HelpSection(
-                title: 'Contact Us',
+                title: 'Liên hệ với chúng tôi',
                 children: [
                   ContactTile(
-                    title: 'Email Support',
-                    subtitle: 'Get help via email',
+                    title: 'Hỗ trợ qua Email',
+                    subtitle: 'Nhận hỗ trợ qua email',
                     icon: Icons.email_outlined,
                     onTap: () {},
                   ),
                   ContactTile(
-                    title: 'Live Chat',
-                    subtitle: 'Chat with our support team',
+                    title: 'Trò chuyện trực tiếp',
+                    subtitle: 'Trao đổi với đội ngũ hỗ trợ',
                     icon: Icons.chat_outlined,
                     onTap: () {},
                   ),
                   ContactTile(
-                    title: 'Call Us',
-                    subtitle: 'Speak with a representative',
+                    title: 'Gọi cho chúng tôi',
+                    subtitle: 'Nói chuyện với nhân viên hỗ trợ',
                     icon: Icons.phone_outlined,
                     onTap: () {},
                   ),
