@@ -20,7 +20,7 @@ class HelpSearchBar extends StatelessWidget {
       ),
       child: const TextField(
         decoration: InputDecoration(
-          hintText: 'Search for help',
+          hintText: 'Tìm kiếm trợ giúp',
           prefixIcon: Icon(Icons.search, color: AppColors.primary),
           border: InputBorder.none,
           contentPadding: EdgeInsets.all(16),
