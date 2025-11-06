@@ -7,15 +7,12 @@ import 'package:get/get.dart';
 class CertificateDialog extends StatelessWidget {
   final Course course;
 
-  const CertificateDialog({
-    super.key,
-    required this.course,
-  });
+  const CertificateDialog({super.key, required this.course});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Congratulations!'),
+      title: const Text('Chúc mừng bạn!'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -26,12 +23,12 @@ class CertificateDialog extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'You have completed all lessons in "${course.title}"',
+            'Bạn đã hoàn thành khóa học "${course.title}"',
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
           Text(
-            'Now, you can download your certificate"',
+            'Tải chứng chỉ',
             textAlign: TextAlign.center,
             style: TextStyle(color: AppColors.secondary),
           ),
@@ -52,7 +49,7 @@ class CertificateDialog extends StatelessWidget {
                   ),
                 ),
                 child: const Text(
-                  'Later',
+                  'Để sau',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
                 ),
               ),
@@ -60,7 +57,7 @@ class CertificateDialog extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   Get.back();
-                  //navigate to certificate preview screen
+                  // điều hướng đến màn hình xem chứng chỉ
                   Get.to(() => CertificatePreviewScreen(course: course));
                 },
                 style: ElevatedButton.styleFrom(
@@ -71,7 +68,7 @@ class CertificateDialog extends StatelessWidget {
                   backgroundColor: AppColors.primary,
                 ),
                 child: const Text(
-                  'View Certificate',
+                  'Xem chứng chỉ',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
                 ),
               ),
