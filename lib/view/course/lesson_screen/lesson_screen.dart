@@ -88,7 +88,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Error',
+                    'Lỗi',
                     style: theme.textTheme.titleLarge?.copyWith(
                       color: Colors.red,
                     ),
@@ -105,7 +105,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         );
                       }
                     },
-                    child: const Text('Retry'),
+                    child: const Text('Thử lại'),
                   ),
                 ],
               ),
@@ -148,14 +148,12 @@ class _LessonScreenState extends State<LessonScreen> {
                         )
                       : Container(
                           color: theme.colorScheme.surface,
-                          child: const Center(
-                            child: Text('Error loading video'),
-                          ),
+                          child: const Center(child: Text('Lỗi khi tải video')),
                         ),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -175,7 +173,7 @@ class _LessonScreenState extends State<LessonScreen> {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              '${lesson.duration} minutes',
+                              '${lesson.duration} phút',
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: theme.colorScheme.secondary,
                               ),
@@ -184,7 +182,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          'Description',
+                          'Mô tả',
                           style: theme.textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -196,7 +194,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          'Resources',
+                          'Tài nguyên',
                           style: theme.textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
