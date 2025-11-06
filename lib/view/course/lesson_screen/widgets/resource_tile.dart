@@ -2,7 +2,6 @@ import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/services/file_download_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 
 class ResourceTile extends StatefulWidget {
   final String title;
@@ -37,20 +36,20 @@ class _ResourceTileState extends State<ResourceTile> {
         filename,
       );
 
-      // show success message
+      // Hiển thị thông báo tải thành công
       Get.snackbar(
-        'Success',
-        'File downloaded successfully',
+        'Thành công',
+        'Tệp đã được tải xuống thành công',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
-      //open the file after download
+      // Mở tệp sau khi tải xuống
       await _fileDownloadService.openFile(filePath);
     } catch (e) {
-      // show error message
+      // Hiển thị thông báo lỗi
       Get.snackbar(
-        'Error',
+        'Lỗi',
         e.toString(),
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
