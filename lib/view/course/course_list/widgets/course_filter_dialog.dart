@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 class CourseFilterDialog extends StatefulWidget {
   final Function(String) onLevelSelected;
   final String? initialLevel;
-  final Function(bool) onPurchasedToggle; 
-  final bool initialShowPurchased; 
+  final Function(bool) onPurchasedToggle;
+  final bool initialShowPurchased;
 
   const CourseFilterDialog({
     super.key,
     required this.onLevelSelected,
     this.initialLevel,
-    required this.onPurchasedToggle, 
-    required this.initialShowPurchased, 
+    required this.onPurchasedToggle,
+    required this.initialShowPurchased,
   });
 
   @override
@@ -21,34 +21,35 @@ class CourseFilterDialog extends StatefulWidget {
 
 class _CourseFilterDialogState extends State<CourseFilterDialog> {
   late String _selectedLevel;
-  late bool _isPurchasedSelected; 
+  late bool _isPurchasedSelected;
+
   final List<String> _levels = [
-    'All Levels',
-    'Beginner',
-    'Intermediate', 
-    'Advanced',
+    'Tất cả trình độ',
+    'Cơ bản',
+    'Trung cấp',
+    'Nâng cao',
   ];
 
   @override
   void initState() {
     super.initState();
-    _selectedLevel = widget.initialLevel ?? 'All Levels';
-    _isPurchasedSelected = widget.initialShowPurchased; 
+    _selectedLevel = widget.initialLevel ?? 'Tất cả trình độ';
+    _isPurchasedSelected = widget.initialShowPurchased;
   }
 
   void _handleApplyFilter() {
     widget.onLevelSelected(_selectedLevel);
-    widget.onPurchasedToggle(_isPurchasedSelected); 
+    widget.onPurchasedToggle(_isPurchasedSelected);
     Navigator.pop(context);
   }
 
   void _handleResetFilter() {
     setState(() {
-      _selectedLevel = 'All Levels';
-      _isPurchasedSelected = false; 
+      _selectedLevel = 'Tất cả trình độ';
+      _isPurchasedSelected = false;
     });
-    widget.onLevelSelected('All Levels');
-    widget.onPurchasedToggle(false); 
+    widget.onLevelSelected('Tất cả trình độ');
+    widget.onPurchasedToggle(false);
     Navigator.pop(context);
   }
 
@@ -62,25 +63,25 @@ class _CourseFilterDialogState extends State<CourseFilterDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ..._levels.map(_buildLevelOption), 
+            ..._levels.map(_buildLevelOption),
             const Divider(height: 24),
 
-            _buildPurchasedOption(), 
+            _buildPurchasedOption(),
 
             const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
                   child: TextButton(
-                    onPressed: _handleResetFilter, 
-                    child: const Text('Reset'),
+                    onPressed: _handleResetFilter,
+                    child: const Text('Đặt lại'),
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: _handleApplyFilter, 
-                    child: const Text('Apply'),
+                    onPressed: _handleApplyFilter,
+                    child: const Text('Áp dụng'),
                   ),
                 ),
               ],
@@ -109,7 +110,7 @@ class _CourseFilterDialogState extends State<CourseFilterDialog> {
 
   Widget _buildPurchasedOption() {
     return SwitchListTile(
-      title: const Text('Khóa học ghi danh'),
+      title: const Text('Chỉ hiển thị khóa học đã ghi danh'),
       value: _isPurchasedSelected,
       onChanged: (newValue) {
         setState(() {
