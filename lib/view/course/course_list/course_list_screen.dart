@@ -32,6 +32,8 @@ class CourseListScreen extends StatefulWidget {
 class _CourseListScreenState extends State<CourseListScreen> {
   String? _currentLevel;
   bool _showPurchasedOnly = false;
+
+  @override
   void initState() {
     super.initState();
 
@@ -79,18 +81,18 @@ class _CourseListScreenState extends State<CourseListScreen> {
 
   void _handleLevelFilter(String level) {
     setState(() {
-      _currentLevel = level == 'All Levels' ? null : level;
+      _currentLevel = level == 'Tất cả trình độ' ? null : level;
     });
 
     if (widget.categoryId != null) {
-      // use FilteredCourseBloc for category-filtered courses
-      if (level == 'All Levels') {
+      // Dùng FilteredCourseBloc cho các khóa học theo danh mục
+      if (level == 'Tất cả trình độ') {
         context.read<FilteredCourseBloc>().add(ClearFilteredCourses());
       } else {
         context.read<FilteredCourseBloc>().add(FilterCoursesByLevel(level));
       }
     } else {
-      // for all courses, just reload and filter in the UI
+      // Với tất cả khóa học, chỉ cần tải lại và lọc trong UI
       context.read<CourseBloc>().add(LoadCourses());
     }
   }
@@ -214,7 +216,10 @@ class _CourseListScreenState extends State<CourseListScreen> {
           )
         else if (courses == null || courses.isEmpty)
           SliverFillRemaining(
-            child: EmptyStateWidget(onActionPressed: () => Get.back()),
+            child: EmptyStateWidget(
+              message: 'Không có khóa học nào',
+              onActionPressed: () => Get.back(),
+            ),
           )
         else
           SliverPadding(
@@ -228,7 +233,7 @@ class _CourseListScreenState extends State<CourseListScreen> {
                   subtitle: course.description,
                   imageUrl: course.imageUrl,
                   rating: course.rating,
-                  duration: '${course.lessons.length * 30} mins',
+                  duration: '${course.lessons.length * 30} phút',
                   isPremium: course.isPremium,
                 );
               }, childCount: courses.length),
@@ -249,7 +254,7 @@ class _CourseListScreenState extends State<CourseListScreen> {
   }
 
   List<Course> _filterCoursesByLevel(List<Course> courses) {
-    if (_currentLevel == null || _currentLevel == 'All Levels') {
+    if (_currentLevel == null || _currentLevel == 'Tất cả trình độ') {
       return courses;
     }
     return courses.where((course) => course.level == _currentLevel).toList();
@@ -262,16 +267,16 @@ class _CourseListScreenState extends State<CourseListScreen> {
       titleParts.add(widget.categoryName!);
     }
 
-    if (_currentLevel != null && _currentLevel != 'All Levels') {
+    if (_currentLevel != null && _currentLevel != 'Tất cả trình độ') {
       titleParts.add(_currentLevel!);
     }
 
     if (_showPurchasedOnly) {
-      titleParts.add('Purchased');
+      titleParts.add('Đã mua');
     }
 
     if (titleParts.isEmpty) {
-      return 'All Courses';
+      return 'Tất cả khóa học';
     }
     return titleParts.join(' - ');
   }
