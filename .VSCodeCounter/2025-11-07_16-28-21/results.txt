@@ -1,0 +1,290 @@
+Date : 2025-11-07 16:28:21
+Directory : c:\Users\xuant\Documents\ElearningApp\elearning_app\lib
+Total : 172 files,  16527 codes, 197 comments, 1377 blanks, all 18101 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |        172 |     16,527 |        197 |      1,377 |     18,101 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                          | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                             |        172 |     16,527 |        197 |      1,377 |     18,101 |
+| . (Files)                                                                                                                     |          3 |        196 |         12 |         11 |        219 |
+| bloc                                                                                                                          |         18 |        910 |         13 |        190 |      1,113 |
+| bloc\auth                                                                                                                     |          3 |        189 |          0 |         37 |        226 |
+| bloc\course                                                                                                                   |          3 |        254 |          3 |         60 |        317 |
+| bloc\filtered_course                                                                                                          |          3 |        230 |          4 |         42 |        276 |
+| bloc\font                                                                                                                     |          3 |         55 |          0 |         17 |         72 |
+| bloc\navigation                                                                                                               |          3 |         19 |          0 |          4 |         23 |
+| bloc\profile                                                                                                                  |          3 |        163 |          6 |         30 |        199 |
+| config                                                                                                                        |          1 |         14 |          0 |          2 |         16 |
+| controllers                                                                                                                   |          1 |        199 |          6 |         24 |        229 |
+| core                                                                                                                          |          6 |        246 |          5 |         21 |        272 |
+| core (Files)                                                                                                                  |          1 |          0 |          0 |          1 |          1 |
+| core\theme                                                                                                                    |          3 |        117 |          5 |         14 |        136 |
+| core\utils                                                                                                                    |          2 |        129 |          0 |          6 |        135 |
+| models                                                                                                                        |         15 |        681 |          3 |         84 |        768 |
+| respositories                                                                                                                 |          6 |        737 |         49 |        129 |        915 |
+| routes                                                                                                                        |          2 |        299 |          5 |         21 |        325 |
+| services                                                                                                                      |          9 |      1,371 |         17 |        131 |      1,519 |
+| view                                                                                                                          |        111 |     11,874 |         87 |        764 |     12,725 |
+| view\auth                                                                                                                     |          3 |        537 |          8 |         35 |        580 |
+| view\certificate                                                                                                              |          2 |        309 |          0 |         16 |        325 |
+| view\chat                                                                                                                     |          5 |        332 |          1 |         25 |        358 |
+| view\chat (Files)                                                                                                             |          2 |        178 |          1 |         10 |        189 |
+| view\chat\widgets                                                                                                             |          3 |        154 |          0 |         15 |        169 |
+| view\course                                                                                                                   |         26 |      3,080 |         29 |        210 |      3,319 |
+| view\course\analytics_dashboard                                                                                               |          5 |        349 |          0 |         19 |        368 |
+| view\course\analytics_dashboard (Files)                                                                                       |          1 |         57 |          0 |          3 |         60 |
+| view\course\analytics_dashboard\widgets                                                                                       |          4 |        292 |          0 |         16 |        308 |
+| view\course\course_detail                                                                                                     |          9 |      1,296 |         15 |         85 |      1,396 |
+| view\course\course_detail (Files)                                                                                             |          1 |        184 |          5 |         13 |        202 |
+| view\course\course_detail\widgets                                                                                             |          8 |      1,112 |         10 |         72 |      1,194 |
+| view\course\course_list                                                                                                       |          4 |        587 |          2 |         47 |        636 |
+| view\course\course_list (Files)                                                                                               |          1 |        251 |          2 |         26 |        279 |
+| view\course\course_list\widgets                                                                                               |          3 |        336 |          0 |         21 |        357 |
+| view\course\course_search                                                                                                     |          1 |        174 |          0 |         13 |        187 |
+| view\course\lesson_screen                                                                                                     |          3 |        415 |          4 |         25 |        444 |
+| view\course\lesson_screen (Files)                                                                                             |          1 |        223 |          0 |         12 |        235 |
+| view\course\lesson_screen\widgets                                                                                             |          2 |        192 |          4 |         13 |        209 |
+| view\course\payment                                                                                                           |          4 |        259 |          8 |         21 |        288 |
+| view\course\payment (Files)                                                                                                   |          1 |         89 |          0 |          6 |         95 |
+| view\course\payment\widgets                                                                                                   |          3 |        170 |          8 |         15 |        193 |
+| view\help_and_support                                                                                                         |          5 |        288 |          0 |         26 |        314 |
+| view\help_and_support (Files)                                                                                                 |          1 |        124 |          0 |         13 |        137 |
+| view\help_and_support\widgets                                                                                                 |          4 |        164 |          0 |         13 |        177 |
+| view\home                                                                                                                     |         11 |        962 |          7 |         58 |      1,027 |
+| view\home (Files)                                                                                                             |          1 |         60 |          0 |          8 |         68 |
+| view\home\widgets                                                                                                             |         10 |        902 |          7 |         50 |        959 |
+| view\notifications                                                                                                            |          5 |        254 |          0 |         17 |        271 |
+| view\notifications (Files)                                                                                                    |          1 |         52 |          0 |          3 |         55 |
+| view\notifications\widgets                                                                                                    |          4 |        202 |          0 |         14 |        216 |
+| view\onboarding                                                                                                               |          4 |        358 |          5 |         23 |        386 |
+| view\onboarding (Files)                                                                                                       |          1 |        127 |          4 |          8 |        139 |
+| view\onboarding\widgets                                                                                                       |          3 |        231 |          1 |         15 |        247 |
+| view\onboarding\widgets (Files)                                                                                               |          1 |         50 |          1 |          3 |         54 |
+| view\onboarding\widgets\common                                                                                                |          2 |        181 |          0 |         12 |        193 |
+| view\privacy_&_terms_conditions                                                                                               |          3 |        213 |          0 |         28 |        241 |
+| view\privacy_&_terms_conditions (Files)                                                                                       |          2 |        178 |          0 |         24 |        202 |
+| view\privacy_&_terms_conditions\widgets                                                                                       |          1 |         35 |          0 |          4 |         39 |
+| view\profile                                                                                                                  |          8 |        751 |          8 |         44 |        803 |
+| view\profile (Files)                                                                                                          |          2 |        357 |          6 |         16 |        379 |
+| view\profile\widgets                                                                                                          |          6 |        394 |          2 |         28 |        424 |
+| view\quiz                                                                                                                     |         12 |        957 |          4 |         68 |      1,029 |
+| view\quiz\quiz_attempt                                                                                                        |          6 |        508 |          4 |         40 |        552 |
+| view\quiz\quiz_attempt (Files)                                                                                                |          1 |        160 |          2 |         19 |        181 |
+| view\quiz\quiz_attempt\widgets                                                                                                |          5 |        348 |          2 |         21 |        371 |
+| view\quiz\quiz_list                                                                                                           |          2 |        157 |          0 |          9 |        166 |
+| view\quiz\quiz_list (Files)                                                                                                   |          1 |         62 |          0 |          4 |         66 |
+| view\quiz\quiz_list\widgets                                                                                                   |          1 |         95 |          0 |          5 |        100 |
+| view\quiz\quiz_result                                                                                                         |          4 |        292 |          0 |         19 |        311 |
+| view\quiz\quiz_result (Files)                                                                                                 |          1 |         80 |          0 |          5 |         85 |
+| view\quiz\quiz_result\widgets                                                                                                 |          3 |        212 |          0 |         14 |        226 |
+| view\settings                                                                                                                 |          3 |        266 |          0 |         12 |        278 |
+| view\settings (Files)                                                                                                         |          1 |        187 |          0 |          4 |        191 |
+| view\settings\widgets                                                                                                         |          2 |         79 |          0 |          8 |         87 |
+| view\splash                                                                                                                   |          1 |        141 |          0 |         14 |        155 |
+| view\teacher                                                                                                                  |         23 |      3,426 |         25 |        188 |      3,639 |
+| view\teacher\create_course                                                                                                    |          2 |      1,148 |         18 |         52 |      1,218 |
+| view\teacher\create_course (Files)                                                                                            |          1 |      1,083 |         18 |         48 |      1,149 |
+| view\teacher\create_course\widgets                                                                                            |          1 |         65 |          0 |          4 |         69 |
+| view\teacher\my_courses                                                                                                       |          5 |        548 |          4 |         25 |        577 |
+| view\teacher\my_courses (Files)                                                                                               |          1 |        134 |          0 |          9 |        143 |
+| view\teacher\my_courses\widgets                                                                                               |          4 |        414 |          4 |         16 |        434 |
+| view\teacher\payment                                                                                                          |          4 |        704 |          0 |         59 |        763 |
+| view\teacher\payment (Files)                                                                                                  |          1 |        138 |          0 |         13 |        151 |
+| view\teacher\payment\widgets                                                                                                  |          3 |        566 |          0 |         46 |        612 |
+| view\teacher\student_progress                                                                                                 |          4 |        402 |          3 |         21 |        426 |
+| view\teacher\student_progress (Files)                                                                                         |          1 |         61 |          0 |          7 |         68 |
+| view\teacher\student_progress\widgets                                                                                         |          3 |        341 |          3 |         14 |        358 |
+| view\teacher\teacher_analytics                                                                                                |          6 |        481 |          0 |         25 |        506 |
+| view\teacher\teacher_analytics (Files)                                                                                        |          1 |         40 |          0 |          3 |         43 |
+| view\teacher\teacher_analytics\widgets                                                                                        |          5 |        441 |          0 |         22 |        463 |
+| view\teacher\teacher_home                                                                                                     |          2 |        143 |          0 |          6 |        149 |
+| view\teacher\teacher_home (Files)                                                                                             |          1 |         96 |          0 |          3 |         99 |
+| view\teacher\teacher_home\widgets                                                                                             |          1 |         47 |          0 |          3 |         50 |
++-------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                                      | language | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\auth\auth_bloc.dart                                              | Dart     |        117 |          0 |         12 |        129 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\auth\auth_event.dart                                             | Dart     |         55 |          0 |         20 |         75 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\auth\auth_state.dart                                             | Dart     |         17 |          0 |          5 |         22 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\course\course_bloc.dart                                          | Dart     |        162 |          3 |         25 |        190 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\course\course_event.dart                                         | Dart     |         31 |          0 |         18 |         49 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\course\course_state.dart                                         | Dart     |         61 |          0 |         17 |         78 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\filtered_course\filtered_course_bloc.dart                        | Dart     |        177 |          4 |         25 |        206 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\filtered_course\filtered_course_event.dart                       | Dart     |         14 |          0 |          8 |         22 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\filtered_course\filtered_course_state.dart                       | Dart     |         39 |          0 |          9 |         48 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\font\font_bloc.dart                                              | Dart     |         24 |          0 |          5 |         29 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\font\font_event.dart                                             | Dart     |         17 |          0 |          8 |         25 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\font\font_state.dart                                             | Dart     |         14 |          0 |          4 |         18 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\navigation\navigation_bloc.dart                                  | Dart     |         10 |          0 |          2 |         12 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\navigation\navigation_event.dart                                 | Dart     |          5 |          0 |          1 |          6 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\navigation\navigation_state.dart                                 | Dart     |          4 |          0 |          1 |          5 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\profile\profile_bloc.dart                                        | Dart     |        107 |          6 |         16 |        129 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\profile\profile_event.dart                                       | Dart     |         27 |          0 |          9 |         36 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\bloc\profile\profile_state.dart                                       | Dart     |         29 |          0 |          5 |         34 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\config\firebase_config.dart                                           | Dart     |         14 |          0 |          2 |         16 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\controllers\video_controller.dart                                     | Dart     |        199 |          6 |         24 |        229 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\core\config.dart                                                      | Dart     |          0 |          0 |          1 |          1 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\core\theme\app_colors.dart                                            | Dart     |         23 |          5 |          7 |         35 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\core\theme\app_theme.dart                                             | Dart     |         49 |          0 |          5 |         54 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\core\theme\app_typography.dart                                        | Dart     |         45 |          0 |          2 |         47 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\core\utils\app_dialogs.dart                                           | Dart     |         91 |          0 |          2 |         93 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\core\utils\validators.dart                                            | Dart     |         38 |          0 |          4 |         42 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\firebase_options.dart                                                 | Dart     |         48 |         12 |          3 |         63 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\main.dart                                                             | Dart     |         81 |          0 |          5 |         86 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\main_screen.dart                                                      | Dart     |         67 |          0 |          3 |         70 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\analytics_data.dart                                            | Dart     |         44 |          0 |          5 |         49 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\category.dart                                                  | Dart     |         13 |          0 |          3 |         16 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\chat_message.dart                                              | Dart     |         36 |          0 |          4 |         40 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\course.dart                                                    | Dart     |         83 |          0 |          4 |         87 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\lesson.dart                                                    | Dart     |         84 |          2 |         10 |         96 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\onboarding_item.dart                                           | Dart     |         10 |          0 |          2 |         12 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\prerequisite_course.dart                                       | Dart     |         14 |          0 |          4 |         18 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\profile.dart                                                   | Dart     |         54 |          0 |          8 |         62 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\question.dart                                                  | Dart     |         46 |          0 |          9 |         55 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\quiz.dart                                                      | Dart     |         42 |          0 |          5 |         47 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\quiz_attempt.dart                                              | Dart     |         43 |          0 |          4 |         47 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\review.dart                                                    | Dart     |         81 |          1 |          9 |         91 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\simple_payment.dart                                            | Dart     |         15 |          0 |          4 |         19 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\user_model.dart                                                | Dart     |         82 |          0 |          9 |         91 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\models\withdrawal.dart                                                | Dart     |         34 |          0 |          4 |         38 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\respositories\auth_respository.dart                                   | Dart     |        138 |          4 |         21 |        163 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\respositories\category_respository.dart                               | Dart     |         35 |          5 |          7 |         47 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\respositories\course_repository.dart                                  | Dart     |        325 |         25 |         48 |        398 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\respositories\instructor_respositories.dart                           | Dart     |         30 |          0 |          6 |         36 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\respositories\review_respository.dart                                 | Dart     |         98 |         15 |         21 |        134 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\respositories\teacher_repository.dart                                 | Dart     |        111 |          0 |         26 |        137 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\routes\app_routes.dart                                                | Dart     |        166 |          5 |         12 |        183 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\routes\route_pages.dart                                               | Dart     |        133 |          0 |          9 |        142 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\services\analytics_service.dart                                       | Dart     |        158 |          0 |         10 |        168 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\services\certificate_service.dart                                     | Dart     |         42 |          0 |          6 |         48 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\services\cloudinary_service.dart                                      | Dart     |         38 |          0 |          5 |         43 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\services\dummy_data_service.dart                                      | Dart     |        880 |          6 |         62 |        948 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\services\file_download_service.dart                                   | Dart     |         61 |          7 |         11 |         79 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\services\font_service.dart                                            | Dart     |         77 |          0 |         10 |         87 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\services\payment_service.dart                                         | Dart     |         93 |          4 |         19 |        116 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\services\storage_service.dart                                         | Dart     |         14 |          0 |          5 |         19 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\services\user_service.dart                                            | Dart     |          8 |          0 |          3 |         11 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\auth\forgot_password_screen.dart                                 | Dart     |         97 |          2 |         10 |        109 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\auth\login_screen.dart                                           | Dart     |        212 |          4 |         15 |        231 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\auth\register_screen.dart                                        | Dart     |        228 |          2 |         10 |        240 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\certificate\certificate_preview_screen.dart                      | Dart     |        152 |          0 |         12 |        164 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\certificate\certificate_widget.dart                              | Dart     |        157 |          0 |          4 |        161 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\chat\chat_list_screen.dart                                       | Dart     |        104 |          0 |          6 |        110 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\chat\chat_screen.dart                                            | Dart     |         74 |          1 |          4 |         79 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\chat\widgets\chat_tile.dart                                      | Dart     |         85 |          0 |          6 |         91 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\chat\widgets\message_bubble.dart                                 | Dart     |         26 |          0 |          4 |         30 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\chat\widgets\message_input.dart                                  | Dart     |         43 |          0 |          5 |         48 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\analytics_dashboard\analytics_dashboard_screen.dart       | Dart     |         57 |          0 |          3 |         60 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\analytics_dashboard\widgets\learning_streak_card.dart     | Dart     |         73 |          0 |          4 |         77 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\analytics_dashboard\widgets\recommendations_card.dart     | Dart     |         55 |          0 |          4 |         59 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\analytics_dashboard\widgets\skills_progress_card.dart     | Dart     |         67 |          0 |          4 |         71 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\analytics_dashboard\widgets\weekly_progress_card.dart     | Dart     |         97 |          0 |          4 |        101 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_detail\course_detail_screen.dart                   | Dart     |        184 |          5 |         13 |        202 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_detail\widgets\action_buttons.dart                 | Dart     |         94 |          3 |          3 |        100 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_detail\widgets\course_detail_app_bar.dart          | Dart     |         56 |          0 |          3 |         59 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_detail\widgets\course_info_card.dart               | Dart     |        141 |          0 |         10 |        151 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_detail\widgets\lesson_list.dart                    | Dart     |        147 |          1 |         11 |        159 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_detail\widgets\lesson_tile.dart                    | Dart     |         57 |          0 |          4 |         61 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_detail\widgets\review_dialog.dart                  | Dart     |        152 |          0 |          9 |        161 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_detail\widgets\reviews_section.dart                | Dart     |        345 |          2 |         28 |        375 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_detail\widgets\shimmer_review_tile.dart            | Dart     |        120 |          4 |          4 |        128 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_list\course_list_screen.dart                       | Dart     |        251 |          2 |         26 |        279 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_list\widgets\course_card.dart                      | Dart     |        166 |          0 |          4 |        170 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_list\widgets\course_filter_dialog.dart             | Dart     |        115 |          0 |         13 |        128 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_list\widgets\empty_state_widget.dart               | Dart     |         55 |          0 |          4 |         59 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\course_search\course_search_screen.dart                   | Dart     |        174 |          0 |         13 |        187 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\lesson_screen\lesson_screen.dart                          | Dart     |        223 |          0 |         12 |        235 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\lesson_screen\widgets\certificate_dialog.dart             | Dart     |         77 |          1 |          4 |         82 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\lesson_screen\widgets\resource_tile.dart                  | Dart     |        115 |          3 |          9 |        127 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\payment\payment_screen.dart                               | Dart     |         89 |          0 |          6 |         95 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\payment\widgets\order_summary.dart                        | Dart     |         56 |          0 |          4 |         60 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\payment\widgets\payment_success_dialog.dart               | Dart     |         47 |          0 |          3 |         50 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\course\payment\widgets\payment_webview.dart                      | Dart     |         67 |          8 |          8 |         83 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\help_and_support\help_and_support_screen.dart                    | Dart     |        124 |          0 |         13 |        137 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\help_and_support\widgets\contact_tile.dart                       | Dart     |         69 |          0 |          4 |         73 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\help_and_support\widgets\faq_tile.dart                           | Dart     |         43 |          0 |          3 |         46 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\help_and_support\widgets\help_search_bar.dart                    | Dart     |         29 |          0 |          3 |         32 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\help_and_support\widgets\help_section.dart                       | Dart     |         23 |          0 |          3 |         26 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\home\home_screen.dart                                            | Dart     |         60 |          0 |          8 |         68 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\home\widgets\category_section.dart                               | Dart     |         98 |          0 |          6 |        104 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\home\widgets\home_app_bar.dart                                   | Dart     |         64 |          0 |          4 |         68 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\home\widgets\in_progress_section.dart                            | Dart     |        142 |          0 |          5 |        147 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\home\widgets\recommended_course_card.dart                        | Dart     |        176 |          0 |          4 |        180 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\home\widgets\recommended_section.dart                            | Dart     |        112 |          0 |         13 |        125 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\home\widgets\search_bar_widget.dart                              | Dart     |         45 |          0 |          3 |         48 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\home\widgets\shimmer_category_card.dart                          | Dart     |         70 |          3 |          5 |         78 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\home\widgets\shimmer_category_section.dart                       | Dart     |         30 |          0 |          3 |         33 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\home\widgets\shimmer_recommended_course_card.dart                | Dart     |        124 |          4 |          4 |        132 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\home\widgets\shimmer_recommeneded_section.dart                   | Dart     |         41 |          0 |          3 |         44 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\notifications\notifications_screen.dart                          | Dart     |         52 |          0 |          3 |         55 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\notifications\widgets\notification_card.dart                     | Dart     |         71 |          0 |          4 |         75 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\notifications\widgets\notification_setting_tile.dart             | Dart     |         48 |          0 |          3 |         51 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\notifications\widgets\notification_settings_section.dart         | Dart     |         61 |          0 |          4 |         65 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\notifications\widgets\notifications_list.dart                    | Dart     |         22 |          0 |          3 |         25 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\onboarding\onboarding_screen.dart                                | Dart     |        127 |          4 |          8 |        139 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\onboarding\widgets\common\custom_button.dart                     | Dart     |         88 |          0 |          6 |         94 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\onboarding\widgets\common\custom_textfield.dart                  | Dart     |         93 |          0 |          6 |         99 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\onboarding\widgets\onboarding_page_widget.dart                   | Dart     |         50 |          1 |          3 |         54 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\privacy_&_terms_conditions\privacy_policy_screen.dart            | Dart     |         89 |          0 |         12 |        101 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\privacy_&_terms_conditions\terms_conditions_screen.dart          | Dart     |         89 |          0 |         12 |        101 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\privacy_&_terms_conditions\widgets\legal_document_section.dart   | Dart     |         35 |          0 |          4 |         39 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\profile\edit_profile_screen.dart                                 | Dart     |        289 |          5 |         10 |        304 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\profile\profile_screen.dart                                      | Dart     |         68 |          1 |          6 |         75 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\profile\widgets\edit_profile_app_bar.dart                        | Dart     |         33 |          0 |          5 |         38 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\profile\widgets\profile_app_bar.dart                             | Dart     |        100 |          0 |          3 |        103 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\profile\widgets\profile_option_card.dart                         | Dart     |         83 |          0 |          5 |         88 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\profile\widgets\profile_options.dart                             | Dart     |         54 |          0 |          3 |         57 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\profile\widgets\profile_picture_bottom_sheet.dart                | Dart     |         70 |          2 |          8 |         80 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\profile\widgets\profile_stats_card.dart                          | Dart     |         54 |          0 |          4 |         58 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_attempt\quiz_attempt_screen.dart                       | Dart     |        160 |          2 |         19 |        181 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_attempt\widgets\quiz_attempt_app_bar.dart              | Dart     |         64 |          0 |          5 |         69 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_attempt\widgets\quiz_navigation_bar.dart               | Dart     |        108 |          0 |          5 |        113 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_attempt\widgets\quiz_option_tile.dart                  | Dart     |         79 |          2 |          4 |         85 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_attempt\widgets\quiz_question_page.dart                | Dart     |         63 |          0 |          4 |         67 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_attempt\widgets\quiz_submit_dialog.dart                | Dart     |         34 |          0 |          3 |         37 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_list\quiz_list_screen.dart                             | Dart     |         62 |          0 |          4 |         66 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_list\widgets\quiz_card.dart                            | Dart     |         95 |          0 |          5 |        100 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_result\quiz_result_screen.dart                         | Dart     |         80 |          0 |          5 |         85 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_result\widgets\quiz_question_analysis.dart             | Dart     |         80 |          0 |          5 |         85 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_result\widgets\quiz_score_card.dart                    | Dart     |         54 |          0 |          4 |         58 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\quiz\quiz_result\widgets\quiz_stats_card.dart                    | Dart     |         78 |          0 |          5 |         83 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\settings\settings_screen.dart                                    | Dart     |        187 |          0 |          4 |        191 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\settings\widgets\setting_tile.dart                               | Dart     |         38 |          0 |          4 |         42 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\settings\widgets\settings_section.dart                           | Dart     |         41 |          0 |          4 |         45 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\splash\splash_screen.dart                                        | Dart     |        141 |          0 |         14 |        155 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\create_course\create_course_screen.dart                  | Dart     |      1,083 |         18 |         48 |      1,149 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\create_course\widgets\create_course_app_bar.dart         | Dart     |         65 |          0 |          4 |         69 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\my_courses\my_courses_screen.dart                        | Dart     |        134 |          0 |          9 |        143 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\my_courses\widgets\empty_courses_state.dart              | Dart     |         50 |          0 |          3 |         53 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\my_courses\widgets\my_courses_app_bar.dart               | Dart     |         48 |          0 |          3 |         51 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\my_courses\widgets\shimmer_course_card.dart              | Dart     |        118 |          4 |          4 |        126 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\my_courses\widgets\teacher_course_card.dart              | Dart     |        198 |          0 |          6 |        204 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\payment\teacher_payment_screen.dart                      | Dart     |        138 |          0 |         13 |        151 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\payment\widgets\balance_card.dart                        | Dart     |         51 |          0 |          5 |         56 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\payment\widgets\payment_history_list.dart                | Dart     |        180 |          0 |         22 |        202 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\payment\widgets\withdrawal_screen.dart                   | Dart     |        335 |          0 |         19 |        354 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\student_progress\student_progress_screen.dart            | Dart     |         61 |          0 |          7 |         68 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\student_progress\widgets\performance_card.dart           | Dart     |        133 |          2 |          7 |        142 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\student_progress\widgets\student_progress_app_bar.dart   | Dart     |         54 |          0 |          3 |         57 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\student_progress\widgets\student_progress_card.dart      | Dart     |        154 |          1 |          4 |        159 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\teacher_analytics\teacher_analytics_screen.dart          | Dart     |         40 |          0 |          3 |         43 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\teacher_analytics\widgets\enrollment_chart_widget.dart   | Dart     |        105 |          0 |          6 |        111 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\teacher_analytics\widgets\overview_cards_widget.dart     | Dart     |         96 |          0 |          5 |        101 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\teacher_analytics\widgets\revenue_stats_widgets.dart     | Dart     |        105 |          0 |          4 |        109 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\teacher_analytics\widgets\student_engagement_widget.dart | Dart     |         82 |          0 |          4 |         86 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\teacher_analytics\widgets\teacher_analytics_app_bar.dart | Dart     |         53 |          0 |          3 |         56 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\teacher_home\teacher_home_screen.dart                    | Dart     |         96 |          0 |          3 |         99 |
+| c:\Users\xuant\Documents\ElearningApp\elearning_app\lib\view\teacher\teacher_home\widgets\dashboard_card.dart                 | Dart     |         47 |          0 |          3 |         50 |
+| Total                                                                                                                         |          |     16,527 |        197 |      1,377 |     18,101 |
++-------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
