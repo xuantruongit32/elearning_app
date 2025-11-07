@@ -51,7 +51,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = 'Failed to load reviews';
+        _error = 'Không thể tải đánh giá';
         _isLoading = false;
       });
     }
@@ -61,10 +61,10 @@ class _ReviewsSectionState extends State<ReviewsSection> {
     final result = await Get.dialog<Map<String, dynamic>>(
       ReviewDialog(
         courseId: widget.courseId,
-        key: UniqueKey(), // force new instance
+        key: UniqueKey(),
         existingReview: existingReview,
       ),
-      barrierDismissible: false, // prevent closing by tapping outside
+      barrierDismissible: false,
     );
 
     if (result != null) {
@@ -76,8 +76,8 @@ class _ReviewsSectionState extends State<ReviewsSection> {
     final currentUser = _auth.currentUser;
     if (currentUser == null) {
       Get.snackbar(
-        'Error',
-        'Please sign in to review',
+        'Lỗi',
+        'Vui lòng đăng nhập để viết đánh giá',
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -89,7 +89,6 @@ class _ReviewsSectionState extends State<ReviewsSection> {
     try {
       final action = result['action'] as String;
 
-      // check if user has already reviewed
       final existingReview = _reviews.firstWhereOrNull(
         (review) => review.userId == currentUser.uid,
       );
@@ -98,8 +97,8 @@ class _ReviewsSectionState extends State<ReviewsSection> {
         case 'add':
           if (existingReview != null) {
             Get.snackbar(
-              'Error',
-              'You have already reviewed this course',
+              'Lỗi',
+              'Bạn đã đánh giá khóa học này rồi',
               backgroundColor: Colors.red,
               colorText: Colors.white,
             );
@@ -112,7 +111,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
             id: '',
             courseId: widget.courseId,
             userId: currentUser.uid,
-            userName: currentUser.displayName ?? 'Anonymous',
+            userName: currentUser.displayName ?? 'Người dùng ẩn danh',
             rating: rating,
             comment: comment,
             createdAt: DateTime.now(),
@@ -128,7 +127,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
               id: existingReview.id,
               courseId: widget.courseId,
               userId: currentUser.uid,
-              userName: currentUser.displayName ?? 'Anonymous',
+              userName: currentUser.displayName ?? 'Người dùng ẩn danh',
               rating: rating,
               comment: comment,
               createdAt: DateTime.now(),
@@ -143,13 +142,12 @@ class _ReviewsSectionState extends State<ReviewsSection> {
           }
           break;
       }
-      await _loadReviews();
 
-      // refresh course details to update rating and review count
+      await _loadReviews();
       context.read<CourseBloc>().add(RefreshCourseDetail(widget.courseId));
 
       Get.snackbar(
-        'Success',
+        'Thành công',
         _getSuccessMessage(action),
         backgroundColor: AppColors.primary,
         colorText: Colors.white,
@@ -159,8 +157,8 @@ class _ReviewsSectionState extends State<ReviewsSection> {
         _isLoading = false;
       });
       Get.snackbar(
-        'Error',
-        'Failed to ${result['action']} review',
+        'Lỗi',
+        'Không thể ${_getActionText(result['action'])} đánh giá',
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -170,13 +168,26 @@ class _ReviewsSectionState extends State<ReviewsSection> {
   String _getSuccessMessage(String action) {
     switch (action) {
       case 'add':
-        return 'Thank you for your review';
+        return 'Cảm ơn bạn đã gửi đánh giá!';
       case 'update':
-        return 'Your review has been updated!';
+        return 'Đánh giá của bạn đã được cập nhật!';
       case 'delete':
-        return 'Your review has been deleted';
+        return 'Đánh giá của bạn đã bị xóa.';
       default:
-        return 'Action completed successfully!';
+        return 'Thao tác đã được thực hiện thành công!';
+    }
+  }
+
+  String _getActionText(String action) {
+    switch (action) {
+      case 'add':
+        return 'thêm';
+      case 'update':
+        return 'cập nhật';
+      case 'delete':
+        return 'xóa';
+      default:
+        return 'xử lý';
     }
   }
 
@@ -198,7 +209,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Reviews',
+              'Đánh giá',
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -208,7 +219,7 @@ class _ReviewsSectionState extends State<ReviewsSection> {
                   ? null
                   : () => _showReviewDialog(userReview),
               label: Text(
-                userReview != null ? 'Edit Review' : 'Write a Review',
+                userReview != null ? 'Chỉnh sửa đánh giá' : 'Viết đánh giá',
               ),
               icon: const Icon(Icons.rate_review),
             ),
@@ -226,7 +237,10 @@ class _ReviewsSectionState extends State<ReviewsSection> {
                 const Icon(Icons.error_outline, size: 48, color: Colors.red),
                 const SizedBox(height: 16),
                 Text(_error!, style: theme.textTheme.bodyLarge),
-                TextButton(onPressed: _loadReviews, child: const Text('Retry')),
+                TextButton(
+                  onPressed: _loadReviews,
+                  child: const Text('Thử lại'),
+                ),
               ],
             ),
           )
@@ -241,14 +255,14 @@ class _ReviewsSectionState extends State<ReviewsSection> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'No reviews yet',
+                  'Chưa có đánh giá nào',
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: AppColors.primary,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Be first to review this course',
+                  'Hãy là người đầu tiên đánh giá!',
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.secondary.withValues(alpha: 0.7),
                   ),
@@ -276,15 +290,15 @@ class _ReviewsSectionState extends State<ReviewsSection> {
 
   String _formatDate(DateTime date) {
     final now = DateTime.now();
-    final differece = now.difference(date);
+    final difference = now.difference(date);
 
-    if (differece.inDays == 0) {
-      if (differece.inHours == 0) {
-        return '${differece.inMinutes} minutes ago';
+    if (difference.inDays == 0) {
+      if (difference.inHours == 0) {
+        return '${difference.inMinutes} phút trước';
       }
-      return '${differece.inHours} hours ago';
-    } else if (differece.inDays < 7) {
-      return '${differece.inDays} days ago';
+      return '${difference.inHours} giờ trước';
+    } else if (difference.inDays < 7) {
+      return '${difference.inDays} ngày trước';
     } else {
       return '${date.day}/${date.month}/${date.year}';
     }
