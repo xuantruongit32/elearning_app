@@ -10,7 +10,6 @@ import 'package:elearning_app/view/teacher/my_courses/widgets/shimmer_course_car
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class CourseSearchScreen extends StatefulWidget {
   const CourseSearchScreen({super.key});
@@ -74,7 +73,7 @@ class _CourseSearchScreenState extends State<CourseSearchScreen> {
             focusNode: _focusNode,
             style: const TextStyle(color: AppColors.primary, fontSize: 16),
             decoration: InputDecoration(
-              hintText: 'Search courses...',
+              hintText: 'Tìm kiếm khóa học...',
               hintStyle: TextStyle(
                 color: AppColors.primary.withValues(alpha: 0.7),
                 fontSize: 16,
@@ -140,7 +139,7 @@ class _CourseSearchScreenState extends State<CourseSearchScreen> {
           if (state is FilteredCoursesLoaded) {
             if (state.courses.isEmpty) {
               return EmptyStateWidget(
-                message: 'No Courses found',
+                message: 'Không tìm thấy khóa học nào',
                 onActionPressed: () {
                   _searchController.clear();
                   context.read<FilteredCourseBloc>().add(
@@ -160,7 +159,7 @@ class _CourseSearchScreenState extends State<CourseSearchScreen> {
                   subtitle: course.description,
                   imageUrl: course.imageUrl,
                   rating: course.rating,
-                  duration: '${course.lessons.length * 30} mins', //code later
+                  duration: '${course.lessons.length * 30} phút', // tạm thời
                   isPremium: course.isPremium,
                 );
               },
