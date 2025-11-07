@@ -11,10 +11,10 @@ class EmptyStateWidget extends StatelessWidget {
 
   const EmptyStateWidget({
     super.key,
-    this.title = 'No Courses Found',
-    this.message = 'There are no Courses available in this category yet.',
+    this.title = 'Không tìm thấy khóa học',
+    this.message = 'Hiện chưa có khóa học nào trong danh mục này.',
     this.onActionPressed,
-    this.actionLabel = 'Go Back',
+    this.actionLabel = 'Quay lại',
     this.icon = Icons.school_outlined,
   });
 
@@ -29,7 +29,7 @@ class EmptyStateWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             title,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            style: theme.textTheme.headlineSmall?.copyWith(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,
             ),
@@ -37,9 +37,9 @@ class EmptyStateWidget extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             message,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge?.copyWith(color: AppColors.secondary),
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: AppColors.secondary,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
