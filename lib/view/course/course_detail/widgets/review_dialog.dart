@@ -15,6 +15,7 @@ class ReviewDialog extends StatefulWidget {
 class _ReviewDialogState extends State<ReviewDialog> {
   double _rating = 0;
   late final TextEditingController _reviewController;
+
   @override
   void initState() {
     super.initState();
@@ -66,7 +67,9 @@ class _ReviewDialogState extends State<ReviewDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              widget.existingReview != null ? 'Edit Review' : 'Rate & Review',
+              widget.existingReview != null
+                  ? 'Chỉnh sửa đánh giá'
+                  : 'Đánh giá & Nhận xét',
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -94,7 +97,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
               controller: _reviewController,
               maxLines: 3,
               decoration: InputDecoration(
-                hintText: 'Write your review...',
+                hintText: 'Viết nhận xét của bạn...',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -110,7 +113,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
                     child: TextButton(
                       onPressed: _handleDelete,
                       child: Text(
-                        'Delete',
+                        'Xóa',
                         style: theme.textTheme.titleMedium?.copyWith(
                           color: Colors.red,
                         ),
@@ -124,7 +127,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
                       Get.back();
                     },
                     child: Text(
-                      'Cancel',
+                      'Hủy',
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: AppColors.secondary,
                       ),
@@ -143,7 +146,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
                       ),
                     ),
                     child: Text(
-                      widget.existingReview != null ? 'Update' : 'Submit',
+                      widget.existingReview != null ? 'Cập nhật' : 'Gửi',
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: Colors.white,
                       ),
