@@ -24,9 +24,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
     with RouteAware {
   final RouteObserver<PageRoute> _routeObserver =
       Get.find<RouteObserver<PageRoute>>();
+
   @override
   void didPopNext() {
-    // this is called when returning to this screen
+    // được gọi khi quay lại màn hình này
     _loadCourseDetail();
   }
 
@@ -59,14 +60,15 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
 
     return BlocBuilder<CourseBloc, CourseState>(
       builder: (context, state) {
-        //show loading scaffold when in loading state or when selected course is null  in CourseLoaded state
-
+        // Hiển thị khi đang tải hoặc chưa có dữ liệu
         if (state is CourseLoading ||
             (state is CoursesLoaded && state.selectedCourse == null)) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
+
+        // Hiển thị khi có lỗi
         if (state is CourseError) {
           return Scaffold(
             appBar: AppBar(),
@@ -74,16 +76,18 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
           );
         }
 
+        // Khi tải thành công
         if (state is CoursesLoaded && state.selectedCourse != null) {
           final course = state.selectedCourse!;
           final bool isUnlocked = state.isEnrolled;
 
-          //if in progress -> scroll to last lesson
+          // Nếu đang học dở, có thể cuộn đến bài học cuối
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (lastLesson != null) {
-              // implement scroll to jast lesson logic here
+              // thêm logic cuộn đến bài học cuối nếu cần
             }
           });
+
           return Scaffold(
             body: CustomScrollView(
               slivers: [
@@ -111,14 +115,14 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              '(${course.reviewCount} reviews)',
+                              '(${course.reviewCount} đánh giá)',
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: theme.colorScheme.secondary,
                               ),
                             ),
                             const Spacer(),
                             Text(
-                              '\$${course.price}',
+                              '${course.price == 0 ? "Miễn phí" : "${course.price}₫"}',
                               style: theme.textTheme.titleLarge?.copyWith(
                                 color: theme.colorScheme.primary,
                                 fontWeight: FontWeight.bold,
@@ -135,7 +139,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                         CourseInfoCard(course: course),
                         const SizedBox(height: 24),
                         Text(
-                          'Course Content',
+                          'Nội dung khóa học',
                           style: theme.textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -171,7 +175,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        // navigate to payment
+                        // điều hướng đến trang thanh toán
                         Get.toNamed(
                           AppRoutes.payment,
                           arguments: {
@@ -182,19 +186,25 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                         )?.then((_) {
                           setState(() {});
                         });
-                        ;
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         padding: const EdgeInsets.all(16),
                       ),
-                      child: Text('Buy Now for \$${course.price}'),
+                      child: Text(
+                        course.price == 0
+                            ? 'Bắt đầu học ngay'
+                            : 'Mua khóa học với ${course.price}₫',
+                      ),
                     ),
                   )
                 : null,
           );
         }
-        return const Scaffold(body: Center(child: Text('Something wrong')));
+
+        return const Scaffold(
+          body: Center(child: Text('Đã xảy ra lỗi')),
+        );
       },
     );
   }
