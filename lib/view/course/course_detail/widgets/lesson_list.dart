@@ -38,8 +38,7 @@ class _LessonListState extends State<LessonList> {
   @override
   void didUpdateWidget(LessonList oldWidget) {
     super.didUpdateWidget(oldWidget);
-
-    // reload course when widget is updated, courseId changes, or isUnlocked changes
+// reload course when widget is updated, courseId changes, or isUnlocked changes
     if (oldWidget.courseId != widget.courseId ||
         oldWidget.isUnlocked != widget.isUnlocked) {
       _loadCourse();
@@ -57,8 +56,8 @@ class _LessonListState extends State<LessonList> {
         _isLoading = false;
       });
       Get.snackbar(
-        'Error',
-        'Please login to view course progress',
+        'Lỗi',
+        'Vui lòng đăng nhập để xem tiến trình khóa học',
         snackPosition: SnackPosition.BOTTOM,
       );
       return;
@@ -76,19 +75,14 @@ class _LessonListState extends State<LessonList> {
           _isLoading = false;
         });
       }
-      setState(() {
-        _course = course;
-        _completedLessons = completedLessons;
-        _isLoading = false;
-      });
     } catch (e) {
       if (mounted) {
         setState(() {
           _isLoading = false;
         });
         Get.snackbar(
-          'Error',
-          'Failed to load course lessons',
+          'Lỗi',
+          'Không thể tải danh sách bài học',
           snackPosition: SnackPosition.BOTTOM,
         );
       }
@@ -102,8 +96,9 @@ class _LessonListState extends State<LessonList> {
     }
 
     if (_course == null) {
-      return const Center(child: Text('No Lessons Available'));
+      return const Center(child: Text('Không có bài học nào'));
     }
+
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -115,29 +110,29 @@ class _LessonListState extends State<LessonList> {
             !lesson.isPreview &&
             (index > 0 &&
                 !_completedLessons.contains(_course!.lessons[index - 1].id));
+
         return LessonTile(
           title: lesson.title,
-          duration: '${lesson.duration} mins',
+          duration: '${lesson.duration} phút',
           isCompleted: _isCompleted,
           isLocked: isLocked,
-
           isUnlocked: widget.isUnlocked,
           onTap: () async {
             if (_course!.isPremium && !widget.isUnlocked) {
               Get.snackbar(
-                'Premium Course',
-                'Please purchase this course to access all lessons',
+                'Khóa học cao cấp',
+                'Vui lòng mua khóa học để truy cập tất cả bài học',
                 backgroundColor: AppColors.primary,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 3),
               );
             } else if (isLocked) {
               Get.snackbar(
-                'Lesson Locked',
-                'Please complete the previous lesson to start',
+                'Bài học bị khóa',
+                'Vui lòng hoàn thành bài học trước đó để tiếp tục',
                 backgroundColor: Colors.red,
                 colorText: Colors.white,
-                duration: Duration(seconds: 3),
+                duration: const Duration(seconds: 3),
               );
             } else {
               final result = await Get.toNamed(
@@ -146,8 +141,7 @@ class _LessonListState extends State<LessonList> {
               );
               if (result == true) {
                 await _loadCourse(); //reload course data when return from lesson
-                widget.onLessonComplete
-                    ?.call(); //notify parent about completion
+                widget.onLessonComplete?.call(); //notify parent about completion
               }
             }
           },
