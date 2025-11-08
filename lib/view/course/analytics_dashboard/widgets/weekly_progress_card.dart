@@ -27,7 +27,7 @@ class WeeklyProgressCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Weekly Progress',
+            'Tiến độ học trong tuần',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
@@ -61,7 +61,7 @@ class WeeklyProgressCard extends StatelessWidget {
                       getTitlesWidget: (value, meta) {
                         return SideTitleWidget(
                           axisSide: meta.axisSide,
-                          child: Text('${value.toInt()}m'),
+                          child: Text('${value.toInt()}p'),
                         );
                       },
                     ),
