@@ -16,7 +16,7 @@ class AnalyticsDashboardScreen extends StatelessWidget {
       backgroundColor: AppColors.lightBackground,
       appBar: AppBar(
         title: const Text(
-          'Learning Analytics',
+          'Phân tích quá trình học',
           style: TextStyle(
             color: AppColors.primary,
             fontWeight: FontWeight.bold,
