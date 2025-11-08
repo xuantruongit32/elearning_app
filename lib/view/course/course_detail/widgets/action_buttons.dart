@@ -30,7 +30,7 @@ class ActionButtons extends StatelessWidget {
                     Get.to(() => CertificatePreviewScreen(course: course));
                   },
                   icon: const Icon(Icons.workspace_premium),
-                  label: const Text('View Certificate'),
+                  label: const Text('Xem chứng chỉ'),
                 ),
               ),
               const SizedBox(width: 16),
@@ -73,7 +73,7 @@ class ActionButtons extends StatelessWidget {
                     );
                   }
                 },
-                label: const Text('Start Learning'),
+                label: const Text('Bắt đầu học'),
                 icon: const Icon(Icons.play_circle),
               ),
             ),
