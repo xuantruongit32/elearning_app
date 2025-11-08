@@ -25,7 +25,7 @@ class RecommendationsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Recommended Next Steps',
+            'Bước tiếp theo được gợi ý',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
