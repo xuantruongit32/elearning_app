@@ -25,7 +25,7 @@ class SkillsProgressCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Skills Progress',
+            'Tiến độ kỹ năng',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
@@ -36,7 +36,7 @@ class SkillsProgressCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        skill.key,
+                        skill.key, // tên kỹ năng (VD: Nghe hiểu, Ngữ pháp...)
                         style: const TextStyle(fontSize: 14),
                       ),
                     ),
