@@ -31,7 +31,7 @@ class CourseInfoCard extends StatelessWidget {
                   context,
                   Icons.people,
                   '${course.enrollmentCount}+',
-                  'Students',
+                  'Học viên',
                 ),
                 _buildInfoItem(
                   context,
@@ -43,19 +43,19 @@ class CourseInfoCard extends StatelessWidget {
                   context,
                   Icons.library_books,
                   '${course.lessons.length}',
-                  'Lessons',
+                  'Bài học',
                 ),
                 _buildInfoItem(
                   context,
                   Icons.signal_cellular_alt,
                   course.level,
-                  'Level',
+                  'Trình độ',
                 ),
               ],
             ),
             const SizedBox(height: 16),
             if (course.requirements.isNotEmpty) ...[
-              _buildSectionTitle(context, 'Requirements'),
+              _buildSectionTitle(context, 'Yêu cầu'),
               const SizedBox(height: 8),
               ...course.requirements.map(
                 (requirement) => _buildRequirementItem(context, requirement),
@@ -63,7 +63,7 @@ class CourseInfoCard extends StatelessWidget {
               const SizedBox(height: 8),
             ],
             if (course.whatYouWillLearn.isNotEmpty) ...[
-              _buildSectionTitle(context, 'What you will learn'),
+              _buildSectionTitle(context, 'Bạn sẽ học được gì'),
               const SizedBox(height: 8),
               ...course.whatYouWillLearn.map(
                 (item) => _buildLearningItem(context, item),
