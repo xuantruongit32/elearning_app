@@ -31,7 +31,7 @@ class LearningStreakCard extends StatelessWidget {
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        '${learningStreak['current']} Day Streak! 🔥',
+                        '${learningStreak['current']} ngày học liên tiếp! 🔥',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 24,
@@ -41,7 +41,7 @@ class LearningStreakCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Keep going! You\'re doing great!',
+                      'Tiếp tục nhé!',
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.8),
                         fontSize: 14,
@@ -63,7 +63,7 @@ class LearningStreakCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  'Best: ${learningStreak['longest']} days',
+                  'Kỷ lục: ${learningStreak['longest']} ngày',
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
