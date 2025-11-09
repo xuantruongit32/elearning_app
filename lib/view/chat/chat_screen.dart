@@ -32,8 +32,8 @@ class ChatScreen extends StatelessWidget {
         ),
         title: Text(
           isTeacherView
-              ? 'Chat with ${studentName ?? 'Student'}'
-              : 'Chat with Instructor',
+              ? 'Trò chuyện với ${studentName ?? 'Học viên'}'
+              : 'Trò chuyện với giảng viên',
           style: const TextStyle(color: Colors.white),
         ),
       ),
@@ -66,7 +66,7 @@ class ChatScreen extends StatelessWidget {
             controller: _messageController,
             onSendPressed: () {
               if (_messageController.text.isNotEmpty) {
-                // send message
+                // send mess
                 _messageController.clear();
               }
             },
