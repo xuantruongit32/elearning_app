@@ -46,7 +46,7 @@ class ChatTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    studentName ?? 'Unknown Student',
+                    studentName ?? 'Không xác định',
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 15,
@@ -78,11 +78,11 @@ class ChatTile extends StatelessWidget {
     final difference = now.difference(timestamp);
 
     if (difference.inMinutes < 60) {
-      return '${difference.inMinutes}m ago';
+      return '${difference.inMinutes} phút trước';
     } else if (difference.inHours < 24) {
-      return '${difference.inHours}hr ago';
+      return '${difference.inHours} giờ trước';
     } else if (difference.inDays < 7) {
-      return '${difference.inDays}d ago';
+      return '${difference.inDays} ngày trước';
     } else {
       return '${timestamp.day}/${timestamp.month}/${timestamp.year}';
     }
