@@ -21,7 +21,7 @@ class ChatListScreen extends StatelessWidget {
           color: AppColors.accent,
         ),
         title: const Text(
-          'Student Messages',
+          'Tin nhắn học viên',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
@@ -70,7 +70,7 @@ class ChatListScreen extends StatelessWidget {
                     subtitle: Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: Text(
-                        '${courseChats.length} messages',
+                        '${courseChats.length} tin nhắn',
                         style: TextStyle(color: Colors.grey[600], fontSize: 13),
                       ),
                     ),
@@ -81,9 +81,9 @@ class ChatListScreen extends StatelessWidget {
                             (progress) => progress.studentId == chat.senderId,
                             orElse: () => StudentProgress(
                               studentId: chat.senderId,
-                              studentName: 'Unknown Student',
+                              studentName: 'Học viên không xác định',
                               courseId: chat.courseId,
-                              courseName: 'Unknow Course',
+                              courseName: 'Khóa học không xác định',
                               progress: 0,
                               lastActive: DateTime.now(),
                               quizScores: [],
