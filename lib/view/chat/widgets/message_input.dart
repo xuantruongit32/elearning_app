@@ -30,7 +30,7 @@ class MessageInput extends StatelessWidget {
             child: TextField(
               controller: controller,
               decoration: const InputDecoration(
-                hintText: 'Type a message...',
+                hintText: 'Nhập tin nhắn...',
                 border: InputBorder.none,
               ),
             ),
