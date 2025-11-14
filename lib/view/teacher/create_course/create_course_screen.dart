@@ -190,7 +190,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             CustomTextField(
                               controller: _priceController,
                               label: 'Giá',
-                              hint: 'Nhập giá',
+                              hint: 'Nhập giá (VND)',
                               keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value?.isEmpty ?? true) {
@@ -1147,4 +1147,3 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
   }
   
 }
-
