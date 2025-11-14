@@ -1,6 +1,7 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/services/dummy_data_service.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OverviewCardsWidget extends StatelessWidget {
   final String instructorId;
@@ -9,6 +10,12 @@ class OverviewCardsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stats = DummyDataService.getTeacherStats(instructorId);
+
+    final formatCurrency = NumberFormat.currency(
+      locale: 'vi_VN',
+      symbol: 'đ',
+      decimalDigits: 0,
+    );
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -29,7 +36,7 @@ class OverviewCardsWidget extends StatelessWidget {
         ),
         _buildStatCard(
           'Tổng doanh thu',
-          '\$${stats.totalRevenue.toStringAsFixed(2)}',
+          formatCurrency.format(stats.totalRevenue * 100),
           Icons.attach_money,
         ),
         _buildStatCard(
