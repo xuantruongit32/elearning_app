@@ -161,7 +161,7 @@ class RecommendedCourseCard extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      '\$${price.toStringAsFixed(2)}',
+                      '${price.toInt().toString().replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (m) => '.')} đ',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,

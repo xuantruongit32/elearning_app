@@ -89,14 +89,15 @@ class _RecommendedSectionState extends State<RecommendedSection> {
                   itemBuilder: (context, index) {
                     final course = courses[index];
                     final instructor = _instructors[course.instructorId];
+                   
+
                     return Padding(
                       padding: const EdgeInsets.only(right: 16),
                       child: RecommendedCourseCard(
                         courseId: course.id,
                         title: course.title,
                         imageUrl: course.imageUrl,
-                        instructorName:
-                            instructor?.fullName ?? 'Giảng viên',
+                        instructorName: instructor?.fullName ?? 'Giảng viên',
                         isPremium: course.isPremium,
                         price: course.price,
                         rating: course.rating,
