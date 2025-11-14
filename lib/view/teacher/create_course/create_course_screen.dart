@@ -1145,4 +1145,6 @@ final aspectRatio = videoController.getAspectRatio() ?? 1.0; */
       );
     }
   }
+  
 }
+
