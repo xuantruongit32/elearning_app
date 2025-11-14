@@ -31,8 +31,8 @@ class RevenueStatsWidgets extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildRevenueMetric('Doanh thu tháng', '\$2,345'),
-              _buildRevenueMetric('Doanh thu năm', '\$28,345'),
+              _buildRevenueMetric('Doanh thu tháng', '2.345.000'),
+              _buildRevenueMetric('Doanh thu năm', '8.345.000'),
             ],
           ),
           const SizedBox(height: 24),
