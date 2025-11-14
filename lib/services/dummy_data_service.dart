@@ -9,7 +9,7 @@ class DummyDataService {
   static final List<Course> courses = [
     Course(
       id: '1',
-      title: 'Flutter Development Bootcamp',
+      title: 'Flutter Cơ Bản',
       description:
           'Master Flutter and Dart from scratch. Build real-world cross-platform apps.',
       imageUrl: 'https://i.ytimg.com/vi/z9kOcyk5t8s/maxresdefault.jpg',
@@ -40,7 +40,7 @@ class DummyDataService {
 
     Course(
       id: '2',
-      title: 'React for Beginners',
+      title: 'React nâng cao',
       description:
           'Learn to build modern web apps with React and master component-based architecture.',
       imageUrl: 'https://i.ytimg.com/vi/DLX62G4lc44/maxresdefault.jpg',
@@ -275,8 +275,9 @@ class DummyDataService {
   static final List<Quiz> quizzes = [
     Quiz(
       id: '1',
-      title: 'Flutter Basics Quiz',
-      description: 'Test your knowledge of Flutter fundamentals.',
+      title: 'Kiến Thức Cơ Bản Flutter',
+      description:
+          'Kiểm tra hiểu biết của bạn về các kiến thức nền tảng Flutter.',
       timeLimit: 30,
       questions: _createFlutterQuizQuestions(),
       createdAt: DateTime.now().subtract(const Duration(days: 5)),
@@ -284,8 +285,9 @@ class DummyDataService {
     ),
     Quiz(
       id: '2',
-      title: 'Dart Programming Quiz',
-      description: 'Check your understanding of Dart programming concepts.',
+      title: 'Lập Trình Dart',
+      description:
+          'Đánh giá mức độ hiểu biết của bạn về các khái niệm trong Dart.',
       timeLimit: 25,
       questions: _createDartQuizQuestions(),
       createdAt: DateTime.now().subtract(const Duration(days: 3)),
@@ -561,19 +563,19 @@ class DummyDataService {
     return [
       Question(
         id: '1',
-        text: 'What is Dart?',
+        text: 'Dart là gì?',
         options: [
-          Option(id: 'a', text: 'A database language'),
-          Option(id: 'b', text: 'A general-purpose programming language'),
-          Option(id: 'c', text: 'A markup language'),
-          Option(id: 'd', text: 'A scripting tool'),
+          Option(id: 'a', text: 'Một ngôn ngữ cơ sở dữ liệu'),
+          Option(id: 'b', text: 'Một ngôn ngữ lập trình đa mục đích'),
+          Option(id: 'c', text: 'Một ngôn ngữ đánh dấu'),
+          Option(id: 'd', text: 'Một công cụ scripting'),
         ],
         correctOptionId: 'b',
         points: 1,
       ),
       Question(
         id: '2',
-        text: 'Which company developed Dart?',
+        text: 'Công ty nào phát triển Dart?',
         options: [
           Option(id: 'a', text: 'Facebook'),
           Option(id: 'b', text: 'Microsoft'),
@@ -585,7 +587,7 @@ class DummyDataService {
       ),
       Question(
         id: '3',
-        text: 'Which keyword is used to define a constant in Dart?',
+        text: 'Từ khóa nào dùng để khai báo hằng số trong Dart?',
         options: [
           Option(id: 'a', text: 'final'),
           Option(id: 'b', text: 'let'),
@@ -602,20 +604,19 @@ class DummyDataService {
     return [
       Question(
         id: '1',
-        text: 'What is Flutter?',
+        text: 'Flutter là gì?',
         options: [
-          Option(id: 'a', text: 'A UI framework for building native apps'),
-          Option(id: 'b', text: 'A programming language'),
-          Option(id: 'c', text: 'A database management system'),
-          Option(id: 'd', text: 'A design tool'),
+          Option(id: 'a', text: 'Một framework UI để xây dựng ứng dụng native'),
+          Option(id: 'b', text: 'Một ngôn ngữ lập trình'),
+          Option(id: 'c', text: 'Một hệ quản trị cơ sở dữ liệu'),
+          Option(id: 'd', text: 'Một công cụ thiết kế'),
         ],
         correctOptionId: 'a',
         points: 1,
       ),
-      // Question 2
       Question(
         id: '2',
-        text: 'Which programming language is used in Flutter?',
+        text: 'Ngôn ngữ lập trình nào được sử dụng trong Flutter?',
         options: [
           Option(id: 'a', text: 'Java'),
           Option(id: 'b', text: 'Kotlin'),
@@ -625,10 +626,9 @@ class DummyDataService {
         correctOptionId: 'c',
         points: 1,
       ),
-      // Question 3
       Question(
         id: '3',
-        text: 'Who developed Flutter?',
+        text: 'Ai phát triển Flutter?',
         options: [
           Option(id: 'a', text: 'Facebook'),
           Option(id: 'b', text: 'Google'),
@@ -638,31 +638,30 @@ class DummyDataService {
         correctOptionId: 'b',
         points: 1,
       ),
-      // Question 4
       Question(
         id: '4',
-        text: 'Which widget is used for layout in Flutter?',
+        text: 'Widget nào được dùng cho bố cục trong Flutter?',
         options: [
           Option(id: 'a', text: 'Container'),
           Option(id: 'b', text: 'ListView'),
           Option(id: 'c', text: 'Column'),
-          Option(id: 'd', text: 'All of the above'),
+          Option(id: 'd', text: 'Tất cả các đáp án trên'),
         ],
         correctOptionId: 'd',
         points: 1,
       ),
-      // Question 5
       Question(
         id: '5',
-        text: 'What does the “hot reload” feature in Flutter do?',
+        text: 'Tính năng "hot reload" trong Flutter dùng để làm gì?',
         options: [
-          Option(id: 'a', text: 'Restarts the app completely'),
+          Option(id: 'a', text: 'Khởi động lại ứng dụng hoàn toàn'),
           Option(
             id: 'b',
-            text: 'Updates code changes instantly without restarting the app',
+            text:
+                'Cập nhật thay đổi mã ngay lập tức mà không cần khởi động lại ứng dụng',
           ),
-          Option(id: 'c', text: 'Deletes the cache'),
-          Option(id: 'd', text: 'Builds APK automatically'),
+          Option(id: 'c', text: 'Xóa bộ nhớ đệm'),
+          Option(id: 'd', text: 'Tự động build APK'),
         ],
         correctOptionId: 'b',
         points: 1,
@@ -733,9 +732,9 @@ class DummyDataService {
         averageTimePerLesson: 45,
         activeStudentsThisWeek: 156,
         courseCompletionRates: {
-          'Flutter Development Bootcamp': 0.85,
-          'Advanced Flutter': 0.72,
-          'Flutter State Management': 0.68,
+          'Flutter Cơ Bản': 0.85,
+          'Flutter Nâng Cao': 0.72,
+          'Quản lý Trạng Thái Flutter': 0.68,
         },
       ),
     ),
@@ -745,9 +744,9 @@ class DummyDataService {
     'inst_1': [
       StudentProgress(
         studentId: 'student_1',
-        studentName: 'John Smith',
+        studentName: 'Hoang Truong',
         courseId: '1',
-        courseName: 'Flutter Development Bootcamp',
+        courseName: 'Flutter cơ bản',
         progress: 0.75,
         lastActive: DateTime.now().subtract(const Duration(hours: 2)),
         quizScores: [85, 92, 78, 88],
@@ -757,9 +756,9 @@ class DummyDataService {
       ),
       StudentProgress(
         studentId: 'student_2',
-        studentName: 'Emma Wilson',
+        studentName: 'Hoang Quan',
         courseId: '1',
-        courseName: 'Flutter Development Bootcamp',
+        courseName: 'Dart nâng cao',
         progress: 0.60,
         lastActive: DateTime.now().subtract(const Duration(days: 1)),
         quizScores: [95, 88, 82],
@@ -817,7 +816,7 @@ class DummyDataService {
         senderId: 'student_1',
         receiverId: 'inst_1',
         courseId: '1',
-        message: 'Hi, I have a question about state management',
+        message: 'Chào thầy, em có một câu hỏi về kiến trúc ứng dụng',
         timestamp: DateTime.now().subtract(const Duration(minutes: 5)),
       ),
       ChatMessage(
@@ -825,7 +824,7 @@ class DummyDataService {
         senderId: 'student_2',
         receiverId: 'inst_1',
         courseId: '1',
-        message: 'When is the next live session?',
+        message: 'Bao giờ có buổi học trực tiếp tiếp theo vậy ạ?',
         timestamp: DateTime.now().subtract(const Duration(hours: 1)),
       ),
       ChatMessage(
@@ -833,11 +832,12 @@ class DummyDataService {
         senderId: 'student_3',
         receiverId: 'inst_1',
         courseId: '2',
-        message: 'Could you review my latest design project?',
+        message: 'Thầy có thể xem giúp em bài thiết kế mới nhất không ạ?',
         timestamp: DateTime.now().subtract(const Duration(minutes: 30)),
       ),
     ],
   };
+
   static bool isLessonCompleted(String courseId, String lessonId) {
     final course = getCourseById(courseId);
     return false;
