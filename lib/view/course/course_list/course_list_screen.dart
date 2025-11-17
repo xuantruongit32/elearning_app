@@ -81,12 +81,12 @@ class _CourseListScreenState extends State<CourseListScreen> {
 
   void _handleLevelFilter(String level) {
     setState(() {
-      _currentLevel = level == 'Tất cả trình độ' ? null : level;
+      _currentLevel = level == 'All' ? null : level;
     });
 
     if (widget.categoryId != null) {
       // Dùng FilteredCourseBloc cho các khóa học theo danh mục
-      if (level == 'Tất cả trình độ') {
+      if (level == 'All') {
         context.read<FilteredCourseBloc>().add(ClearFilteredCourses());
       } else {
         context.read<FilteredCourseBloc>().add(FilterCoursesByLevel(level));
@@ -254,7 +254,7 @@ class _CourseListScreenState extends State<CourseListScreen> {
   }
 
   List<Course> _filterCoursesByLevel(List<Course> courses) {
-    if (_currentLevel == null || _currentLevel == 'Tất cả trình độ') {
+    if (_currentLevel == null || _currentLevel == 'All') {
       return courses;
     }
     return courses.where((course) => course.level == _currentLevel).toList();
