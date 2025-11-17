@@ -5,9 +5,23 @@ import 'package:flutter/material.dart';
 class CourseInfoCard extends StatelessWidget {
   final Course course;
   const CourseInfoCard({super.key, required this.course});
+  String _translateLevel(String level) {
+    switch (level.toLowerCase()) {
+      case 'beginner':
+        return 'Cơ bản';
+      case 'inter':
+      case 'intermediate':
+        return 'Trung cấp';
+      case 'advanced':
+        return 'Nâng cao';
+      default:
+        return level;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final String displayLevel = _translateLevel(course.level);
     return Container(
       decoration: BoxDecoration(
         color: AppColors.accent,
@@ -48,7 +62,7 @@ class CourseInfoCard extends StatelessWidget {
                 _buildInfoItem(
                   context,
                   Icons.signal_cellular_alt,
-                  course.level,
+                  displayLevel,
                   'Trình độ',
                 ),
               ],
