@@ -1,5 +1,6 @@
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OrderSummary extends StatelessWidget {
   final String courseName;
@@ -13,6 +14,11 @@ class OrderSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final priceFormatter = NumberFormat.currency(
+      locale: 'vi_VN',
+      symbol: '₫ ',
+      decimalDigits: 0,
+    );
     final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(16),
@@ -44,7 +50,7 @@ class OrderSummary extends StatelessWidget {
                 child: Text(courseName, style: theme.textTheme.bodyLarge),
               ),
               Text(
-                '\$$price',
+                priceFormatter.format(price),
                 style: theme.textTheme.titleMedium?.copyWith(
                   color: AppColors.primary,
                   fontWeight: FontWeight.bold,
