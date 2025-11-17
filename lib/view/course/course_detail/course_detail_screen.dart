@@ -11,6 +11,7 @@ import 'package:elearning_app/view/course/course_detail/widgets/reviews_section.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class CourseDetailScreen extends StatefulWidget {
   final String courseId;
@@ -57,6 +58,11 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final lastLesson = Get.parameters['latestlesson'];
+    final priceFormatter = NumberFormat.currency(
+      locale: 'vi_VN',
+      symbol: '₫',
+      decimalDigits: 0,
+    );
 
     return BlocBuilder<CourseBloc, CourseState>(
       builder: (context, state) {
@@ -122,7 +128,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                             ),
                             const Spacer(),
                             Text(
-                              '${course.price == 0 ? "Miễn phí" : "${course.price}₫"}',
+                              course.price == 0
+                                  ? "Miễn phí"
+                                  : priceFormatter.format(course.price),
                               style: theme.textTheme.titleLarge?.copyWith(
                                 color: theme.colorScheme.primary,
                                 fontWeight: FontWeight.bold,
@@ -194,7 +202,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                       child: Text(
                         course.price == 0
                             ? 'Bắt đầu học ngay'
-                            : 'Mua khóa học với ${course.price}₫',
+                            : 'Mua khóa học với ${priceFormatter.format(course.price)}',
                       ),
                     ),
                   )
@@ -202,9 +210,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
           );
         }
 
-        return const Scaffold(
-          body: Center(child: Text('Đã xảy ra lỗi')),
-        );
+        return const Scaffold(body: Center(child: Text('Đã xảy ra lỗi')));
       },
     );
   }
