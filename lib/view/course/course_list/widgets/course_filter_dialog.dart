@@ -14,6 +14,12 @@ class CourseFilterDialog extends StatefulWidget {
     required this.onPurchasedToggle,
     required this.initialShowPurchased,
   });
+   static final Map<String, String> levelDisplayMap = {
+    'All': 'Tất cả trình độ',
+    'Beginner': 'Cơ bản',
+    'Intermediate': 'Trung cấp',
+    'Advanced': 'Nâng cao',
+  };
 
   @override
   State<CourseFilterDialog> createState() => _CourseFilterDialogState();
@@ -23,17 +29,12 @@ class _CourseFilterDialogState extends State<CourseFilterDialog> {
   late String _selectedLevel;
   late bool _isPurchasedSelected;
 
-  final List<String> _levels = [
-    'Tất cả trình độ',
-    'Cơ bản',
-    'Trung cấp',
-    'Nâng cao',
-  ];
+ 
 
   @override
   void initState() {
     super.initState();
-    _selectedLevel = widget.initialLevel ?? 'Tất cả trình độ';
+    _selectedLevel = widget.initialLevel ?? 'All';
     _isPurchasedSelected = widget.initialShowPurchased;
   }
 
@@ -45,10 +46,10 @@ class _CourseFilterDialogState extends State<CourseFilterDialog> {
 
   void _handleResetFilter() {
     setState(() {
-      _selectedLevel = 'Tất cả trình độ';
+      _selectedLevel = 'All';
       _isPurchasedSelected = false;
     });
-    widget.onLevelSelected('Tất cả trình độ');
+    widget.onLevelSelected('All');
     widget.onPurchasedToggle(false);
     Navigator.pop(context);
   }
@@ -63,7 +64,7 @@ class _CourseFilterDialogState extends State<CourseFilterDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ..._levels.map(_buildLevelOption),
+            ...CourseFilterDialog.levelDisplayMap.keys.map(_buildLevelOption),
             const Divider(height: 24),
 
             _buildPurchasedOption(),
@@ -95,7 +96,7 @@ class _CourseFilterDialogState extends State<CourseFilterDialog> {
   Widget _buildLevelOption(String level) {
     final isSelected = _selectedLevel == level;
     return ListTile(
-      title: Text(level),
+      title: Text(CourseFilterDialog.levelDisplayMap[level] ?? level),
       contentPadding: EdgeInsets.zero,
       trailing: isSelected
           ? const Icon(Icons.check_circle, color: AppColors.primary)

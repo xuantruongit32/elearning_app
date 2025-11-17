@@ -267,8 +267,12 @@ class _CourseListScreenState extends State<CourseListScreen> {
       titleParts.add(widget.categoryName!);
     }
 
-    if (_currentLevel != null && _currentLevel != 'Tất cả trình độ') {
-      titleParts.add(_currentLevel!);
+    if (_currentLevel != null &&
+        _currentLevel != 'All' &&
+        _currentLevel != 'Tất cả trình độ') {
+      String displayLevel =
+          CourseFilterDialog.levelDisplayMap[_currentLevel] ?? _currentLevel!;
+      titleParts.add(displayLevel);
     }
 
     if (_showPurchasedOnly) {
