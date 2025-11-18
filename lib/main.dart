@@ -17,6 +17,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+// 1. THÊM IMPORT CHO FILE APP_ENTRY CỦA BẠN
+import 'package:elearning_app/app_entry.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseConfig.init();
@@ -72,7 +75,11 @@ class MyApp extends StatelessWidget {
               title: 'TT Elearning',
               theme: AppTheme.getLightTheme(fontState),
               themeMode: ThemeMode.light,
-              initialRoute: AppRoutes.splash,
+
+              // 2. THAY ĐỔI DÒNG NÀY
+              // initialRoute: AppRoutes.splash, // <-- Xóa dòng này
+              home: const AppEntry(), // <-- Thêm dòng này
+
               onGenerateRoute: AppRoutes.onGenerateRoute,
               getPages: AppPages.pages,
               navigatorObservers: [routeObserver],

@@ -17,29 +17,17 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -59,4 +47,41 @@ class DefaultFirebaseOptions {
     projectId: 'tt-elearning-f84d2',
     storageBucket: 'tt-elearning-f84d2.firebasestorage.app',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBPUfAWg2kmUnb1Kmu5lxS_zK8TcMHK4qA',
+    appId: '1:37486478707:web:990c88f53eb9fc5236b106',
+    messagingSenderId: '37486478707',
+    projectId: 'tt-elearning-f84d2',
+    authDomain: 'tt-elearning-f84d2.firebaseapp.com',
+    storageBucket: 'tt-elearning-f84d2.firebasestorage.app',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAuhani8P2M-05Ec5YS9PMAbqaOO6eweJE',
+    appId: '1:37486478707:ios:baf7355665a8845736b106',
+    messagingSenderId: '37486478707',
+    projectId: 'tt-elearning-f84d2',
+    storageBucket: 'tt-elearning-f84d2.firebasestorage.app',
+    iosBundleId: 'com.example.elearningApp',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAuhani8P2M-05Ec5YS9PMAbqaOO6eweJE',
+    appId: '1:37486478707:ios:baf7355665a8845736b106',
+    messagingSenderId: '37486478707',
+    projectId: 'tt-elearning-f84d2',
+    storageBucket: 'tt-elearning-f84d2.firebasestorage.app',
+    iosBundleId: 'com.example.elearningApp',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBPUfAWg2kmUnb1Kmu5lxS_zK8TcMHK4qA',
+    appId: '1:37486478707:web:1515abe362e191dc36b106',
+    messagingSenderId: '37486478707',
+    projectId: 'tt-elearning-f84d2',
+    authDomain: 'tt-elearning-f84d2.firebaseapp.com',
+    storageBucket: 'tt-elearning-f84d2.firebasestorage.app',
+  );
+
 }
