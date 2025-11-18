@@ -51,10 +51,26 @@ class _LoginScreenState extends State<LoginScreen> {
             SnackBar(content: Text(state.error!), backgroundColor: Colors.red),
           );
         } else if (state.userModel != null) {
-          if (state.userModel!.role == UserRole.teacher) {
+          // ========= PHẦN CẬP NHẬT LOGIC ==========
+          final userRole = state.userModel!.role;
+
+          if (userRole == UserRole.teacher) {
+            // Cho phép Teacher
             Get.offAllNamed(AppRoutes.teacherHome);
-          } else {
+          } else if (userRole == UserRole.student) {
+            // Cho phép Student
             Get.offAllNamed(AppRoutes.main);
+          } else if (userRole == UserRole.admin) {
+            // CHẶN ADMIN
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'Quản trị viên vui lòng đăng nhập trên trang web.',
+                ),
+                backgroundColor: Colors.orange,
+              ),
+            );
+            context.read<AuthBloc>().add(LogoutRequested());
           }
         }
       },
