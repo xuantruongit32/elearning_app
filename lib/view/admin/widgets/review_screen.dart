@@ -15,7 +15,6 @@ class ReviewScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // === THANH CÔNG CỤ ===
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -24,7 +23,6 @@ class ReviewScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // Hàng 1: Tìm kiếm & Sort (Giữ nguyên)
               Row(
                 children: [
                   Expanded(
@@ -77,7 +75,6 @@ class ReviewScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // Hàng 2: Filter Sao & Filter Ngày (ĐÃ CẬP NHẬT)
               Row(
                 children: [
                   // Bộ lọc Sao
@@ -104,7 +101,6 @@ class ReviewScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // === NÚT CHỌN NGÀY MỚI ===
                   const SizedBox(width: 16),
                   Obx(() {
                     final hasDate = controller.startDate.value != null;
@@ -151,8 +147,7 @@ class ReviewScreen extends StatelessWidget {
                             if (hasDate) ...[
                               const SizedBox(width: 8),
                               InkWell(
-                                onTap: () => controller
-                                    .clearDateFilter(), // Xóa lọc ngày
+                                onTap: () => controller.clearDateFilter(),
                                 child: const Icon(
                                   Icons.close,
                                   size: 16,
@@ -172,7 +167,6 @@ class ReviewScreen extends StatelessWidget {
         ),
         const SizedBox(height: 24),
 
-        // === DANH SÁCH REVIEW (Giữ nguyên) ===
         Expanded(
           child: Obx(() {
             if (controller.filteredReviews.isEmpty) {
@@ -193,7 +187,6 @@ class ReviewScreen extends StatelessWidget {
     );
   }
 
-  // Widget con: Chip lọc (Đã làm gọn)
   Widget _buildFilterChip(
     ReviewController controller,
     int value,
@@ -205,7 +198,6 @@ class ReviewScreen extends StatelessWidget {
       child: ChoiceChip(
         label: Text(label),
         selected: isSelected,
-        // Thu nhỏ chip lại một chút cho gọn
         visualDensity: VisualDensity.compact,
         selectedColor: AppColors.primary.withOpacity(0.2),
         labelStyle: TextStyle(
@@ -220,9 +212,7 @@ class ReviewScreen extends StatelessWidget {
     );
   }
 
-  // Widget con: Card hiển thị Review (Giữ nguyên code cũ của bạn hoặc code tôi gửi trước đó)
   Widget _buildReviewCard(Review review, ReviewController controller) {
-    // ... Copy lại phần _buildReviewCard ở tin nhắn trước vào đây
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -283,17 +273,52 @@ class ReviewScreen extends StatelessWidget {
             ],
           ),
           const Divider(),
+
           Row(
             children: [
               const Icon(Icons.book, size: 14, color: Colors.grey),
-              const SizedBox(width: 4),
-              Text(
-                'Course ID: ${review.courseId}',
-                style: const TextStyle(color: Colors.grey, fontSize: 12),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  'Course ID: ${review.courseId}',
+                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
+
+          Row(
+            children: [
+              const Icon(Icons.person, size: 14, color: Colors.grey),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  'User ID: ${review.userId}',
+                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+
+          Row(
+            children: [
+              const Icon(Icons.tag, size: 14, color: Colors.grey),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  'Review ID: ${review.id}',
+                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 12),
           Row(
             children: List.generate(5, (index) {
               return Icon(
