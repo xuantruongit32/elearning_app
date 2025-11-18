@@ -1,3 +1,5 @@
+// DÁN TOÀN BỘ CODE NÀY VÀO FILE: RecommendedSection.dart
+
 import 'package:elearning_app/bloc/course/course_bloc.dart';
 import 'package:elearning_app/bloc/course/course_event.dart';
 import 'package:elearning_app/bloc/course/course_state.dart';
@@ -10,7 +12,6 @@ import 'package:elearning_app/view/home/widgets/shimmer_recommeneded_section.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class RecommendedSection extends StatefulWidget {
   const RecommendedSection({super.key});
@@ -36,7 +37,9 @@ class _RecommendedSectionState extends State<RecommendedSection> {
       _instructors = await _instructorRepository.getInstructorsByIds(
         instructorIds,
       );
-    } catch (e) {}
+    } catch (e) {
+      // Bỏ qua lỗi nếu có
+    }
   }
 
   @override
@@ -80,19 +83,24 @@ class _RecommendedSectionState extends State<RecommendedSection> {
                 ],
               ),
               const SizedBox(height: 16),
+
               SizedBox(
+               
                 height: 280,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: PageView.builder(
+                  physics: const PageScrollPhysics(), 
+                  controller: PageController(
+               
+                    viewportFraction: 0.85,
+                  ),
                   itemCount: courses.length,
                   itemBuilder: (context, index) {
                     final course = courses[index];
                     final instructor = _instructors[course.instructorId];
-                   
 
                     return Padding(
-                      padding: const EdgeInsets.only(right: 16),
+                 
+                      padding: const EdgeInsets.only(right: 16, bottom: 5),
                       child: RecommendedCourseCard(
                         courseId: course.id,
                         title: course.title,

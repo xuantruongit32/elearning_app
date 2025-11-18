@@ -32,8 +32,6 @@ class RecommendedCourseCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 240,
-        margin: const EdgeInsets.only(right: 16, bottom: 5),
         decoration: BoxDecoration(
           color: AppColors.accent,
           borderRadius: BorderRadius.circular(16),
