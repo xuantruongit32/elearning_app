@@ -130,4 +130,35 @@ class ReviewRepository {
       throw Exception('Failed to delete review: $e');
     }
   }
+
+  Future<List<Review>> getAllReviews() async {
+    try {
+      final snapshot = await _firestore
+          .collection('reviews')
+          .orderBy('createdAt', descending: true)
+          .get();
+
+      List<Review> loadedReviews = [];
+
+      for (var doc in snapshot.docs) {
+        try {
+          final data = doc.data();
+
+          if (data['courseId'] == null) {
+            continue;
+          }
+
+          final reviewData = {...data, 'id': doc.id};
+          loadedReviews.add(Review.fromJson(reviewData));
+        } catch (e) {
+          print('Lỗi parse data ở doc ${doc.id}: $e');
+        }
+      }
+
+      return loadedReviews;
+    } catch (e) {
+      print('Error getting all reviews: $e');
+      return [];
+    }
+  }
 }
