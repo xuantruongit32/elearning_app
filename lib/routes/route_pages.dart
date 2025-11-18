@@ -2,6 +2,7 @@ import 'package:elearning_app/main_screen.dart';
 import 'package:elearning_app/models/quiz.dart';
 import 'package:elearning_app/models/quiz_attempt.dart';
 import 'package:elearning_app/routes/app_routes.dart';
+import 'package:elearning_app/view/admin/admin_screen.dart';
 import 'package:elearning_app/view/auth/forgot_password_screen.dart';
 import 'package:elearning_app/view/auth/login_screen.dart';
 import 'package:elearning_app/view/auth/register_screen.dart';
@@ -136,6 +137,10 @@ class AppPages {
             ? Get.arguments['initialIndex'] as int?
             : null,
       ),
+    ),
+    GetPage(
+      name: AppRoutes.admin,
+      page: () => const AdminLayout(),
     ),
   ];
 }

@@ -55,8 +55,7 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
 
           if (userRole == UserRole.admin) {
             // CHUYỂN HƯỚNG ADMIN
-         //   Get.offAllNamed(
-             // AppRoutes.adminDashboard,
+            Get.offAllNamed(AppRoutes.admin);
           } else if (userRole == UserRole.teacher) {
             Get.offAllNamed(AppRoutes.teacherHome);
           } else {
@@ -66,20 +65,16 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
                 backgroundColor: Colors.orange,
               ),
             );
-            context.read<AuthBloc>().add(
-              LogoutRequested(),
-            ); 
+            context.read<AuthBloc>().add(LogoutRequested());
           }
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.grey[100], 
+        backgroundColor: Colors.grey[100],
         body: Center(
           child: SingleChildScrollView(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxWidth: 450,
-              ), 
+              constraints: const BoxConstraints(maxWidth: 450),
               child: Card(
                 elevation: 8.0,
                 shape: RoundedRectangleBorder(

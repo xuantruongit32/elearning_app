@@ -1,4 +1,5 @@
 import 'package:elearning_app/main_screen.dart';
+import 'package:elearning_app/view/admin/admin_screen.dart';
 import 'package:elearning_app/view/auth/forgot_password_screen.dart';
 import 'package:elearning_app/view/auth/login_screen.dart';
 import 'package:elearning_app/view/auth/register_screen.dart';
@@ -28,6 +29,7 @@ import 'package:elearning_app/view/teacher/student_progress/student_progress_scr
 import 'package:elearning_app/view/teacher/teacher_analytics/teacher_analytics_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart';
 import 'package:flutter/material.dart';
+
 
 class AppRoutes {
   //main
@@ -72,6 +74,9 @@ class AppRoutes {
   static const String termsConditions = '/terms-conditions';
   static const String helpSupport = '/help-support';
 
+  //admin
+  static const String admin = '/admin';
+
   static Route<dynamic> onGenerateRoute(RouteSettings setting) {
     switch (setting.name) {
       case splash:
@@ -81,7 +86,7 @@ class AppRoutes {
           builder: (_) => MainScreen(
             initialIndex: setting.arguments is Map
                 ? (setting.arguments as Map<String, dynamic>)['initialIndex']
-                      as int?
+                    as int?
                 : null,
           ),
         );
@@ -162,6 +167,7 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const TeacherAnalyticsScreen(),
         );
+        
       case payment:
         final args = setting.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
@@ -171,6 +177,10 @@ class AppRoutes {
             price: args['price'] ?? 0.0,
           ),
         );
+        
+      // MỚI: Thêm case cho màn hình Admin
+      case admin:
+        return MaterialPageRoute(builder: (_) => const AdminLayout());
 
       default:
         return MaterialPageRoute(
