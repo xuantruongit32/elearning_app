@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/review.dart';
 import 'package:elearning_app/respositories/review_respository.dart';
+import 'package:elearning_app/services/email_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReviewController extends GetxController {
   final ReviewRepository _repository = Get.put(ReviewRepository());
+  final EmailService _emailService = EmailService();
 
   var allReviews = <Review>[].obs;
   var filteredReviews = <Review>[].obs;
@@ -14,7 +17,6 @@ class ReviewController extends GetxController {
   var selectedStarFilter = 0.obs;
   var isNewestFirst = true.obs;
 
-  // === MỚI: Biến lưu khoảng ngày ===
   var startDate = Rxn<DateTime>(); // Rxn cho phép giá trị null
   var endDate = Rxn<DateTime>();
 
@@ -23,7 +25,6 @@ class ReviewController extends GetxController {
     super.onInit();
     fetchReviews();
 
-    // Thêm startDate và endDate vào danh sách lắng nghe
     everAll([
       allReviews,
       searchQuery,
@@ -39,7 +40,6 @@ class ReviewController extends GetxController {
     allReviews.assignAll(reviews);
   }
 
-  // === MỚI: Hàm chọn khoảng ngày ===
   Future<void> pickDateRange(BuildContext context) async {
     final DateTimeRange? picked = await showDateRangePicker(
       context: context,
@@ -52,7 +52,7 @@ class ReviewController extends GetxController {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: AppColors.primary, // Màu chủ đạo của App
+              primary: AppColors.primary,
               onPrimary: Colors.white,
               onSurface: Colors.black,
             ),
@@ -68,7 +68,6 @@ class ReviewController extends GetxController {
     }
   }
 
-  // === MỚI: Hàm xóa lọc ngày ===
   void clearDateFilter() {
     startDate.value = null;
     endDate.value = null;
@@ -82,36 +81,27 @@ class ReviewController extends GetxController {
       String query = searchQuery.value.toLowerCase().trim();
 
       result = result.where((review) {
-        // Kiểm tra trùng khớp ID khóa học
         bool matchCourse = review.courseId.toLowerCase().contains(query);
-        // Kiểm tra trùng khớp ID người dùng
         bool matchUser = review.userId.toLowerCase().contains(query);
-        // Kiểm tra trùng khớp ID bài review
         bool matchReview = review.id.toLowerCase().contains(query);
-        // (Khuyến nghị thêm) Kiểm tra trùng khớp Tên người dùng
         bool matchName = review.userName.toLowerCase().contains(query);
 
-        // Trả về true nếu khớp bất kỳ điều kiện nào
         return matchCourse || matchUser || matchReview || matchName;
       }).toList();
     }
 
-    // 2. Filter Star
     if (selectedStarFilter.value != 0) {
       result = result
           .where((review) => review.rating.round() == selectedStarFilter.value)
           .toList();
     }
 
-    // 3. === MỚI: Filter Date ===
     if (startDate.value != null && endDate.value != null) {
-      // Lấy đầu ngày của startDate (00:00:00)
       final start = DateTime(
         startDate.value!.year,
         startDate.value!.month,
         startDate.value!.day,
       );
-      // Lấy cuối ngày của endDate (23:59:59)
       final end = DateTime(
         endDate.value!.year,
         endDate.value!.month,
@@ -127,7 +117,6 @@ class ReviewController extends GetxController {
       }).toList();
     }
 
-    // 4. Sort
     result.sort((a, b) {
       if (isNewestFirst.value) {
         return b.createdAt.compareTo(a.createdAt);
@@ -138,8 +127,8 @@ class ReviewController extends GetxController {
     filteredReviews.assignAll(result);
   }
 
-  // Hàm xóa review
   void deleteReview(String reviewId) {
+    final reviewToDelete = allReviews.firstWhereOrNull((r) => r.id == reviewId);
     Get.dialog(
       AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -158,12 +147,21 @@ class ReviewController extends GetxController {
             ),
             child: const Text('Xóa'),
             onPressed: () async {
-              Get.back();
+              Get.back(); // Đóng dialog
+
+              // Xóa review
               await _repository.deleteReview(reviewId);
-              fetchReviews();
+
+              // === GỬI EMAIL THÔNG BÁO ===
+              if (reviewToDelete != null) {
+                _sendDeletionNotification(reviewToDelete);
+              }
+
+              fetchReviews(); // Tải lại danh sách
+
               Get.snackbar(
                 'Thành công',
-                'Đã xóa đánh giá và cập nhật điểm khóa học',
+                'Đã xóa đánh giá và gửi mail thông báo',
                 backgroundColor: Colors.green,
                 colorText: Colors.white,
                 snackPosition: SnackPosition.BOTTOM,
@@ -173,5 +171,47 @@ class ReviewController extends GetxController {
         ],
       ),
     );
+  }
+
+  Future<void> _sendDeletionNotification(Review review) async {
+    try {
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(review.userId)
+          .get();
+
+      if (userDoc.exists) {
+        final userData = userDoc.data();
+        final userEmail = userData?['email'];
+        final userName = userData?['fullName'] ?? 'Người dùng';
+
+        if (userEmail != null) {
+          final message =
+              '''
+            Chào $userName,
+            
+            Bài đánh giá của bạn cho khóa học (ID: ${review.courseId}) đã bị xóa bởi Quản trị viên.
+            
+            Nội dung bài đánh giá: "${review.comment}"
+            
+            Lý do: Vi phạm tiêu chuẩn cộng đồng.
+            
+            Nếu bạn có thắc mắc, vui lòng liên hệ bộ phận hỗ trợ.
+            
+            Trân trọng,
+            Đội ngũ TT Elearning.
+          ''';
+
+          await _emailService.sendEmail(
+            toName: userName,
+            toEmail: userEmail,
+            message: message,
+            subject: 'Thông báo: Bài đánh giá của bạn đã bị xóa',
+          );
+        }
+      }
+    } catch (e) {
+      print('Lỗi khi gửi mail thông báo: $e');
+    }
   }
 }

@@ -47,13 +47,11 @@ class ReviewRepository {
         comment: review.comment,
         createdAt: review.createdAt,
       );
-      // convert to JSON and save
       final reviewData = reviewWithId.toJson();
       // set the document data without the id field
       final dataToSave = Map<String, dynamic>.from(reviewData)..remove('id');
       await docRef.set(dataToSave);
 
-      // update course rating and review count
       await _updateCourseRating(review.courseId);
     } catch (e) {
       throw Exception('Failed to add review: $e');
@@ -66,7 +64,7 @@ class ReviewRepository {
       final reviews = await getCourseReviews(courseId);
 
       if (reviews.isEmpty) {
-        // if no reviews, set rating to 0 and count to 0
+        // if no reviews
         await _firestore.collection('courses').doc(courseId).update({
           'rating': 0.0,
           'reviewCount': 0,
@@ -74,7 +72,6 @@ class ReviewRepository {
         return;
       }
 
-      //calculate average rating
       double totalRating = 0;
       for (var review in reviews) {
         totalRating += review.rating;
@@ -87,13 +84,11 @@ class ReviewRepository {
         'reviewCount': reviews.length,
       });
     } catch (e) {
-      //don't throw here as this is background operation
     }
   }
 
   Future<void> updateReview(Review review) async {
     try {
-      // convert to JSON and save
       final reviewData = review.toJson();
 
       // remove id field before updating
@@ -112,7 +107,6 @@ class ReviewRepository {
 
   Future<void> deleteReview(String reviewId) async {
     try {
-      // get the review first to get the courseId
       final reviewDoc = await _firestore
           .collection('reviews')
           .doc(reviewId)
@@ -122,7 +116,7 @@ class ReviewRepository {
       // delete the review
       await _firestore.collection('reviews').doc(reviewId).delete();
 
-      // update course rating if we have the courseId
+      // update course rating 
       if (courseId != null) {
         await _updateCourseRating(courseId);
       }
