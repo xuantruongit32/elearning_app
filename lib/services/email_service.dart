@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class EmailService {
-  final String _serviceId = 'YOUR_SERVICE_ID';
-  final String _templateId = 'YOUR_TEMPLATE_ID';
-  final String _userId = 'YOUR_PUBLIC_KEY'; 
+  final String _serviceId = 'service_8iadw1h';
+  final String _templateId = 'template_kemcm42';
+  final String _userId = '0H9TfWOAx6764DwLF';
 
   Future<void> sendEmail({
     required String toName,
@@ -18,7 +18,7 @@ class EmailService {
       final response = await http.post(
         url,
         headers: {
-          'origin': 'http://localhost', 
+          'origin': 'http://localhost',
           'Content-Type': 'application/json',
         },
         body: json.encode({
