@@ -86,5 +86,5 @@ class UserModel {
   }
 }
 
-enum UserRole { student, teacher }
+enum UserRole { student, teacher, admin}
 
