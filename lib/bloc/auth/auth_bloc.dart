@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:bloc/bloc.dart';
 import 'package:elearning_app/bloc/auth/auth_event.dart';
 import 'package:elearning_app/bloc/auth/auth_state.dart';
@@ -82,8 +82,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(state.copyWith(isLoading: true));
       await _authRepository.signOut();
-      emit(const AuthState());
-      Get.offAllNamed(AppRoutes.login);
+      emit(const AuthState()); 
+
+      if (kIsWeb) {
+ 
+        Get.offAllNamed('/');
+      } else {
+        Get.offAllNamed(AppRoutes.login);
+      }
     } catch (e) {
       emit(state.copyWith(error: e.toString(), isLoading: false));
     }
