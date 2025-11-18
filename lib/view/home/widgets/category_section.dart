@@ -32,7 +32,7 @@ class CategorySection extends StatelessWidget {
               child: Text(
                 'Xem tất cả',
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.secondary,
+                  color: AppColors.primary,
                   fontWeight: FontWeight.bold,
                 ),
               ),

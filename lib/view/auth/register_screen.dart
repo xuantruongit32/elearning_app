@@ -25,6 +25,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _confirmPasswordController = TextEditingController();
 
   UserRole? _selectedRole;
+  final Map<UserRole, String> _roleOptions = {
+    UserRole.student: 'Học viên',
+    UserRole.teacher: 'Giáo viên',
+  };
 
   @override
   void dispose() {
@@ -164,13 +168,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           borderSide: BorderSide(color: Colors.grey.shade300),
                         ),
                       ),
-                      value: _selectedRole,
-                      items: UserRole.values.map((role) {
+                      initialValue: _selectedRole,
+                      items: _roleOptions.entries.map((entry) {
                         return DropdownMenuItem<UserRole>(
-                          value: role,
-                          child: Text(
-                            role.toString().split('.').last.capitalize!,
-                          ),
+                          value: entry.key,
+                          child: Text(entry.value),
                         );
                       }).toList(),
                       onChanged: (UserRole? value) {
