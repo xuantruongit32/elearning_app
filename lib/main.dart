@@ -16,8 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-// 1. THÊM IMPORT CHO FILE APP_ENTRY CỦA BẠN
 import 'package:elearning_app/app_entry.dart';
 
 void main() async {
@@ -75,10 +75,15 @@ class MyApp extends StatelessWidget {
               title: 'TT Elearning',
               theme: AppTheme.getLightTheme(fontState),
               themeMode: ThemeMode.light,
+              locale: const Locale('vi', 'VN'),
+              supportedLocales: const [Locale('vi', 'VN'), Locale('en', 'US')],
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
 
-              // 2. THAY ĐỔI DÒNG NÀY
-              // initialRoute: AppRoutes.splash, // <-- Xóa dòng này
-              home: const AppEntry(), // <-- Thêm dòng này
+              home: const AppEntry(),
 
               onGenerateRoute: AppRoutes.onGenerateRoute,
               getPages: AppPages.pages,
