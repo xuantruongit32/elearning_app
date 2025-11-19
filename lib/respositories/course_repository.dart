@@ -250,7 +250,7 @@ class CourseRepository {
           .get();
 
       if (existingEnrollment.docs.isEmpty) {
-        // create new enrollment with 0% progress
+        // new enrollment
         await _firestore.collection('enrollments').add({
           'courseId': courseId,
           'studentId': studentId,
@@ -260,7 +260,12 @@ class CourseRepository {
           'progress': 0.0,
         });
 
-        // unlock first lesson
+        // Cập nhật enrollmentCount trong document
+        await _firestore.collection('courses').doc(courseId).update({
+          'enrollmentCount': FieldValue.increment(1),
+        });
+
+        //first lesson
         final course = await getCourseDetail(courseId);
         if (course.lessons.isNotEmpty) {
           await unlockLesson(courseId, course.lessons.first.id, studentId);
