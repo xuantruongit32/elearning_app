@@ -2,9 +2,12 @@ import 'package:elearning_app/bloc/auth/auth_bloc.dart';
 import 'package:elearning_app/bloc/auth/auth_event.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/routes/app_routes.dart';
+import 'package:elearning_app/view/admin/widgets/admin_payment_screen.dart';
+import 'package:elearning_app/view/admin/widgets/admin_user_screen.dart';
 import 'package:elearning_app/view/admin/widgets/category_screen.dart';
 import 'package:elearning_app/view/admin/widgets/course_screen.dart';
 import 'package:elearning_app/view/admin/widgets/review_screen.dart';
+import 'package:elearning_app/view/admin/widgets/withdrawal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -19,23 +22,12 @@ class DashboardScreen extends StatelessWidget {
   }
 }
 
-
 class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return const Center(
       child: Text('Admin: Quản lí Người dùng', style: TextStyle(fontSize: 24)),
-    );
-  }
-}
-
-class AdminPaymentScreen extends StatelessWidget {
-  const AdminPaymentScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Admin: Quản lí Thanh toán', style: TextStyle(fontSize: 24)),
     );
   }
 }
@@ -54,8 +46,9 @@ class _AdminLayoutState extends State<AdminLayout> {
     DashboardScreen(),
     CategoryScreen(),
     CourseScreen(),
-    UserScreen(),
+    AdminUserScreen(),
     AdminPaymentScreen(),
+    AdminWithdrawalScreen(),
     ReviewScreen(),
   ];
 
@@ -65,6 +58,7 @@ class _AdminLayoutState extends State<AdminLayout> {
     'Admin: Quản lí Khóa học',
     'Admin: Quản lí Người dùng',
     'Admin: Quản lí Thanh toán',
+    'Admin: Quản lí Rút tiền',
     'Admin: Quản lí Đánh giá',
   ];
 
@@ -175,6 +169,11 @@ class _AdminLayoutState extends State<AdminLayout> {
                         icon: Icon(Icons.payment_outlined),
                         selectedIcon: Icon(Icons.payment),
                         label: Text('Thanh toán'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.paypal),
+                        selectedIcon: Icon(Icons.paypal_outlined),
+                        label: Text('Rút tiền'),
                       ),
                       NavigationRailDestination(
                         icon: Icon(Icons.reviews_outlined),

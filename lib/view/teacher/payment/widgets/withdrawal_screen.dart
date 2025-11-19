@@ -154,7 +154,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
               ),
             ),
             onPressed: _handleConfirmWithdrawal,
-            child: const Text('Xác nhận'),
+            child: const Text(' Xác nhận '),
           ),
         ],
       ),
