@@ -9,18 +9,12 @@ class TeacherRepository {
     return _firestore.collection('users').doc(teacherId);
   }
 
- 
   CollectionReference<Map<String, dynamic>> _getMainPaymentsCollection() {
     return _firestore.collection('payments');
   }
 
-  CollectionReference<Map<String, dynamic>> _getWithdrawalsCollection(
-    String teacherId,
-  ) {
-    return _firestore
-        .collection('withdrawals')
-        .doc(teacherId)
-        .collection('withdrawal_history');
+  CollectionReference<Map<String, dynamic>> _getMainWithdrawalsCollection() {
+    return _firestore.collection('withdrawals');
   }
 
   Stream<double> getBalanceStream(String teacherId) {
@@ -36,10 +30,7 @@ class TeacherRepository {
     int limit = 20,
   }) {
     return _getMainPaymentsCollection()
-        .where(
-          'teacherId',
-          isEqualTo: teacherId,
-        ) 
+        .where('teacherId', isEqualTo: teacherId)
         .orderBy('date', descending: true)
         .limit(limit)
         .snapshots()
@@ -54,7 +45,8 @@ class TeacherRepository {
     String teacherId, {
     int limit = 20,
   }) {
-    return _getWithdrawalsCollection(teacherId)
+    return _getMainWithdrawalsCollection() 
+        .where('teacherId', isEqualTo: teacherId) 
         .orderBy('date', descending: true)
         .limit(limit)
         .snapshots()
@@ -74,7 +66,6 @@ class TeacherRepository {
     if (amount <= 0) throw Exception('Amount must be positive');
 
     final userRef = _getUserDoc(teacherId);
-
     final paymentRef = _getMainPaymentsCollection().doc();
 
     return _firestore.runTransaction((transaction) async {
@@ -84,7 +75,7 @@ class TeacherRepository {
       final newBalance = currentBalance + amount;
 
       transaction.set(paymentRef, {
-        'teacherId': teacherId, 
+        'teacherId': teacherId,
         'studentId': studentId,
         'courseId': courseId,
         'amount': amount,
@@ -107,7 +98,8 @@ class TeacherRepository {
     if (amount <= 0) throw Exception('Amount must be positive');
 
     final userRef = _getUserDoc(teacherId);
-    final withdrawalRef = _getWithdrawalsCollection(teacherId).doc();
+
+    final withdrawalRef = _getMainWithdrawalsCollection().doc();
 
     return _firestore.runTransaction((transaction) async {
       final snapshot = await transaction.get(userRef);
@@ -122,7 +114,7 @@ class TeacherRepository {
       final newBalance = currentBalance - amount;
 
       transaction.set(withdrawalRef, {
-        'teacherId': teacherId,
+        'teacherId': teacherId, 
         'amount': amount,
         'date': Timestamp.now(),
         'bankName': bankName,
