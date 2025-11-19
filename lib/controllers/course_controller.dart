@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart'; // Để query user
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/category_firestore.dart';
 import 'package:elearning_app/models/course.dart';
 import 'package:elearning_app/respositories/course_repository.dart';
 import 'package:elearning_app/respositories/category_respository.dart';
-import 'package:elearning_app/services/email_service.dart'; // Import EmailService
+import 'package:elearning_app/services/email_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -14,7 +14,6 @@ enum CourseSortOption { newest, oldest, rating, revenue }
 class CourseController extends GetxController {
   final CourseRepository _courseRepository = CourseRepository();
   final CategoryRepository _categoryRepository = Get.put(CategoryRepository());
-  // 1. Khởi tạo EmailService
   final EmailService _emailService = EmailService();
 
   var allCourses = <Course>[].obs;
@@ -41,9 +40,7 @@ class CourseController extends GetxController {
   }
 
   void fetchInitialData() {
-    categories.bindStream(
-      _categoryRepository.getCategoriesforWeb(),
-    ); // Sửa lại tên hàm nếu cần (getCategories thay vì getCategoriesforWeb)
+    categories.bindStream(_categoryRepository.getCategoriesforWeb());
 
     ever(categories, (List<CategoryFirestoreModel> cats) {
       final map = <String, String>{};
@@ -108,9 +105,7 @@ class CourseController extends GetxController {
     filteredCourses.assignAll(result);
   }
 
-  // === HÀM XÓA KHÓA HỌC ĐÃ CẬP NHẬT LOGIC GỬI EMAIL ===
   void deleteCourse(String courseId) {
-    // 1. Tìm thông tin khóa học trước khi xóa
     final courseToDelete = allCourses.firstWhereOrNull((c) => c.id == courseId);
 
     Get.dialog(
@@ -135,13 +130,10 @@ class CourseController extends GetxController {
             onPressed: () async {
               Get.back(); // Đóng dialog
               try {
-                // 2. Gửi Email thông báo TRƯỚC hoặc SAU khi xóa
                 if (courseToDelete != null) {
-                  // Gọi hàm gửi mail không cần await để không chặn UI
                   _sendDeletionNotification(courseToDelete);
                 }
 
-                // 3. Thực hiện xóa
                 await _courseRepository.deleteCourse(courseId);
                 allCourses.removeWhere((c) => c.id == courseId);
 
@@ -166,10 +158,8 @@ class CourseController extends GetxController {
     );
   }
 
-  // === HÀM PHỤ TRỢ: Gửi Email ===
   Future<void> _sendDeletionNotification(Course course) async {
     try {
-      // 1. Lấy thông tin Giảng viên từ Firestore
       final userDoc = await FirebaseFirestore.instance
           .collection('users')
           .doc(course.instructorId)
@@ -181,7 +171,6 @@ class CourseController extends GetxController {
         final teacherName = userData?['fullName'] ?? 'Giảng viên';
 
         if (teacherEmail != null) {
-          // 2. Soạn nội dung email
           final message =
               '''
             Chào $teacherName,
@@ -196,7 +185,6 @@ class CourseController extends GetxController {
             Đội ngũ TT Elearning.
           ''';
 
-          // 3. Gửi email qua Service
           await _emailService.sendEmail(
             toName: teacherName,
             toEmail: teacherEmail,

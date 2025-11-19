@@ -260,7 +260,6 @@ class CourseRepository {
           'progress': 0.0,
         });
 
-        // Cập nhật enrollmentCount trong document
         await _firestore.collection('courses').doc(courseId).update({
           'enrollmentCount': FieldValue.increment(1),
         });

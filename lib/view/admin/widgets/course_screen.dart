@@ -15,8 +15,6 @@ class CourseScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ... (Phần Header Tìm kiếm và Sort giữ nguyên) ...
-        // ... Copy lại phần Container Header từ code cũ ...
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -122,7 +120,6 @@ class CourseScreen extends StatelessWidget {
         ),
         const SizedBox(height: 24),
 
-        // === DATA TABLE ===
         Expanded(
           child: Container(
             width: double.infinity,
@@ -276,11 +273,9 @@ class CourseScreen extends StatelessWidget {
                             ),
                           ),
 
-                          // 7. HÀNH ĐỘNG (Update nút xem chi tiết)
                           DataCell(
                             Row(
                               children: [
-                                // === NÚT XEM CHI TIẾT (MỚI) ===
                                 IconButton(
                                   icon: const Icon(
                                     Icons.visibility,
@@ -288,7 +283,6 @@ class CourseScreen extends StatelessWidget {
                                   ),
                                   tooltip: 'Xem chi tiết',
                                   onPressed: () {
-                                    // Hiển thị dialog chi tiết
                                     showDialog(
                                       context: context,
                                       builder: (context) =>
@@ -296,7 +290,6 @@ class CourseScreen extends StatelessWidget {
                                     );
                                   },
                                 ),
-                                // ===============================
                                 IconButton(
                                   icon: const Icon(
                                     Icons.delete,
