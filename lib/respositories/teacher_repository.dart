@@ -9,16 +9,10 @@ class TeacherRepository {
     return _firestore.collection('users').doc(teacherId);
   }
 
-
-  CollectionReference<Map<String, dynamic>> _getPaymentsCollection(
-    String teacherId,
-  ) {
-    return _firestore
-        .collection('payments')
-        .doc(teacherId)
-        .collection('payment_history');
+ 
+  CollectionReference<Map<String, dynamic>> _getMainPaymentsCollection() {
+    return _firestore.collection('payments');
   }
-
 
   CollectionReference<Map<String, dynamic>> _getWithdrawalsCollection(
     String teacherId,
@@ -28,7 +22,6 @@ class TeacherRepository {
         .doc(teacherId)
         .collection('withdrawal_history');
   }
-
 
   Stream<double> getBalanceStream(String teacherId) {
     return _getUserDoc(teacherId).snapshots().map((snapshot) {
@@ -42,7 +35,11 @@ class TeacherRepository {
     String teacherId, {
     int limit = 20,
   }) {
-    return _getPaymentsCollection(teacherId)
+    return _getMainPaymentsCollection()
+        .where(
+          'teacherId',
+          isEqualTo: teacherId,
+        ) 
         .orderBy('date', descending: true)
         .limit(limit)
         .snapshots()
@@ -68,15 +65,17 @@ class TeacherRepository {
         });
   }
 
-
   Future<void> addDeposit({
     required String teacherId,
     required double amount,
+    required String studentId,
+    required String courseId,
   }) async {
     if (amount <= 0) throw Exception('Amount must be positive');
 
     final userRef = _getUserDoc(teacherId);
-    final paymentRef = _getPaymentsCollection(teacherId).doc();
+
+    final paymentRef = _getMainPaymentsCollection().doc();
 
     return _firestore.runTransaction((transaction) async {
       final snapshot = await transaction.get(userRef);
@@ -85,7 +84,9 @@ class TeacherRepository {
       final newBalance = currentBalance + amount;
 
       transaction.set(paymentRef, {
-        'teacherId': teacherId,
+        'teacherId': teacherId, 
+        'studentId': studentId,
+        'courseId': courseId,
         'amount': amount,
         'date': Timestamp.now(),
       });
