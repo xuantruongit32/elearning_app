@@ -3,6 +3,7 @@ import 'package:elearning_app/bloc/auth/auth_event.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/routes/app_routes.dart';
 import 'package:elearning_app/view/admin/widgets/category_screen.dart';
+import 'package:elearning_app/view/admin/widgets/course_screen.dart';
 import 'package:elearning_app/view/admin/widgets/review_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,15 +19,6 @@ class DashboardScreen extends StatelessWidget {
   }
 }
 
-class CourseScreen extends StatelessWidget {
-  const CourseScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Admin: Quản lí Khóa học', style: TextStyle(fontSize: 24)),
-    );
-  }
-}
 
 class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
