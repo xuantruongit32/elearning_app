@@ -6,21 +6,12 @@ import 'package:elearning_app/view/admin/widgets/admin_payment_screen.dart';
 import 'package:elearning_app/view/admin/widgets/admin_user_screen.dart';
 import 'package:elearning_app/view/admin/widgets/category_screen.dart';
 import 'package:elearning_app/view/admin/widgets/course_screen.dart';
+import 'package:elearning_app/view/admin/widgets/dashboard_screen.dart';
 import 'package:elearning_app/view/admin/widgets/review_screen.dart';
 import 'package:elearning_app/view/admin/widgets/withdrawal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Admin: Tổng quan', style: TextStyle(fontSize: 24)),
-    );
-  }
-}
 
 class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
