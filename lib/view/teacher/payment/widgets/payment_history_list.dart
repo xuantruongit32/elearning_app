@@ -102,7 +102,7 @@ class PaymentHistoryList extends StatelessWidget {
             combinedList.sort((a, b) {
               DateTime dateA = (a.date as Timestamp).toDate();
               DateTime dateB = (b.date as Timestamp).toDate();
-              return dateB.compareTo(dateA); // Sắp xếp giảm dần
+              return dateB.compareTo(dateA); 
             });
 
             if (combinedList.isEmpty) {
@@ -135,11 +135,41 @@ class PaymentHistoryList extends StatelessWidget {
                 DateTime itemDate = (item.date as Timestamp).toDate();
 
                 if (isDeposit) {
-                  title = 'Nhận tiền - ${dateFormatter.format(itemDate)}';
-                  amountString = '+${currencyFormatter.format(item.amount)}';
+                  final SimplePayment payment = item as SimplePayment;
+
+                  title =
+                      'Thanh toán học phí - ${dateFormatter.format(itemDate)}';
+                  amountString = '+${currencyFormatter.format(payment.amount)}';
                   amountColor = Colors.green.shade700;
                   iconData = Icons.arrow_downward;
-                  subtitle = null;
+
+                 
+                  subtitle = Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Mã KH: ${payment.courseId}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          'Học viên: ${payment.studentId}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  );
                 } else {
                   Withdrawal withdrawal = item as Withdrawal;
 
@@ -166,6 +196,10 @@ class PaymentHistoryList extends StatelessWidget {
                     ],
                   ),
                   child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     leading: CircleAvatar(
                       backgroundColor: amountColor.withValues(alpha: 0.1),
                       child: Icon(iconData, color: amountColor, size: 20),
