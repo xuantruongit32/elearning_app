@@ -52,7 +52,6 @@ class PaymentService {
     );
 
     if (result == true) {
-   
       //Hiển thị dialog loading trong khi lưu vào Firebase
       Get.dialog(
         const Center(child: CircularProgressIndicator()),
@@ -67,11 +66,7 @@ class PaymentService {
         }
 
         //GHI DANH người dùng vào khóa học
-        await _courseRepo.enrollInCourse(
-          courseId,
-          studentId,
-          isPremium: true,
-        );
+        await _courseRepo.enrollInCourse(courseId, studentId, isPremium: true);
 
         //Cộng tiền cho giáo viên
         final courseDoc = await _firestore
@@ -81,18 +76,20 @@ class PaymentService {
         final teacherId = courseDoc.data()?['instructorId'] as String?;
 
         if (teacherId != null && teacherId.isNotEmpty) {
-          await _teacherRepo.addDeposit(teacherId: teacherId, amount: amount);
+          await _teacherRepo.addDeposit(
+            teacherId: teacherId,
+            amount: amount,
+            studentId: studentId,
+            courseId: courseId,
+          );
         } else {
           debugPrint(
             'Payment Success: Could not find teacherId for course $courseId',
           );
         }
 
-        
         Get.back(); // Tắt dialog loading
         Get.dialog(const PaymentSuccessDialog(), barrierDismissible: false);
-
-     
       } catch (e) {
         Get.back(); // Tắt dialog loading
         Get.snackbar(
@@ -102,7 +99,6 @@ class PaymentService {
           colorText: Colors.white,
         );
       }
-
     } else {
       Get.snackbar(
         'Lỗi thanh toán',
