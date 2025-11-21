@@ -57,7 +57,7 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
             // CHUYỂN HƯỚNG ADMIN
             Get.offAllNamed(AppRoutes.admin);
           } else if (userRole == UserRole.teacher) {
-            Get.offAllNamed(AppRoutes.teacherHome);
+            Get.offAllNamed(AppRoutes.teacherWebHome);
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
