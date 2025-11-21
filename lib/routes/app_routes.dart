@@ -28,8 +28,8 @@ import 'package:elearning_app/view/teacher/payment/teacher_payment_screen.dart';
 import 'package:elearning_app/view/teacher/student_progress/student_progress_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_analytics/teacher_analytics_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart';
+import 'package:elearning_app/view/teacher_web/teacher_web_home/teacher_web_home_screen.dart';
 import 'package:flutter/material.dart';
-
 
 class AppRoutes {
   //main
@@ -51,6 +51,9 @@ class AppRoutes {
   static const String teacherAnalytics = '/teacher/analytics';
   static const String studentProgress = '/teacher/students';
   static const String teacherPayments = '/teacher/payments';
+
+  //teacher_web
+  static const String teacherWebHome = '/teacherweb/home';
 
   //course routes
   static const String courseList = '/courses';
@@ -86,7 +89,7 @@ class AppRoutes {
           builder: (_) => MainScreen(
             initialIndex: setting.arguments is Map
                 ? (setting.arguments as Map<String, dynamic>)['initialIndex']
-                    as int?
+                      as int?
                 : null,
           ),
         );
@@ -167,7 +170,9 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const TeacherAnalyticsScreen(),
         );
-        
+      case teacherWebHome:
+        return MaterialPageRoute(builder: (_) => const TeacherWebHomeScreen());
+
       case payment:
         final args = setting.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
@@ -177,7 +182,7 @@ class AppRoutes {
             price: args['price'] ?? 0.0,
           ),
         );
-        
+
       // MỚI: Thêm case cho màn hình Admin
       case admin:
         return MaterialPageRoute(builder: (_) => const AdminLayout());

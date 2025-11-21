@@ -32,6 +32,7 @@ import 'package:elearning_app/view/teacher/payment/teacher_payment_screen.dart';
 import 'package:elearning_app/view/teacher/student_progress/student_progress_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_analytics/teacher_analytics_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart';
+import 'package:elearning_app/view/teacher_web/teacher_web_home/teacher_web_home_screen.dart';
 import 'package:get/get.dart';
 
 class AppPages {
@@ -46,6 +47,11 @@ class AppPages {
       page: () => const ForgotPasswordScreen(),
     ),
     GetPage(name: AppRoutes.teacherHome, page: () => const TeacherHomeScreen()),
+    GetPage(
+      name: AppRoutes.teacherWebHome,
+      page: () => const TeacherWebHomeScreen(),
+    ),
+
     GetPage(name: AppRoutes.teacherChats, page: () => const ChatListScreen()),
 
     GetPage(name: AppRoutes.myCourses, page: () => const MyCoursesScreen()),
@@ -53,7 +59,7 @@ class AppPages {
       name: AppRoutes.createCourse,
       page: () => const CreateCourseScreen(),
     ),
-     GetPage(
+    GetPage(
       name: AppRoutes.teacherPayments,
       page: () => const TeacherPaymentsScreen(),
     ),
@@ -138,9 +144,6 @@ class AppPages {
             : null,
       ),
     ),
-    GetPage(
-      name: AppRoutes.admin,
-      page: () => const AdminLayout(),
-    ),
+    GetPage(name: AppRoutes.admin, page: () => const AdminLayout()),
   ];
 }
