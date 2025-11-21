@@ -17,7 +17,7 @@ class TeacherWebHomeScreen extends StatelessWidget {
       {
         'title': 'Khóa học của tôi',
         'icon': Icons.book,
-        'route': AppRoutes.myCourses,
+        'route': AppRoutes.myCoursesWeb,
       },
       {
         'title': 'Tạo khóa học',
