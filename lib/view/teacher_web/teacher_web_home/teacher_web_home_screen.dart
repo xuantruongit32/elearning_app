@@ -22,7 +22,7 @@ class TeacherWebHomeScreen extends StatelessWidget {
       {
         'title': 'Tạo khóa học',
         'icon': Icons.add_circle,
-        'route': AppRoutes.createCourse,
+        'route': AppRoutes.createCourseWeb,
       },
       {
         'title': 'Phân tích',

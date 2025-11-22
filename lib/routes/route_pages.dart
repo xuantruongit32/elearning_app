@@ -32,6 +32,7 @@ import 'package:elearning_app/view/teacher/payment/teacher_payment_screen.dart';
 import 'package:elearning_app/view/teacher/student_progress/student_progress_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_analytics/teacher_analytics_screen.dart';
 import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart';
+import 'package:elearning_app/view/teacher_web/create_course_web/create_course_screen_web.dart';
 import 'package:elearning_app/view/teacher_web/my_course_screen_web/my_course_screen_web.dart';
 import 'package:elearning_app/view/teacher_web/teacher_web_home/teacher_web_home_screen.dart';
 import 'package:get/get.dart';
@@ -64,6 +65,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.createCourse,
       page: () => const CreateCourseScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.createCourseWeb,
+      page: () => const CreateCourseScreenWeb(),
     ),
     GetPage(
       name: AppRoutes.teacherPayments,
