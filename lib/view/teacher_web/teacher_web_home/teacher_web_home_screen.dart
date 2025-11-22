@@ -42,7 +42,7 @@ class TeacherWebHomeScreen extends StatelessWidget {
       {
         'title': 'Thanh toán',
         'icon': Icons.payment,
-        'route': AppRoutes.teacherPayments,
+        'route': AppRoutes.teacherPaymentsWeb,
       },
     ];
 
