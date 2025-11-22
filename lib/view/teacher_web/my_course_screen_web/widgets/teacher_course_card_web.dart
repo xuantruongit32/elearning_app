@@ -3,7 +3,7 @@ import 'package:elearning_app/bloc/course/course_bloc.dart';
 import 'package:elearning_app/bloc/course/course_event.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/course.dart';
-import 'package:elearning_app/view/teacher/create_course/create_course_screen.dart';
+import 'package:elearning_app/view/teacher_web/create_course_web/create_course_screen_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -76,7 +76,7 @@ class _TeacherCourseCardState extends State<TeacherCourseCardWeb> {
           color: Colors.transparent,
           child: InkWell(
             onTap: () =>
-                Get.to(() => CreateCourseScreen(course: widget.course)),
+                Get.to(() => CreateCourseScreenWeb(course: widget.course)),
             borderRadius: BorderRadius.circular(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,7 +221,7 @@ class _TeacherCourseCardState extends State<TeacherCourseCardWeb> {
                                   constraints: const BoxConstraints(),
                                   onPressed: () {
                                     Get.to(
-                                      () => CreateCourseScreen(
+                                      () => CreateCourseScreenWeb(
                                         course: widget.course,
                                       ),
                                     );
