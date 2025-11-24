@@ -27,7 +27,7 @@ class TeacherWebHomeScreen extends StatelessWidget {
       {
         'title': 'Phân tích',
         'icon': Icons.analytics,
-        'route': AppRoutes.teacherAnalytics,
+        'route': AppRoutes.teacherAnalyticsWeb,
       },
       {
         'title': 'Tiến độ học viên',

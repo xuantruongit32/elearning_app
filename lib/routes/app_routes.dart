@@ -31,6 +31,7 @@ import 'package:elearning_app/view/teacher/teacher_home/teacher_home_screen.dart
 import 'package:elearning_app/view/teacher_web/create_course_web/create_course_screen_web.dart';
 import 'package:elearning_app/view/teacher_web/my_course_screen_web/my_course_screen_web.dart';
 import 'package:elearning_app/view/teacher_web/payment_web/teacher_payment_web.dart';
+import 'package:elearning_app/view/teacher_web/teacher_analytics_web/teacher_analytics_web_screen.dart';
 import 'package:elearning_app/view/teacher_web/teacher_web_home/teacher_web_home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -60,6 +61,7 @@ class AppRoutes {
   static const String myCoursesWeb = '/teacherweb/courses';
   static const String createCourseWeb = '/teacherweb/courses/create';
   static const String teacherPaymentsWeb = '/teacherweb/payments';
+  static const String teacherAnalyticsWeb = '/teacherweb/analytics';
 
   //course routes
   static const String courseList = '/courses';
@@ -183,6 +185,10 @@ class AppRoutes {
       case teacherAnalytics:
         return MaterialPageRoute(
           builder: (_) => const TeacherAnalyticsScreen(),
+        );
+        case teacherAnalyticsWeb:
+        return MaterialPageRoute(
+          builder: (_) => const TeacherAnalyticsWebScreen(),
         );
       case teacherWebHome:
         return MaterialPageRoute(builder: (_) => const TeacherWebHomeScreen());
