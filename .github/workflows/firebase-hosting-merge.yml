@@ -23,7 +23,7 @@ jobs:
       # --- KẾT THÚC PHẦN THÊM MỚI ---
 
       # Bước 3: Build web
-      - run: flutter build web
+      - run: flutter build web --no-tree-shake-icons
 
       # Bước 4: Deploy lên Firebase
       - uses: FirebaseExtended/action-hosting-deploy@v0
