@@ -2,6 +2,7 @@ import 'package:elearning_app/controllers/review_controller.dart';
 import 'package:elearning_app/core/theme/app_colors.dart';
 import 'package:elearning_app/models/review.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -212,6 +213,40 @@ class ReviewScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildInfoRowWithCopy(IconData icon, String label, String value) {
+    return Row(
+      children: [
+        Icon(icon, size: 14, color: Colors.grey),
+        const SizedBox(width: 6),
+        Expanded(
+          child: Text(
+            '$label: $value',
+            style: const TextStyle(color: Colors.grey, fontSize: 12),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            Clipboard.setData(ClipboardData(text: value));
+            Get.snackbar(
+              'Đã sao chép',
+              '$label đã được sao chép',
+              snackPosition: SnackPosition.BOTTOM,
+              duration: const Duration(seconds: 1),
+              backgroundColor: Colors.black.withOpacity(0.7),
+              colorText: Colors.white,
+              margin: const EdgeInsets.all(16),
+            );
+          },
+          child: const Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: Icon(Icons.copy, size: 14, color: AppColors.primary),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildReviewCard(Review review, ReviewController controller) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -274,49 +309,10 @@ class ReviewScreen extends StatelessWidget {
           ),
           const Divider(),
 
-          Row(
-            children: [
-              const Icon(Icons.book, size: 14, color: Colors.grey),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  'Course ID: ${review.courseId}',
-                  style: const TextStyle(color: Colors.grey, fontSize: 12),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-
-          Row(
-            children: [
-              const Icon(Icons.person, size: 14, color: Colors.grey),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  'User ID: ${review.userId}',
-                  style: const TextStyle(color: Colors.grey, fontSize: 12),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-
-          Row(
-            children: [
-              const Icon(Icons.tag, size: 14, color: Colors.grey),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  'Review ID: ${review.id}',
-                  style: const TextStyle(color: Colors.grey, fontSize: 12),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
+          _buildInfoRowWithCopy(Icons.book, 'Course ID', review.courseId),
+          _buildInfoRowWithCopy(Icons.person, 'User ID', review.userId),
+          const SizedBox(height: 8),
+          _buildInfoRowWithCopy(Icons.tag, 'Review ID', review.id),
 
           const SizedBox(height: 12),
           Row(
