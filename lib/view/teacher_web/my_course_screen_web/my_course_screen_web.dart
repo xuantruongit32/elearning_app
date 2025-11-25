@@ -113,62 +113,44 @@ class _MyCoursesScreenWebState extends State<MyCoursesScreenWeb> {
   }) {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
+      // Đã loại bỏ LayoutBuilder và kiểm tra isWeb
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          const MyCoursesAppBarWeb(),
 
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final isWeb = constraints.maxWidth > 900;
-
-          return Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 1200),
-              child: CustomScrollView(
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  const MyCoursesAppBarWeb(),
-
-                  SliverPadding(
-                    padding: const EdgeInsets.all(16),
-                    sliver: isLoading
-                        ? SliverGrid(
-                            gridDelegate:
-                                const SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 300,
-                                  mainAxisSpacing: 16,
-                                  crossAxisSpacing: 16,
-                                  childAspectRatio: 0.75,
-                                ),
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) => const ShimmerCourseCardWeb(),
-                              childCount: 6,
+          SliverPadding(
+            padding: const EdgeInsets.all(24),
+            sliver: isLoading
+                ? SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 300,
+                          mainAxisSpacing: 16,
+                          crossAxisSpacing: 16,
+                          childAspectRatio: 0.75,
+                        ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => const ShimmerCourseCardWeb(),
+                      childCount: 6,
+                    ),
+                  )
+                : (contentSliver ??
+                      SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 300,
+                              mainAxisSpacing: 24,
+                              crossAxisSpacing: 24,
+                              childAspectRatio: 0.75,
                             ),
-                          )
-                        : (contentSliver ??
-                              (isWeb
-                                  ? SliverGrid(
-                                      gridDelegate:
-                                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                                            maxCrossAxisExtent: 300,
-                                            mainAxisSpacing: 24,
-                                            crossAxisSpacing: 24,
-                                            childAspectRatio: 0.75,
-                                          ),
-                                      delegate: SliverChildBuilderDelegate(
-                                        itemBuilder!,
-                                        childCount: itemCount!,
-                                      ),
-                                    )
-                                  : SliverList(
-                                      delegate: SliverChildBuilderDelegate(
-                                        itemBuilder!,
-                                        childCount: itemCount!,
-                                      ),
-                                    ))),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+                        delegate: SliverChildBuilderDelegate(
+                          itemBuilder!,
+                          childCount: itemCount!,
+                        ),
+                      )),
+          ),
+        ],
       ),
     );
   }
