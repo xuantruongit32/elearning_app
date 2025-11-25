@@ -7,61 +7,46 @@ class MyCoursesAppBarWeb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWeb = MediaQuery.of(context).size.width > 900;
-
     return SliverAppBar(
-      expandedHeight: isWeb ? 120 : 200,
-      collapsedHeight: kToolbarHeight,
-      toolbarHeight: kToolbarHeight,
       pinned: true,
+      floating: true,
+      toolbarHeight: kToolbarHeight,
+      collapsedHeight: kToolbarHeight,
+      expandedHeight: kToolbarHeight,
       backgroundColor: AppColors.primary,
       leading: IconButton(
         onPressed: () => Get.back(),
         icon: const Icon(Icons.arrow_back, color: AppColors.accent),
       ),
+      title: Text(
+        'Khóa học của tôi',
+        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+          color: AppColors.accent,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      centerTitle: false,
       actions: [
-        if (isWeb)
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: FilledButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.add),
-              label: const Text("Tạo khóa học"),
-              style: FilledButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: AppColors.primary,
-              ),
-            ),
-          )
-        else
-          IconButton(
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: FilledButton.icon(
             onPressed: () {},
-            icon: const Icon(Icons.add, color: AppColors.accent),
-          ),
-      ],
-      flexibleSpace: FlexibleSpaceBar(
-        centerTitle: isWeb,
-        titlePadding: isWeb
-            ? const EdgeInsets.only(bottom: 16)
-            : EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 0.15,
-                bottom: 16,
-              ),
-        title: Text(
-          'Khóa học của tôi',
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            color: AppColors.accent,
-            fontWeight: FontWeight.bold,
-            fontSize: isWeb ? 24 : null,
+            icon: const Icon(Icons.add),
+            label: const Text("Tạo khóa học"),
+            style: FilledButton.styleFrom(
+              backgroundColor: Colors.white,
+              foregroundColor: AppColors.primary,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            ),
           ),
         ),
-        background: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.primary, AppColors.primaryLight],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+      ],
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [AppColors.primary, AppColors.primaryLight],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
       ),
