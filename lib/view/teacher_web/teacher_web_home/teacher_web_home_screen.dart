@@ -48,78 +48,72 @@ class TeacherWebHomeScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final bool isDesktop = constraints.maxWidth > 900;
-          final double horizontalPadding = isDesktop ? 100.0 : 16.0;
-
-          const double maxCardWidth = 300.0;
-
-          return CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                expandedHeight: isDesktop ? 150 : 200,
-                pinned: true,
-                backgroundColor: AppColors.primary,
-                actions: [
-                  Tooltip(
-                    message: 'Đăng xuất',
-                    child: IconButton(
-                      onPressed: () async {
-                        final confirm = await AppDialogs.showLogoutDialog();
-                        if (confirm == true) {
-                          context.read<AuthBloc>().add(LogoutRequested());
-                        }
-                      },
-                      icon: const Icon(Icons.logout, color: AppColors.accent),
-                    ),
-                  ),
-                  if (isDesktop) const SizedBox(width: 24),
-                ],
-                flexibleSpace: FlexibleSpaceBar(
-                  title: const Text(
-                    'Bảng điều khiển cho Giảng viên',
-                    style: TextStyle(color: AppColors.accent),
-                  ),
-                  centerTitle: isDesktop ? false : true,
-                  background: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [AppColors.primary, AppColors.primaryLight],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                    ),
-                  ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            floating: true,
+            toolbarHeight: kToolbarHeight,
+            collapsedHeight: kToolbarHeight,
+            expandedHeight: kToolbarHeight,
+            backgroundColor: AppColors.primary,
+            title: const Text(
+              'Bảng điều khiển cho Giảng viên',
+              style: TextStyle(
+                color: AppColors.accent,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            centerTitle: false,
+            actions: [
+              Tooltip(
+                message: 'Đăng xuất',
+                child: IconButton(
+                  onPressed: () async {
+                    final confirm = await AppDialogs.showLogoutDialog();
+                    if (confirm == true) {
+                      context.read<AuthBloc>().add(LogoutRequested());
+                    }
+                  },
+                  icon: const Icon(Icons.logout, color: AppColors.accent),
                 ),
               ),
-
-              SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: horizontalPadding,
-                  vertical: 32,
-                ),
-                sliver: SliverGrid(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final item = menuItems[index];
-                    return DashboardCard(
-                      title: item['title'],
-                      icon: item['icon'],
-                      onTap: () => Get.toNamed(item['route']),
-                    );
-                  }, childCount: menuItems.length),
-
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: maxCardWidth,
-                    mainAxisSpacing: 24,
-                    crossAxisSpacing: 24,
-                    childAspectRatio: 1.3,
-                  ),
-                ),
-              ),
+              const SizedBox(width: 16),
             ],
-          );
-        },
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [AppColors.primary, AppColors.primaryLight],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 100.0,
+              vertical: 32,
+            ),
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final item = menuItems[index];
+                return DashboardCard(
+                  title: item['title'],
+                  icon: item['icon'],
+                  onTap: () => Get.toNamed(item['route']),
+                );
+              }, childCount: menuItems.length),
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 300.0,
+                mainAxisSpacing: 24,
+                crossAxisSpacing: 24,
+                childAspectRatio: 1.3,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
