@@ -24,11 +24,10 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Thanh toán VNPAY'),
+        title: const Text('Thanh toán MoMo'),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            // Trả về false (thất bại/hủy) khi người dùng tự đóng
             Get.back(result: false);
           },
         ),
@@ -37,28 +36,45 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
         children: [
           InAppWebView(
             initialUrlRequest: URLRequest(url: WebUri(widget.paymentUrl)),
+            initialSettings: InAppWebViewSettings(
+              javaScriptEnabled: true,
+              useShouldOverrideUrlLoading: true,
+              userAgent:
+                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+            ),
             onWebViewCreated: (controller) {
               _webViewController = controller;
             },
+
+            shouldOverrideUrlLoading: (controller, navigationAction) async {
+              final uri = navigationAction.request.url!;
+
+              if (["http", "https"].contains(uri.scheme)) {
+                return NavigationActionPolicy.ALLOW;
+              }
+
+              return NavigationActionPolicy.CANCEL;
+            },
+
+            // ---------------------------------
             onLoadStart: (controller, url) {
               setState(() {
                 _isLoading = true;
               });
 
-              // ĐÂY CHÍNH LÀ "DÒNG CODE CỦA BẠN"
-              // Kiểm tra xem URL có phải là URL trả về không
-              if (url.toString().startsWith(widget.returnUrl)) {
-                // Trích xuất vnp_ResponseCode từ URL
-                final responseCode = url?.queryParameters['vnp_ResponseCode'];
+              if (url != null) {
+                final urlString = url.toString();
+                // Kiểm tra xem đã quay về link kết quả chưa
+                if (urlString.startsWith(widget.returnUrl)) {
+                  final uri = Uri.parse(urlString);
+                  final errorCode = uri.queryParameters['errorCode'];
 
-                if (responseCode == '00') {
-                  // Thanh toán THÀNH CÔNG
-                  // Trả về true
-                  Get.back(result: true);
-                } else {
-                  // Thanh toán THẤT BẠI (hoặc bị hủy)
-                  // Trả về false
-                  Get.back(result: false);
+                  // errorCode = 0 là thành công
+                  if (errorCode == '0') {
+                    Get.back(result: true);
+                  } else {
+                    Get.back(result: false);
+                  }
                 }
               }
             },
@@ -66,12 +82,6 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
               setState(() {
                 _isLoading = false;
               });
-            },
-            onLoadError: (controller, url, code, message) {
-              setState(() {
-                _isLoading = false;
-              });
-              Get.back(result: false); // Lỗi tải trang
             },
           ),
           if (_isLoading) const Center(child: CircularProgressIndicator()),
