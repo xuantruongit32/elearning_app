@@ -28,14 +28,14 @@ class AppDialogs {
               ),
               const SizedBox(height: 20),
               Text(
-                'Logout',
+                'Đăng xuất',
                 style: Get.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                'Are you sure you want to logout?',
+                'Bạn có muốn đăng xuất không?',
                 textAlign: TextAlign.center,
                 style: Get.textTheme.bodyMedium?.copyWith(
                   color: AppColors.secondary,
@@ -55,7 +55,7 @@ class AppDialogs {
                         ),
                       ),
                       child: Text(
-                        'Cancel',
+                        'Hủy',
                         style: Get.textTheme.titleMedium?.copyWith(
                           color: AppColors.secondary,
                         ),
@@ -74,7 +74,7 @@ class AppDialogs {
                         ),
                       ),
                       child: Text(
-                        'Logout',
+                        'Đăng xuất',
                         style: Get.textTheme.titleMedium?.copyWith(
                           color: Colors.white,
                         ),
