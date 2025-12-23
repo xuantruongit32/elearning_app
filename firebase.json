@@ -1,0 +1,39 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "tt-elearning-f84d2",
+          "appId": "1:37486478707:android:90a4c0fd721f083c36b106",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "tt-elearning-f84d2",
+          "configurations": {
+            "android": "1:37486478707:android:90a4c0fd721f083c36b106",
+            "ios": "1:37486478707:ios:baf7355665a8845736b106",
+            "macos": "1:37486478707:ios:baf7355665a8845736b106",
+            "web": "1:37486478707:web:990c88f53eb9fc5236b106",
+            "windows": "1:37486478707:web:1515abe362e191dc36b106"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
