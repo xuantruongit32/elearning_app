@@ -281,10 +281,7 @@ class _UserListTab extends GetView<UserController> {
                       InkWell(
                         onTap: () {
                           Clipboard.setData(ClipboardData(text: user.uid));
-                          Get.rawSnackbar(
-                            message: 'Đã copy UID',
-                            duration: const Duration(seconds: 1),
-                          );
+                          
                         },
                         child: Row(
                           children: [
@@ -317,11 +314,7 @@ class _UserListTab extends GetView<UserController> {
                             ),
                             tooltip: 'Xem chi tiết',
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) =>
-                                    UserDetailDialog(user: user),
-                              );
+                              Get.dialog(UserDetailDialog(user: user));
                             },
                           ),
                           IconButton(

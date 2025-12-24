@@ -256,13 +256,6 @@ class CourseDetailDialog extends StatelessWidget {
                           label: const Text('Copy JSON'),
                           onPressed: () {
                             Clipboard.setData(ClipboardData(text: prettyJson));
-                            Get.snackbar(
-                              'Thành công',
-                              'Đã copy JSON vào bộ nhớ tạm!',
-                              backgroundColor: Colors.green,
-                              colorText: Colors.white,
-                              snackPosition: SnackPosition.BOTTOM,
-                            );
                           },
                         ),
                       ],
@@ -332,10 +325,6 @@ class CourseDetailDialog extends StatelessWidget {
             InkWell(
               onTap: () {
                 Clipboard.setData(ClipboardData(text: value));
-                Get.rawSnackbar(
-                  message: 'Đã copy: $value',
-                  duration: const Duration(seconds: 1),
-                );
               },
               child: const Icon(Icons.copy, size: 14, color: Colors.blueGrey),
             ),

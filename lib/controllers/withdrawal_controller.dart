@@ -22,6 +22,9 @@ class WithdrawalController extends GetxController {
   var searchQuery = ''.obs;
   var selectedSort = WithdrawalSortOption.newest.obs;
 
+  // Biến lưu ID của item đang được xử lý (để hiện loading trên nút tương ứng)
+  var processingId = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -34,12 +37,7 @@ class WithdrawalController extends GetxController {
       final data = await _repo.getWithdrawals();
       allWithdrawals.assignAll(data);
     } catch (e) {
-      Get.snackbar(
-        'Lỗi',
-        'Không thể tải yêu cầu rút tiền: $e',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      print('Error fetching withdrawals: $e');
     }
   }
 
@@ -141,57 +139,63 @@ class WithdrawalController extends GetxController {
   }
 
   Future<void> approve(Withdrawal item) async {
+    if (processingId.value.isNotEmpty) return;
+
+    processingId.value = item.id; // Bắt đầu loading
+
     try {
       await _repo.approveWithdrawal(item.id);
 
-      _sendEmailNotification(
+      await _sendEmailNotification(
         teacherId: item.teacherId,
         isApproved: true,
         amount: item.amount,
       );
 
       await fetchWithdrawals();
-      Get.snackbar(
-        'Thành công',
-        'Đã duyệt yêu cầu và gửi mail thông báo',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
+
+      _showAlertDialog('Thành công', 'Đã duyệt yêu cầu và gửi mail thông báo');
     } catch (e) {
-      Get.snackbar(
-        'Lỗi',
-        'Không thể duyệt: $e',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      _showAlertDialog('Lỗi', 'Không thể duyệt: $e');
+    } finally {
+      processingId.value = ''; // Kết thúc loading
     }
   }
 
   Future<void> reject(Withdrawal item) async {
+    if (processingId.value.isNotEmpty) return;
+
+    processingId.value = item.id; // Bắt đầu loading
+
     try {
       await _repo.rejectWithdrawal(item.id, item.teacherId, item.amount);
 
-      _sendEmailNotification(
+      await _sendEmailNotification(
         teacherId: item.teacherId,
         isApproved: false,
         amount: item.amount,
       );
 
       await fetchWithdrawals();
-      Get.snackbar(
-        'Đã từ chối',
-        'Đã hoàn tiền và gửi mail thông báo',
-        backgroundColor: Colors.orange,
-        colorText: Colors.white,
-      );
+
+      _showAlertDialog('Đã từ chối', 'Đã hoàn tiền và gửi mail thông báo');
     } catch (e) {
-      Get.snackbar(
-        'Lỗi',
-        'Không thể từ chối: $e',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      _showAlertDialog('Lỗi', 'Không thể từ chối: $e');
+    } finally {
+      processingId.value = ''; // Kết thúc loading
     }
+  }
+
+  void _showAlertDialog(String title, String content) {
+    Get.dialog(
+      AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(onPressed: () => Get.back(), child: const Text('OK')),
+        ],
+      ),
+    );
   }
 
   String formatCurrency(double amount) {

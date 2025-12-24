@@ -17,8 +17,11 @@ class ReviewController extends GetxController {
   var selectedStarFilter = 0.obs;
   var isNewestFirst = true.obs;
 
-  var startDate = Rxn<DateTime>(); // Rxn cho phép giá trị null
+  var startDate = Rxn<DateTime>();
   var endDate = Rxn<DateTime>();
+
+  // Biến trạng thái loading cho hành động xóa
+  var isDeleting = false.obs;
 
   @override
   void onInit() {
@@ -36,8 +39,12 @@ class ReviewController extends GetxController {
   }
 
   Future<void> fetchReviews() async {
-    final reviews = await _repository.getAllReviews();
-    allReviews.assignAll(reviews);
+    try {
+      final reviews = await _repository.getAllReviews();
+      allReviews.assignAll(reviews);
+    } catch (e) {
+      print('Error fetching reviews: $e');
+    }
   }
 
   Future<void> pickDateRange(BuildContext context) async {
@@ -128,7 +135,10 @@ class ReviewController extends GetxController {
   }
 
   void deleteReview(String reviewId) {
+    // Reset trạng thái loading
+    isDeleting.value = false;
     final reviewToDelete = allReviews.firstWhereOrNull((r) => r.id == reviewId);
+
     Get.dialog(
       AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -136,38 +146,77 @@ class ReviewController extends GetxController {
         title: const Text('Xác nhận xóa'),
         content: const Text('Bạn có chắc chắn muốn xóa đánh giá này không?'),
         actions: [
-          TextButton(
-            child: Text('Hủy', style: TextStyle(color: AppColors.secondary)),
-            onPressed: () => Get.back(),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+          // Nút Hủy: Disable khi đang xóa
+          Obx(
+            () => TextButton(
+              child: Text('Hủy', style: TextStyle(color: AppColors.secondary)),
+              onPressed: isDeleting.value ? null : () => Get.back(),
             ),
-            child: const Text('Xóa'),
-            onPressed: () async {
-              Get.back(); // Đóng dialog
-
-              // Xóa review
-              await _repository.deleteReview(reviewId);
-
-              // === GỬI EMAIL THÔNG BÁO ===
-              if (reviewToDelete != null) {
-                _sendDeletionNotification(reviewToDelete);
-              }
-
-              fetchReviews(); // Tải lại danh sách
-
-              Get.snackbar(
-                'Thành công',
-                'Đã xóa đánh giá và gửi mail thông báo',
-                backgroundColor: Colors.green,
-                colorText: Colors.white,
-                snackPosition: SnackPosition.BOTTOM,
-              );
-            },
           ),
+
+          // Nút Xóa: Loading trực tiếp trên nút
+          Obx(
+            () => ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: isDeleting.value
+                  ? null // Disable khi đang chạy
+                  : () async {
+                      isDeleting.value = true; // Bắt đầu xoay
+
+                      try {
+                        // Xóa review
+                        await _repository.deleteReview(reviewId);
+
+                        // Gửi email
+                        if (reviewToDelete != null) {
+                          await _sendDeletionNotification(reviewToDelete);
+                        }
+
+                        fetchReviews(); // Tải lại danh sách
+
+                        Get.back(); // Đóng dialog xác nhận xóa
+
+                        // Hiện thông báo thành công bằng Dialog (Thay cho Snackbar)
+                        _showAlertDialog(
+                          'Thành công',
+                          'Đã xóa đánh giá và gửi mail thông báo',
+                        );
+                      } catch (e) {
+                        isDeleting.value = false; // Tắt xoay để ấn lại
+
+                        // Hiện thông báo lỗi bằng Dialog
+                        _showAlertDialog('Lỗi', 'Đã có lỗi xảy ra: $e');
+                      }
+                    },
+              child: isDeleting.value
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : const Text('Xóa'),
+            ),
+          ),
+        ],
+      ),
+      barrierDismissible: false, // Không cho bấm ra ngoài khi đang dialog
+    );
+  }
+
+  // Hàm tiện ích để hiện Dialog thay cho Snackbar
+  void _showAlertDialog(String title, String content) {
+    Get.dialog(
+      AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(onPressed: () => Get.back(), child: const Text('OK')),
         ],
       ),
     );

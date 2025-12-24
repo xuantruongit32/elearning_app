@@ -200,15 +200,7 @@ class PaymentDetailDialog extends StatelessWidget {
                           ),
                           onPressed: () {
                             Clipboard.setData(ClipboardData(text: prettyJson));
-                            Get.snackbar(
-                              'Đã sao chép',
-                              'Dữ liệu JSON đã được lưu vào bộ nhớ tạm',
-                              backgroundColor: Colors.green,
-                              colorText: Colors.white,
-                              snackPosition: SnackPosition.BOTTOM,
-                              duration: const Duration(seconds: 2),
-                              margin: const EdgeInsets.all(16),
-                            );
+                          
                           },
                         ),
                       ],
@@ -291,11 +283,7 @@ class PaymentDetailDialog extends StatelessWidget {
             InkWell(
               onTap: () {
                 Clipboard.setData(ClipboardData(text: value));
-                Get.rawSnackbar(
-                  message: 'Đã copy: $value',
-                  duration: const Duration(seconds: 1),
-                  snackPosition: SnackPosition.BOTTOM,
-                );
+              
               },
               borderRadius: BorderRadius.circular(4),
               child: Padding(

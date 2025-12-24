@@ -279,10 +279,6 @@ class UserDetailDialog extends StatelessWidget {
                           label: const Text('Copy'),
                           onPressed: () {
                             Clipboard.setData(ClipboardData(text: prettyJson));
-                            Get.rawSnackbar(
-                              message: 'Đã copy JSON',
-                              duration: const Duration(seconds: 1),
-                            );
                           },
                         ),
                       ],
@@ -312,7 +308,6 @@ class UserDetailDialog extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildSectionTitle(String title) {
     return Padding(
@@ -357,10 +352,6 @@ class UserDetailDialog extends StatelessWidget {
             InkWell(
               onTap: () {
                 Clipboard.setData(ClipboardData(text: value));
-                Get.rawSnackbar(
-                  message: 'Đã copy $label',
-                  duration: const Duration(seconds: 1),
-                );
               },
               child: const Icon(Icons.copy, size: 14, color: Colors.blueGrey),
             ),

@@ -11,17 +11,16 @@ class UserController extends GetxController {
   final UserRepository _repo = UserRepository();
   final EmailService _emailService = EmailService();
 
-  // Dữ liệu gốc
   var allUsers = <UserModel>[].obs;
-
-  // Dữ liệu hiển thị cho 2 tabs
   var studentList = <UserModel>[].obs;
   var teacherList = <UserModel>[].obs;
 
-  // Filters
   var searchQuery = ''.obs;
   var selectedSort = UserSortOption.newest.obs;
   var dateRange = Rx<DateTimeRange?>(null);
+
+  // Biến quản lý trạng thái đang gửi của nút bấm
+  var isSending = false.obs;
 
   @override
   void onInit() {
@@ -40,19 +39,15 @@ class UserController extends GetxController {
       final users = await _repo.getUsers();
       allUsers.assignAll(users);
     } catch (e) {
-      Get.snackbar(
-        'Lỗi',
-        'Không thể tải danh sách người dùng: $e',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      print(
+        'Lỗi tải user: $e',
+      ); // Chỉ in log, không hiện popup gây phiền lúc mới vào
     }
   }
 
   void applyFilters() {
     List<UserModel> temp = List.from(allUsers);
 
-    // lọc theo ngày
     if (dateRange.value != null) {
       DateTime start = dateRange.value!.start;
       DateTime end = dateRange.value!.end
@@ -65,7 +60,6 @@ class UserController extends GetxController {
       }).toList();
     }
 
-    // tìm kiếm
     if (searchQuery.value.isNotEmpty) {
       String query = searchQuery.value.toLowerCase().trim();
       temp = temp.where((u) {
@@ -75,14 +69,12 @@ class UserController extends GetxController {
       }).toList();
     }
 
-    // sort
     if (selectedSort.value == UserSortOption.newest) {
       temp.sort((a, b) => b.createdAt.compareTo(a.createdAt));
     } else {
       temp.sort((a, b) => a.createdAt.compareTo(b.createdAt));
     }
 
-    // chia tab
     studentList.assignAll(
       temp.where((u) => u.role == UserRole.student).toList(),
     );
@@ -94,24 +86,17 @@ class UserController extends GetxController {
   Future<void> deleteUser(UserModel user) async {
     try {
       await _sendDeleteNotification(user);
-
       await _repo.deleteUser(user.uid);
-
       allUsers.removeWhere((u) => u.uid == user.uid);
 
-      Get.snackbar(
+      // Thay Snackbar bằng Dialog báo thành công
+      _showAlertDialog(
         'Thành công',
-        'Đã xóa người dùng và gửi mail thông báo',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
+        'Đã xóa người dùng và gửi mail thông báo.',
       );
     } catch (e) {
-      Get.snackbar(
-        'Lỗi',
-        'Không thể xóa: $e',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Thay Snackbar bằng Dialog báo lỗi
+      _showAlertDialog('Lỗi', 'Không thể xóa: $e');
     }
   }
 
@@ -123,10 +108,7 @@ class UserController extends GetxController {
       Chào $name,
       
       Tài khoản của bạn (Email: ${user.email}) tại hệ thống TT Elearning đã bị xóa bởi Quản trị viên.
-      
       Lý do: Vi phạm chính sách hoặc theo yêu cầu quản lý hệ thống.
-      
-      Nếu bạn cho rằng đây là sự nhầm lẫn, vui lòng liên hệ lại với bộ phận hỗ trợ.
       
       Trân trọng,
       Đội ngũ Quản trị viên.
@@ -139,13 +121,14 @@ class UserController extends GetxController {
         subject: subject,
         message: message,
       );
-      print('Đã gửi mail xóa user tới: ${user.email}');
     } catch (e) {
       print('Lỗi gửi mail thông báo xóa: $e');
     }
   }
 
   void showEmailDialog(BuildContext context, UserModel user) {
+    isSending.value = false; // Reset trạng thái
+
     final subjectController = TextEditingController(
       text: 'Thông báo từ TT Elearning',
     );
@@ -180,43 +163,75 @@ class UserController extends GetxController {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Get.back(), child: const Text('Hủy')),
-          ElevatedButton(
-            onPressed: () async {
-              Get.back();
-              if (messageController.text.isEmpty) {
-                Get.snackbar(
-                  'Lỗi',
-                  'Nội dung không được để trống',
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white,
-                );
-                return;
-              }
-
-              Get.snackbar(
-                'Đang gửi...',
-                'Vui lòng chờ',
-                showProgressIndicator: true,
-              );
-
-              await _emailService.sendEmail(
-                toName: userName,
-                toEmail: user.email,
-                subject: subjectController.text,
-                message: messageController.text,
-              );
-
-              Get.closeCurrentSnackbar();
-              Get.snackbar(
-                'Thành công',
-                'Đã gửi email tới ${user.email}',
-                backgroundColor: Colors.green,
-                colorText: Colors.white,
-              );
-            },
-            child: const Text(' Gửi ngay '),
+          // Nút Hủy
+          Obx(
+            () => TextButton(
+              onPressed: isSending.value ? null : () => Get.back(),
+              child: const Text('Hủy'),
+            ),
           ),
+
+          // Nút Gửi
+          Obx(
+            () => ElevatedButton(
+              onPressed: isSending.value
+                  ? null
+                  : () async {
+                      if (messageController.text.isEmpty) {
+                        _showAlertDialog('Lỗi', 'Nội dung không được để trống');
+                        return;
+                      }
+
+                      isSending.value = true; // Bắt đầu xoay
+
+                      try {
+                        await _emailService.sendEmail(
+                          toName: userName,
+                          toEmail: user.email,
+                          subject: subjectController.text,
+                          message: messageController.text,
+                        );
+
+                        Get.back(); // Đóng dialog nhập liệu trước
+
+                        // Hiện thông báo thành công bằng Dialog
+                        _showAlertDialog(
+                          'Thành công',
+                          'Đã gửi email tới ${user.email}',
+                        );
+                      } catch (e) {
+                        isSending.value = false; // Tắt xoay để ấn lại
+
+                        // Hiện thông báo lỗi bằng Dialog
+                        _showAlertDialog('Lỗi', 'Đã có lỗi xảy ra: $e');
+                      }
+                    },
+              child: isSending.value
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : const Text(' Gửi ngay '),
+            ),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
+  }
+
+  // Hàm tiện ích để hiện Dialog thay cho Snackbar
+  void _showAlertDialog(String title, String content) {
+    Get.dialog(
+      AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(onPressed: () => Get.back(), child: const Text('OK')),
         ],
       ),
     );

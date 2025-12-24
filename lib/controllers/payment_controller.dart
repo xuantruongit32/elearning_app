@@ -35,12 +35,7 @@ class PaymentController extends GetxController {
       allPayments.assignAll(payments);
     } catch (e) {
       print("Error fetching payments: $e");
-      Get.snackbar(
-        'Lỗi',
-        'Không thể tải dữ liệu thanh toán: $e',
-        backgroundColor: Colors.red.withOpacity(0.7),
-        colorText: Colors.white,
-      );
+      // Đã bỏ Snackbar để tránh lỗi crash trên Web
     }
   }
 

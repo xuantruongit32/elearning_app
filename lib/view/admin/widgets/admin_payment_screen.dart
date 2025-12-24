@@ -248,10 +248,7 @@ class AdminPaymentScreen extends StatelessWidget {
       InkWell(
         onTap: () {
           Clipboard.setData(ClipboardData(text: id));
-          Get.rawSnackbar(
-            message: 'Đã copy: $id',
-            duration: const Duration(seconds: 1),
-          );
+          
         },
         child: Container(
           constraints: const BoxConstraints(maxWidth: 120),

@@ -228,15 +228,7 @@ class ReviewScreen extends StatelessWidget {
         InkWell(
           onTap: () {
             Clipboard.setData(ClipboardData(text: value));
-            Get.snackbar(
-              'Đã sao chép',
-              '$label đã được sao chép',
-              snackPosition: SnackPosition.BOTTOM,
-              duration: const Duration(seconds: 1),
-              backgroundColor: Colors.black.withOpacity(0.7),
-              colorText: Colors.white,
-              margin: const EdgeInsets.all(16),
-            );
+           
           },
           child: const Padding(
             padding: EdgeInsets.only(left: 8.0),

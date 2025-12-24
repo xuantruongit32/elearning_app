@@ -1,3 +1,5 @@
+// main.dart
+
 import 'package:elearning_app/bloc/auth/auth_bloc.dart';
 import 'package:elearning_app/bloc/auth/auth_state.dart';
 import 'package:elearning_app/bloc/course/course_bloc.dart';
@@ -20,11 +22,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:elearning_app/app_entry.dart';
 
+final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseConfig.init();
   await GetStorage.init();
   await StorageService.init();
+  // Khởi tạo các service/repository cần thiết
   Get.put<RouteObserver<PageRoute>>(RouteObserver<PageRoute>());
   Get.put(TeacherRepository());
 
@@ -56,41 +62,46 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ],
-      child: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state.error != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.error!),
-                backgroundColor: Colors.red,
-              ),
-            );
-          }
+      // XÓA BlocListener ở đây đi, đưa nó vào bên trong home
+      child: BlocBuilder<FontBloc, FontState>(
+        builder: (context, fontState) {
+          final routeObserver = Get.find<RouteObserver<PageRoute>>();
+          return GetMaterialApp(
+            scaffoldMessengerKey: rootScaffoldMessengerKey,
+            debugShowCheckedModeBanner: false,
+            title: 'TT Elearning',
+            theme: AppTheme.getLightTheme(fontState),
+            themeMode: ThemeMode.light,
+            locale: const Locale('vi', 'VN'),
+            supportedLocales: const [Locale('vi', 'VN'), Locale('en', 'US')],
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+
+            // SỬA: Đặt BlocListener bọc lấy AppEntry (Widget con của MaterialApp)
+            home: BlocListener<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state.error != null) {
+                  // Bây giờ context này đã nằm dưới GetMaterialApp
+                  // nên ScaffoldMessenger và Get.snackbar sẽ hoạt động
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.error!),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+              child: const AppEntry(),
+            ),
+
+            onGenerateRoute: AppRoutes.onGenerateRoute,
+            getPages: AppPages.pages,
+            navigatorObservers: [routeObserver],
+          );
         },
-        child: BlocBuilder<FontBloc, FontState>(
-          builder: (context, fontState) {
-            final routeObserver = Get.find<RouteObserver<PageRoute>>();
-            return GetMaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'TT Elearning',
-              theme: AppTheme.getLightTheme(fontState),
-              themeMode: ThemeMode.light,
-              locale: const Locale('vi', 'VN'),
-              supportedLocales: const [Locale('vi', 'VN'), Locale('en', 'US')],
-              localizationsDelegates: const [
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-
-              home: const AppEntry(),
-
-              onGenerateRoute: AppRoutes.onGenerateRoute,
-              getPages: AppPages.pages,
-              navigatorObservers: [routeObserver],
-            );
-          },
-        ),
       ),
     );
   }

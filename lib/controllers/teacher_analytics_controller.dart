@@ -80,7 +80,8 @@ class TeacherAnalyticsController extends GetxController {
       analyticsData.value = data;
     } catch (e) {
       print("Lỗi controller: $e");
-      Get.snackbar("Lỗi", "Không thể tải dữ liệu thống kê");
+      // Đã bỏ Snackbar để tránh lỗi crash overlay trên Web.
+      // Dữ liệu lỗi sẽ chỉ in ra log, UI sẽ giữ nguyên trạng thái hoặc hiện loading xong tắt.
     } finally {
       isLoading.value = false;
     }

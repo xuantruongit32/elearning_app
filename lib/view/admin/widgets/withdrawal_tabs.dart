@@ -225,10 +225,7 @@ DataCell _buildIdCell(String id) {
     InkWell(
       onTap: () {
         Clipboard.setData(ClipboardData(text: id));
-        Get.rawSnackbar(
-          message: 'Đã copy: $id',
-          duration: const Duration(seconds: 1),
-        );
+        
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,

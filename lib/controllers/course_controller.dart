@@ -26,6 +26,9 @@ class CourseController extends GetxController {
   var searchQuery = ''.obs;
   var selectedSort = CourseSortOption.newest.obs;
 
+  // Biến trạng thái loading cho hành động xóa
+  var isDeleting = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -106,6 +109,8 @@ class CourseController extends GetxController {
   }
 
   void deleteCourse(String courseId) {
+    // Reset trạng thái loading trước khi mở dialog
+    isDeleting.value = false;
     final courseToDelete = allCourses.firstWhereOrNull((c) => c.id == courseId);
 
     Get.dialog(
@@ -117,42 +122,71 @@ class CourseController extends GetxController {
           'Hành động này sẽ xóa vĩnh viễn khóa học và dữ liệu liên quan.\nBạn có chắc chắn không?',
         ),
         actions: [
-          TextButton(
-            child: Text('Hủy', style: TextStyle(color: AppColors.secondary)),
-            onPressed: () => Get.back(),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+          Obx(
+            () => TextButton(
+              child: Text('Hủy', style: TextStyle(color: AppColors.secondary)),
+              onPressed: isDeleting.value ? null : () => Get.back(),
             ),
-            child: const Text(' Xóa vĩnh viễn '),
-            onPressed: () async {
-              Get.back(); // Đóng dialog
-              try {
-                if (courseToDelete != null) {
-                  _sendDeletionNotification(courseToDelete);
-                }
-
-                await _courseRepository.deleteCourse(courseId);
-                allCourses.removeWhere((c) => c.id == courseId);
-
-                Get.snackbar(
-                  'Thành công',
-                  'Đã xóa khóa học và gửi mail thông báo cho giảng viên',
-                  backgroundColor: Colors.green,
-                  colorText: Colors.white,
-                );
-              } catch (e) {
-                Get.snackbar(
-                  'Lỗi',
-                  'Không thể xóa: $e',
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white,
-                );
-              }
-            },
           ),
+
+          Obx(
+            () => ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: isDeleting.value
+                  ? null // Disable khi đang chạy
+                  : () async {
+                      isDeleting.value = true;
+
+                      try {
+                        if (courseToDelete != null) {
+                          await _sendDeletionNotification(courseToDelete);
+                        }
+
+                        await _courseRepository.deleteCourse(courseId);
+                        allCourses.removeWhere((c) => c.id == courseId);
+
+                        Get.back(); // Đóng dialog xác nhận xóa trước
+
+                        // Hiện thông báo thành công bằng Dialog
+                        _showAlertDialog(
+                          'Thành công',
+                          'Đã xóa khóa học và gửi mail thông báo cho giảng viên',
+                        );
+                      } catch (e) {
+                        isDeleting.value = false; // Tắt xoay để ấn lại
+
+                        // Hiện thông báo lỗi bằng Dialog
+                        _showAlertDialog('Lỗi', 'Không thể xóa: $e');
+                      }
+                    },
+              child: isDeleting.value
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : const Text(' Xóa vĩnh viễn '),
+            ),
+          ),
+        ],
+      ),
+      barrierDismissible: false, // Không cho bấm ra ngoài tắt
+    );
+  }
+
+  void _showAlertDialog(String title, String content) {
+    Get.dialog(
+      AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(onPressed: () => Get.back(), child: const Text('OK')),
         ],
       ),
     );
@@ -176,7 +210,6 @@ class CourseController extends GetxController {
             Chào $teacherName,
             
             Khóa học của bạn mang tên "${course.title}" (ID: ${course.id}) đã bị xóa khỏi hệ thống bởi Quản trị viên.
-            
             Lý do: Vi phạm chính sách nội dung hoặc theo yêu cầu quản lý.
             
             Nếu bạn có thắc mắc, vui lòng liên hệ với bộ phận hỗ trợ của chúng tôi.
@@ -190,11 +223,6 @@ class CourseController extends GetxController {
             toEmail: teacherEmail,
             message: message,
             subject: 'Thông báo: Khóa học đã bị xóa',
-          );
-          print('Đã gửi mail xóa khóa học đến: $teacherEmail');
-        } else {
-          print(
-            'Không tìm thấy email của giảng viên ID: ${course.instructorId}',
           );
         }
       }
