@@ -25,6 +25,11 @@ class TeacherWebHomeScreen extends StatelessWidget {
         'route': AppRoutes.createCourseWeb,
       },
       {
+        'title': 'Hồ sơ cá nhân',
+        'icon': Icons.person,
+        'route': AppRoutes.teacherProfileWeb,
+      },
+      {
         'title': 'Phân tích',
         'icon': Icons.analytics,
         'route': AppRoutes.teacherAnalyticsWeb,

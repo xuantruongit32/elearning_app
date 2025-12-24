@@ -36,6 +36,8 @@ import 'package:elearning_app/view/teacher_web/create_course_web/create_course_s
 import 'package:elearning_app/view/teacher_web/my_course_screen_web/my_course_screen_web.dart';
 import 'package:elearning_app/view/teacher_web/payment_web/teacher_payment_web.dart';
 import 'package:elearning_app/view/teacher_web/teacher_analytics_web/teacher_analytics_web_screen.dart';
+import 'package:elearning_app/view/teacher_web/teacher_profile_web/teacher_web_edit_profile_screen.dart';
+import 'package:elearning_app/view/teacher_web/teacher_profile_web/teacher_web_profile_screen.dart';
 import 'package:elearning_app/view/teacher_web/teacher_web_home/teacher_web_home_screen.dart';
 import 'package:get/get.dart';
 
@@ -89,6 +91,10 @@ class AppPages {
       page: () => const TeacherAnalyticsWebScreen(),
     ),
     GetPage(
+      name: AppRoutes.teacherProfileWeb,
+      page: () => const TeacherWebProfileScreen(),
+    ),
+    GetPage(
       name: AppRoutes.courseSearch,
       page: () => const CourseSearchScreen(),
     ),
@@ -100,6 +106,10 @@ class AppPages {
 
     GetPage(name: AppRoutes.profile, page: () => const ProfileScreen()),
     GetPage(name: AppRoutes.editProfile, page: () => const EditProfileScreen()),
+    GetPage(
+      name: AppRoutes.teacherEditProfileWeb,
+      page: () => const TeacherWebEditProfileScreen(),
+    ),
 
     GetPage(
       name: AppRoutes.notifications,

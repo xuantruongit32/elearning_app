@@ -62,6 +62,8 @@ class AppRoutes {
   static const String createCourseWeb = '/teacherweb/courses/create';
   static const String teacherPaymentsWeb = '/teacherweb/payments';
   static const String teacherAnalyticsWeb = '/teacherweb/analytics';
+  static const String teacherProfileWeb = '/teacherweb/profile';
+  static const String teacherEditProfileWeb = '/teacherweb/editprofile';
 
   //course routes
   static const String courseList = '/courses';
@@ -186,7 +188,7 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const TeacherAnalyticsScreen(),
         );
-        case teacherAnalyticsWeb:
+      case teacherAnalyticsWeb:
         return MaterialPageRoute(
           builder: (_) => const TeacherAnalyticsWebScreen(),
         );
